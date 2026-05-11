@@ -1,26 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500&display=swap');
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'DM Sans', sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Custom Scrollbar ── */
+
+html,
+body {
+  scrollbar-gutter: stable;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html[lang="ar"] body {
+  font-family: var(--font-arabic), var(--font-sans), system-ui, sans-serif;
+}
+
+/* Navbar in Arabic: `tracking-wide` harms readability; normalize link/button spacing */
+.nav-ar-locale :is(a, button) {
+  letter-spacing: normal;
+}
+
+/* Firefox */
+html,
+body,
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #B8860B #EDE7D9;
+}
+
+/* Chrome / Safari / Edge */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: #EDE7D9;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #D4A017 0%, #B8860B 50%, #8B6508 100%);
+  border-radius: 999px;
+  border: 1px solid #EDE7D9;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #B8860B 0%, #8B6508 100%);
+}
+
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-corner {
+  background: #EDE7D9;
+}
+
+/* ── Floating WhatsApp subtle glow pulse (no transform — keeps Tailwind hover:scale working) ── */
+
+@keyframes whatsapp-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 10px 36px rgba(28, 58, 46, 0.38),
+      0 0 0 1px rgba(184, 134, 11, 0.22);
+  }
+  50% {
+    box-shadow:
+      0 14px 44px rgba(28, 58, 46, 0.48),
+      0 0 0 1px rgba(212, 160, 23, 0.38);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.whatsapp-float {
+  animation: whatsapp-glow 2.8s ease-in-out infinite;
+}
+
+.whatsapp-float:hover {
+  animation: none;
 }

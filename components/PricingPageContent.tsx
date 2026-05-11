@@ -1,0 +1,1514 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState, type ReactNode } from "react";
+import { useReveal } from "@/hooks/useReveal";
+import { useI18n } from "@/components/LocaleProvider";
+
+/* ─── Inline SVG icons (Tabler outline style) ───────────────────── */
+const IconClock = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" />
+  </svg>
+);
+const IconCalendar = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <rect x="4" y="5" width="16" height="16" rx="2" /><path d="M16 3v4M8 3v4M4 11h16" />
+  </svg>
+);
+const IconBook = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M4 19V6a2 2 0 0 1 2-2h13a1 1 0 0 1 1 1v13" />
+    <path d="M4 19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1H5a1 1 0 0 0-1 1Z" />
+    <path d="M8 7h6M8 11h5" />
+  </svg>
+);
+const IconChartBar = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M3 20h18M8 20V10M12 20V4M16 20v-6" />
+  </svg>
+);
+const IconUsers = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <circle cx="9" cy="7" r="3" />
+    <path d="M3 20c0-3.314 2.686-6 6-6s6 2.686 6 6" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75M21 20c0-2.761-2-5-4.5-5.5" />
+  </svg>
+);
+const IconTarget = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" />
+    <path d="M12 3v2M12 19v2M3 12h2M19 12h2" />
+  </svg>
+);
+const IconBrandWhatsapp = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
+    <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
+  </svg>
+);
+const IconMail = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" />
+  </svg>
+);
+const IconArrowRight = () => (
+  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="rtl:rotate-180" aria-hidden>
+    <path d="M3 8h10M9 4l4 4-4 4" />
+  </svg>
+);
+const IconStar = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden>
+    <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2Z" />
+  </svg>
+);
+const IconCheck = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M5 13l4 4L19 7" />
+  </svg>
+);
+const IconSparkles = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M12 3v3M12 18v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M3 12h3M18 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12" />
+  </svg>
+);
+const IconBanknote = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <rect x="4" y="6" width="16" height="12" rx="2" />
+    <circle cx="12" cy="12" r="2" />
+    <path d="M8 6V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1M8 18v1a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-1" />
+  </svg>
+);
+const IconTag = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.41 0l6.59-6.59a1 1 0 0 0 0-1.41L12 2Z" />
+    <path d="M7 7h.01" />
+  </svg>
+);
+const IconReceipt = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2H4Z" />
+    <path d="M8 10h8M8 14h6" />
+  </svg>
+);
+const IconCreditCard = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <rect x="2" y="5" width="20" height="14" rx="2" />
+    <path d="M2 10h20" />
+  </svg>
+);
+const IconShieldCheck = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+    <path d="m9 12 2 2 4-4" />
+  </svg>
+);
+const IconRefresh = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+    <path d="M3 3v5h5M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+    <path d="M21 21v-5h-5" />
+  </svg>
+);
+const IconAward = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <circle cx="12" cy="8" r="6" />
+    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+  </svg>
+);
+const IconPolicy = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z" />
+    <path d="M14 2v6h6M10 13h4M10 17h4M8 13h.01M8 17h.01" />
+  </svg>
+);
+
+/* ─── Pricing Section 2 Data ─────────────────────────────────────── */
+const PRIVATE_PKGS = [
+  {
+    name: { en: "Starter", ar: "المبتدئ" },
+    hours: 4,
+    launch: "$22.40", regular: "$32.00",
+    bestFor: { en: "Absolute beginners", ar: "المبتدئون تماماً" },
+    features: {
+      en: ["Build core foundations at your own pace", "Basic step-by-step progress tracking"],
+      ar: ["بناء الأسس الجوهرية بالوتيرة المناسبة", "تتبع التقدم خطوة بخطوة", "مدرس أصيل معتمد", "جدولة مرنة للجلسات"],
+    },
+    popular: false,
+  },
+  {
+    name: { en: "Beginner", ar: "المبتدئ +" },
+    hours: 6,
+    launch: "$33.60", regular: "$48.00",
+    bestFor: { en: "Busy schedules", ar: "الجداول المزدحمة" },
+    features: {
+      en: ["Access to exclusive extra practice files", "Direct out-of-class messaging with tutor"],
+      ar: ["مواد تدريبية إضافية", "مراسلة مباشرة مع المعلم", "مدرس أصيل معتمد", "جدولة مرنة للجلسات"],
+    },
+    popular: false,
+  },
+  {
+    name: { en: "Growth", ar: "النمو" },
+    hours: 8,
+    launch: "$44.80", regular: "$64.00",
+    bestFor: { en: "Consistent progress", ar: "التقدم المستمر" },
+    features: {
+      en: ["100% personalized study plan", "Detailed weekly teacher feedback reports"],
+      ar: ["خطة دراسية شخصية", "تقارير أسبوعية من المعلم", "مدرس أصيل معتمد", "جدولة مرنة للجلسات"],
+    },
+    popular: true,
+  },
+  {
+    name: { en: "Accelerated", ar: "المتسارع" },
+    hours: 10,
+    launch: "$52.50", regular: "$75.00",
+    bestFor: { en: "Goal-oriented learners", ar: "المتعلمون الهادفون" },
+    features: {
+      en: ["Priority scheduling and VIP teacher matching", "Advanced goal-setting and milestone tracking"],
+      ar: ["جدولة بالأولوية", "تتبع الإنجازات المتقدمة", "مدرس أصيل معتمد", "تجربة تعليمية شخصية"],
+    },
+    popular: false,
+  },
+  {
+    name: { en: "Intensive", ar: "المكثف" },
+    hours: 12,
+    launch: "$63.00", regular: "$90.00",
+    bestFor: { en: "Rapid fluency seekers", ar: "الساعون للطلاقة السريعة" },
+    features: {
+      en: ["Deep immersion curriculum for rapid fluency", "Premium digital library access"],
+      ar: ["منهج انغماس عميق", "وصول لمكتبة رقمية متميزة", "مدرس أصيل معتمد", "تتبع التقدم والتقارير"],
+    },
+    popular: false,
+  },
+];
+
+const GROUP_PKGS = [
+  {
+    name: { en: "Group Starter", ar: "المجموعة المبتدئة" },
+    hours: 4,
+    launch: "$14.00", regular: "$20.00",
+    bestFor: { en: "Social learning on a budget", ar: "التعلم الاجتماعي باقتصاد" },
+    features: {
+      en: ["Interactive social learning", "Fixed schedule and standard curriculum"],
+      ar: ["تعلم جماعي تفاعلي", "جدول أسبوعي ثابت", "مجموعات صغيرة (3–5 طلاب)", "مدرس أصيل معتمد"],
+    },
+    popular: false,
+  },
+  {
+    name: { en: "Group Growth", ar: "نمو المجموعة" },
+    hours: 8,
+    launch: "$28.00", regular: "$40.00",
+    bestFor: { en: "Consistent community routine", ar: "الروتين المجتمعي المنتظم" },
+    features: {
+      en: ["Healthy peer motivation", "Collaborative reading and discussions"],
+      ar: ["تحفيز الأقران والنقاشات", "أنشطة تعاونية", "تتبع التقدم الشهري", "مدرس أصيل معتمد"],
+    },
+    popular: true,
+  },
+  {
+    name: { en: "Group Intensive", ar: "المجموعة المكثفة" },
+    hours: 12,
+    launch: "$42.00", regular: "$60.00",
+    bestFor: { en: "Active and fast-paced learning", ar: "المتعلمون السريعون" },
+    features: {
+      en: ["Fast-paced group study", "Maximum community engagement"],
+      ar: ["تدريب مكثف جماعي", "أقصى تفاعل كلامي", "دروس أسبوعية منظمة", "مدرس أصيل معتمد"],
+    },
+    popular: false,
+  },
+];
+
+const FAM_ROWS = [
+  { hours: 8,  m2: { regular: "$60.00", discounted: "$48.00" }, m3: { regular: "$56.00", discounted: "$44.80" }, m4: { regular: "$52.00", discounted: "$41.60" } },
+  { hours: 10, m2: { regular: "$75.00", discounted: "$60.00" }, m3: { regular: "$70.00", discounted: "$56.00" }, m4: { regular: "$65.00", discounted: "$52.00" } },
+  { hours: 12, m2: { regular: "$90.00", discounted: "$72.00" }, m3: { regular: "$84.00", discounted: "$67.20" }, m4: { regular: "$78.00", discounted: "$62.40" } },
+  { hours: 14, m2: { regular: "$105.00", discounted: "$84.00" }, m3: { regular: "$98.00", discounted: "$78.40" }, m4: { regular: "$91.00", discounted: "$72.80" } },
+  { hours: 16, m2: { regular: "$120.00", discounted: "$96.00" }, m3: { regular: "$112.00", discounted: "$89.60" }, m4: { regular: "$104.00", discounted: "$83.20" } },
+  { hours: 18, m2: { regular: "$135.00", discounted: "$108.00" }, m3: { regular: "$126.00", discounted: "$100.80" }, m4: { regular: "$117.00", discounted: "$93.60" } },
+  { hours: 20, m2: { regular: "$150.00", discounted: "$120.00" }, m3: { regular: "$140.00", discounted: "$112.00" }, m4: { regular: "$130.00", discounted: "$104.00" } },
+];
+
+const PRIVATE_INCLUDED = [
+  { icon: <IconClock />,        en: "Flexible sessions: 30, 45, or 60 minutes.", ar: "جلسات مرنة: 30 أو 45 أو 60 دقيقة." },
+  { icon: <IconUsers />,        en: "Native tutors: One-on-one expert focus.", ar: "مدرسون أصليون: تركيز خبراء في تعليم فردي 1-على-1." },
+  { icon: <IconRefresh />,      en: "Easy rescheduling: Change sessions with 7 days’ notice.", ar: "إعادة جدولة سهلة: عدّل المواعيد مع إشعار قبل 7 أيام." },
+  { icon: <IconShieldCheck />,  en: "Risk-free: 100% refund on your first session.", ar: "بدون مخاطرة: استرداد 100٪ لأول جلسة." },
+  { icon: <IconCreditCard />,   en: "Clear billing: Monthly prepay. No hidden fees. (A 3–4% payment gateway fee applies.)", ar: "فوترة واضحة: دفع شهري مسبق. بلا رسوم خفية. (رسوم بوابة دفع 3–4٪)." },
+];
+
+const GROUP_INCLUDED = [
+  { icon: <IconUsers />,        en: "Small groups: 3–5 students maximum.", ar: "مجموعات صغيرة: 3–5 طلاب كحد أقصى." },
+  { icon: <IconCalendar />,     en: "Fixed routine: Builds weekly discipline.", ar: "روتين ثابت: يعزّز الانضباط الأسبوعي." },
+  { icon: <IconAward />,       en: "Native tutors: Certified Arabic experts.", ar: "مدرسون أصليون: خبراء عربية معتمدون." },
+  { icon: <IconShieldCheck />, en: "Risk-free: 100% refund on your first session.", ar: "بدون مخاطرة: استرداد 100٪ لأول جلسة." },
+  { icon: <IconCreditCard />,  en: "Clear billing: Monthly prepay. No hidden fees. (A 3–4% payment gateway fee applies.)", ar: "فوترة واضحة: دفع شهري مسبق. بلا رسوم خفية. (رسوم بوابة دفع 3–4٪)." },
+];
+
+const FAM_INCLUDED = [
+  { icon: <IconUsers />,        en: "Shared pool: Distribute hours freely among members.", ar: "رصيد مشترك: وزّع الساعات بحرية بين الأعضاء." },
+  { icon: <IconBook />,        en: "Individual profiles: A custom path for each member.", ar: "ملفات فردية: مسار مخصص لكل فرد." },
+  { icon: <IconClock />,       en: "Flexible sessions: 30, 45, or 60 minutes per student.", ar: "جلسات مرنة: 30 أو 45 أو 60 دقيقة لكل طالب." },
+  { icon: <IconShieldCheck />, en: "Risk-free: 100% refund on your first session.", ar: "بدون مخاطرة: استرداد 100٪ لأول جلسة." },
+  { icon: <IconCreditCard />,  en: "Clear billing: Monthly prepay. No hidden fees. (A 3–4% payment gateway fee applies.)", ar: "فوترة واضحة: دفع شهري مسبق. بلا رسوم خفية. (رسوم بوابة دفع 3–4٪)." },
+];
+
+/* ─── PkgCard ────────────────────────────────────────────────────── */
+function PkgCard({
+  pkg,
+  isAr,
+  brandGreen,
+}: {
+  pkg: typeof PRIVATE_PKGS[number];
+  isAr: boolean;
+  brandGreen: string;
+}) {
+  const name      = isAr ? pkg.name.ar     : pkg.name.en;
+  const bestFor   = isAr ? pkg.bestFor.ar  : pkg.bestFor.en;
+  const features  = isAr ? pkg.features.ar : pkg.features.en;
+  const hoursLabel = isAr
+    ? `${pkg.hours} ساعات / شهر`
+    : `${pkg.hours} hours / month`;
+
+  return (
+    <div
+      className="pkg-card-anim bg-white border border-[#E8E2D6] rounded-2xl p-4 sm:p-5 max-w-[640px] mx-auto"
+      dir={isAr ? "rtl" : "ltr"}
+    >
+      <div className="md:flex md:items-stretch md:gap-6">
+        {/* Left: Summary */}
+        <div className="md:w-[44%] md:shrink-0 md:pe-5 md:border-e md:border-[#EDE7D9] md:flex md:flex-col">
+          {/* Name + badge */}
+          <div className="flex items-start justify-between gap-2 mb-2.5">
+            <h3 className="font-serif text-[1.02rem] sm:text-[1.08rem] font-bold leading-snug" style={{ color: brandGreen }}>
+              {name}
+            </h3>
+            {pkg.popular && (
+              <span
+                className="shrink-0 inline-flex items-center gap-1 rounded-full text-[#F2D58C] text-[9px] font-bold uppercase tracking-wider px-2.5 py-1"
+                style={{ backgroundColor: brandGreen }}
+              >
+                <IconStar /> {isAr ? "الأكثر شيوعاً" : "Popular"}
+              </span>
+            )}
+          </div>
+
+          {/* Best for */}
+          <p className="flex items-center gap-1.5 text-[12px] text-[#6b7d75] mb-3">
+            <IconTarget /> {isAr ? "الأنسب لـ:" : "Best for:"} {bestFor}
+          </p>
+
+          {/* Price */}
+          <div className="flex items-baseline gap-2 mb-1">
+            <span className="text-[1.55rem] sm:text-[1.65rem] font-extrabold tabular-nums leading-none" style={{ color: brandGreen }}>
+              {pkg.launch}
+            </span>
+            <span className="text-[13px] text-[#9aada6] line-through tabular-nums">{pkg.regular}</span>
+            <span className="text-[11px] text-[#6b7d75]">/mo</span>
+          </div>
+          <div className="flex items-center flex-wrap gap-2 mb-3">
+            <span className="text-[10px] font-bold text-[#8B6508] bg-[#FFF4D6] rounded-full px-2.5 py-0.5 border border-[#D4A017]/30">
+              🔥 30% OFF · {isAr ? "أول 3 أشهر" : "First 3 months"}
+            </span>
+            <span className="text-[11px] text-[#9aada6]">
+              {isAr ? `ثم ${pkg.regular}/شهر` : `then ${pkg.regular}/mo`}
+            </span>
+          </div>
+
+          {/* Hours pill */}
+          <div className="flex items-center gap-2 rounded-xl bg-[#1C3A2E]/[0.06] px-3.5 py-2 mb-4">
+            <span style={{ color: "rgba(37,74,58,0.5)" }}><IconClock /></span>
+            <span className="text-[13px] font-semibold tabular-nums" style={{ color: brandGreen }}>
+              {hoursLabel}
+            </span>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex gap-2 md:mt-auto">
+            <Link
+              href="/contact"
+              className="btn-trial-s flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-[13px] font-semibold border transition-colors duration-200"
+              style={{ borderColor: "rgba(37,74,58,0.22)", color: brandGreen }}
+            >
+              <IconCalendar />
+              {isAr ? "احجز تجريبية" : "Book trial"}
+            </Link>
+            <Link
+              href="/contact"
+              className="btn-sub-s flex-[1.15] flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-[13px] font-semibold text-[#F2D58C]"
+              style={{ backgroundColor: brandGreen }}
+            >
+              {isAr ? "اشترك الآن" : "Subscribe"}
+              <IconArrowRight />
+            </Link>
+          </div>
+        </div>
+
+        {/* Right: Details */}
+        <div className="mt-5 md:mt-0 md:flex-1">
+          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#8B9E96] mb-2.5">
+            {isAr ? "ما يشمله الاشتراك" : "What's included"}
+          </p>
+          <ul className="space-y-2.5 mb-4">
+            {features.map((f, fi) => (
+              <li key={fi} className="flex items-start gap-2.5 text-[13px] text-[#2d3e36] leading-relaxed">
+                <span
+                  className="mt-[3px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-white"
+                  style={{ backgroundColor: brandGreen }}
+                >
+                  <IconCheck />
+                </span>
+                {f}
+              </li>
+            ))}
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function IncludedPlansSection({
+  isAr,
+  items,
+}: {
+  isAr: boolean;
+  items: typeof PRIVATE_INCLUDED;
+}) {
+  const columns = [items.slice(0, 2), items.slice(2, 4), items.slice(4, 6)];
+
+  return (
+    <div className="mt-7 overflow-hidden rounded-2xl border border-[#E2D9C6] bg-[#F8F4EC]" dir={isAr ? "rtl" : "ltr"}>
+      <div className="border-b border-[#E2D9C6] px-5 py-3.5 bg-[#F2ECE0]">
+        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#7F928A]">
+          {isAr ? "ضمان نبراس" : "The Nibras Guarantee"}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3">
+        {columns.map((column, ci) => (
+          <div
+            key={ci}
+            className={[
+              "px-5 py-4",
+              ci !== columns.length - 1 ? "border-b md:border-b-0" : "",
+              ci !== 0 ? "md:border-s" : "",
+              "border-[#E2D9C6]",
+            ].join(" ")}
+          >
+            <ul className="space-y-3">
+              {column.map(({ icon, en, ar }, ii) => (
+                <li key={ii} className="flex items-start gap-2.5 text-[12.5px] text-[#43564E] leading-snug">
+                  <span className="shrink-0 text-[#B49B44] mt-[1px]">{icon}</span>
+                  {isAr ? ar : en}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── PricingTabs — Section 2 (Fixed card sizing) ───────────────── */
+function PricingTabs({
+  isAr,
+  brandGreen,
+  packagesVisible,
+}: {
+  isAr: boolean;
+  brandGreen: string;
+  packagesVisible: boolean;
+}) {
+  const [activeTab, setActiveTab] = useState<"private" | "group" | "family">("private");
+
+  const tabs = [
+    { id: "private" as const, labelEn: "Private 1-on-1", labelAr: "فردي 1-على-1", icon: <IconTarget /> },
+    { id: "group"   as const, labelEn: "Group (3–5)",    labelAr: "مجموعة (3–5)", icon: <IconUsers /> },
+    { id: "family"  as const, labelEn: "Family",          labelAr: "عائلي",         icon: <IconBook /> },
+  ];
+
+  const currentPlans = activeTab === "private" ? PRIVATE_PKGS : GROUP_PKGS;
+  const includedItems =
+    activeTab === "private"
+      ? PRIVATE_INCLUDED
+      : activeTab === "group"
+      ? GROUP_INCLUDED
+      : FAM_INCLUDED;
+
+  /* ── icon per plan index (cycles) ── */
+  const planIcons = [
+    /* box */
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden key="box">
+      <path d="M12 3L2 7.5 12 12l10-4.5L12 3Z"/><path d="M2 7.5v9L12 21l10-4.5v-9"/><path d="M12 12v9"/>
+    </svg>,
+    /* rocket */
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden key="rocket">
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09Z"/>
+      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2Z"/>
+    </svg>,
+    /* star */
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden key="star">
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/>
+    </svg>,
+    /* zap */
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden key="zap">
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8Z"/>
+    </svg>,
+    /* flame */
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden key="flame">
+      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/>
+    </svg>,
+  ];
+
+  const groupIcons = [
+    <IconUsers key="u1" />,
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden key="award">
+      <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+    </svg>,
+    <IconTarget key="tg1" />,
+  ];
+
+  return (
+    <div
+      className={`transition-all duration-700 ease-out ${
+        packagesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      }`}
+      dir={isAr ? "rtl" : "ltr"}
+    >
+      {/* ── Tabs header ── */}
+      <div className="rounded-t-2xl border border-b-0 border-[#DCCFB6] bg-[#EEF2EF] px-4 sm:px-5">
+        <div className="flex items-center justify-between gap-3 border-b border-[#DCCFB6]/90">
+          <div className="sm:hidden flex-1 py-2.5">
+            <label htmlFor="pricing-tab-filter" className="sr-only">
+              {isAr ? "تصفية نوع الخطة" : "Filter plan type"}
+            </label>
+            <select
+              id="pricing-tab-filter"
+              value={activeTab}
+              onChange={(e) => setActiveTab(e.target.value as "private" | "group" | "family")}
+              className="w-full rounded-xl border border-[#DCCFB6] bg-white px-3 py-2 text-[13px] font-semibold text-[#254A3A] outline-none focus:border-[#254A3A] focus:ring-2 focus:ring-[#254A3A]/20"
+            >
+              {tabs.map((tab) => (
+                <option key={tab.id} value={tab.id}>
+                  {isAr ? tab.labelAr : tab.labelEn}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="hidden sm:flex min-w-0">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`shrink-0 inline-flex items-center gap-2 px-3 sm:px-4 py-3 text-[12.5px] sm:text-[13px] font-semibold border-b-2 transition-colors ${
+                  activeTab === tab.id
+                    ? "text-[#254A3A] border-[#254A3A]"
+                    : "text-[#5e7168] border-transparent hover:text-[#254A3A]"
+                }`}
+              >
+                <span className="w-4 h-4 flex items-center justify-center">{tab.icon}</span>
+                {isAr ? tab.labelAr : tab.labelEn}
+              </button>
+            ))}
+          </div>
+          <Link
+            href="/contact"
+            className="hidden sm:inline shrink-0 text-[12px] sm:text-[13px] font-semibold text-[#254A3A] hover:text-[#1A352A]"
+          >
+            {isAr ? "عرض الكل ←" : "View all →"}
+          </Link>
+        </div>
+      </div>
+
+      {/* ── Body ── */}
+      <div className="overflow-hidden rounded-b-2xl border border-[#DCCFB6] bg-[#F7F4EE]">
+        {activeTab !== "family" ? (
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-2 ${
+              activeTab === "private"
+                ? "lg:grid-cols-3 xl:grid-cols-5"
+                : "md:grid-cols-3"
+            } gap-2.5 p-2.5 sm:gap-3 sm:p-3 bg-[#F7F4EE]`}
+          >
+            {currentPlans.map((pkg, i) => {
+              const icons = activeTab === "group" ? groupIcons : planIcons;
+              const pkgIcon = icons[i % icons.length];
+              const isPrivate = activeTab === "private";
+
+              return (
+                <article
+                  key={pkg.name.en}
+                  className={`pricing-tab-card relative flex flex-col overflow-hidden rounded-xl sm:rounded-2xl border border-[#DFD6C4] bg-[#FBF9F4] shadow-[0_8px_20px_rgba(38,33,23,0.07)] ${
+                    pkg.popular ? "ring-2 ring-[#B49B44]/50" : ""
+                  }`}
+                >
+                  {/* Popular ribbon */}
+                  {pkg.popular && (
+                    <div
+                      className={`pointer-events-none absolute top-3 z-[1] ${
+                        isAr ? "-left-7 -rotate-45" : "-right-7 rotate-45"
+                      } bg-[#B49B44] px-7 py-[3px] shadow-[0_2px_8px_rgba(0,0,0,0.14)]`}
+                    >
+                      <span className="block text-center text-[8px] font-extrabold uppercase tracking-[0.14em] text-white">
+                        {isAr ? "الأكثر شيوعاً" : "Popular"}
+                      </span>
+                    </div>
+                  )}
+
+                  <div className={`flex flex-col flex-1 items-center text-center ${isPrivate ? "px-2.5 pt-4 pb-3.5 sm:px-3 sm:pt-5 sm:pb-4" : "px-3 pt-5 pb-4 sm:px-4 sm:pt-6 sm:pb-5"}`}>
+
+                    {/* Icon badge */}
+                    <div className="mb-3 inline-flex items-center justify-center rounded-xl border border-[#CFBF9A] bg-[#F5F2EA] text-[#B38A55] shadow-[inset_0_1px_0_rgba(255,255,255,0.75),0_4px_10px_rgba(38,33,23,0.08)]"
+                        style={{ width: isPrivate ? 40 : 48, height: isPrivate ? 40 : 48 }}
+                    >
+                      {pkgIcon}
+                    </div>
+
+                    {/* Name + hours */}
+                    <h3
+                      className="font-extrabold leading-tight tracking-[-0.01em] text-[#3A2414]"
+                      style={{ fontSize: isPrivate ? "clamp(0.78rem, 1.25vw, 0.95rem)" : "1rem" }}
+                    >
+                      {isAr ? pkg.name.ar : pkg.name.en}
+                    </h3>
+                    <p
+                      className="mt-0.5 font-semibold text-[#7A6A55]"
+                      style={{ fontSize: isPrivate ? "0.68rem" : "0.76rem" }}
+                    >
+                      {pkg.hours} {isAr ? "ساعات / شهر" : "Hours / Mo."}
+                    </p>
+
+                    {/* Best for */}
+                    <p
+                      className="mt-1.5 font-serif italic text-[#6A6057]"
+                      style={{ fontSize: isPrivate ? "0.72rem" : "0.82rem" }}
+                    >
+                      {isAr ? "الأنسب لـ" : "Best For"}: {isAr ? pkg.bestFor.ar : pkg.bestFor.en}
+                    </p>
+
+                    {/* Divider */}
+                    <div className="my-3 h-px w-full bg-[#E7DDCC]" />
+
+                    {/* Regular price strikethrough */}
+                    <p
+                      className="text-[#9aada6] tabular-nums"
+                      style={{
+                        fontSize: isPrivate ? "1rem" : "0.9rem",
+                        color: "#8A9A5B"
+                      }}                    >
+                      <span className="line-through">{pkg.regular}</span>
+                      <span className="text-[#9aada6] ms-1">/ {isAr ? "شهر" : "month"}</span>
+                    </p>
+
+                    {/* Launch price box */}
+                    <div className="mt-2 w-full rounded-xl border border-[#E4D8C5] bg-[#F7F2E8] px-2 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_5px_12px_rgba(38,33,23,0.07)]">
+                      <p className="flex items-end justify-center gap-1 text-[#4B2B11] tabular-nums">
+                        <span
+                          className="font-black leading-none tracking-[-0.015em]"
+                          style={{ fontSize: isPrivate ? "clamp(1.25rem, 2.6vw, 1.8rem)" : "2.1rem" }}
+                        >
+                          {pkg.launch}
+                        </span>
+                        <span
+                          className="mb-1 font-semibold"
+                          style={{ fontSize: isPrivate ? "0.68rem" : "0.82rem" }}
+                        >
+                          / {isAr ? "شهر" : "mo"}
+                        </span>
+                        <span className="mb-1 text-[14px]">🔥</span>
+                      </p>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="my-3 h-px w-full bg-[#E7DDCC]" />
+
+                    {/* Perks title */}
+                    <p className="pricing-perks-title mb-2 text-[10px] font-bold uppercase tracking-[0.08em] text-[#5E4A31]">
+                      {activeTab === "group"
+                        ? (isAr ? "مزايا المجموعة" : "Group Perks")
+                        : (isAr ? "مزايا خاصة" : "Unique Perks")}
+                    </p>
+
+                    {/* Features */}
+                    <ul className="mb-4 w-full space-y-1.5 text-start">
+                      {(isAr ? pkg.features.ar : pkg.features.en).map((feature) => (
+                        <li
+                          key={feature}
+                          className="flex items-start gap-1.5 leading-snug text-[#625547]"
+                          style={{ fontSize: isPrivate ? "0.7rem" : "0.8rem" }}
+                        >
+                          <span className="mt-[2px] shrink-0 text-[#9FB366]">
+                            <IconCheck />
+                          </span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTAs — pushed to bottom */}
+                    <div className="mt-auto flex w-full items-center gap-2">
+                      <Link
+                        href="/contact"
+                        className="btn-trial-s pricing-btn-trial flex-1 inline-flex items-center justify-center rounded-full border border-[#9C6A46] bg-[#FBF8F1] font-semibold text-[#6B4220] transition-all"
+                        style={{ padding: isPrivate ? "7px 6px" : "9px 11px", fontSize: isPrivate ? "0.69rem" : "0.8rem" }}
+                      >
+                        {isAr ? "احجز تجربة" : "Book Trial"}
+                      </Link>
+                      <Link
+                        href="/contact"
+                        className="btn-sub-s pricing-btn-sub flex-1 inline-flex items-center justify-center rounded-full font-semibold text-[#F8F5EB] transition-all"
+                        style={{ padding: isPrivate ? "7px 6px" : "9px 11px", fontSize: isPrivate ? "0.69rem" : "0.8rem" }}
+                      >
+                        {isAr ? "اشترك" : "Subscribe"}
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="p-2.5 sm:p-3.5 bg-[#F7F4EE]">
+            <div className="mb-3 rounded-xl border border-[#E4D9C5] bg-[#FBF7EF] px-3.5 py-3 sm:px-4">
+              <h4 className="text-[14px] sm:text-[16px] font-extrabold text-[#2F433B]">
+                {isAr ? "جدول تسعير العائلة (لكل فرد)" : "Family Pricing Table (Per Person)"}
+              </h4>
+            </div>
+
+            <div className="hidden md:block overflow-hidden rounded-xl border border-[#DED3BD] bg-white">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-[#F4EFE4] text-[#2F433B]">
+                    <th className="px-4 py-3 text-start text-[12px] font-bold border-b border-[#E6DCCB]">
+                      {isAr ? "الساعات / الشهر" : "Hours / Month"}
+                    </th>
+                    <th className="px-4 py-3 text-start text-[12px] font-bold border-b border-[#E6DCCB]">
+                      {isAr ? "عضوان" : "2 Members"}
+                    </th>
+                    <th className="px-4 py-3 text-start text-[12px] font-bold border-b border-[#E6DCCB]">
+                      {isAr ? "خصم 20% (أول 3 أشهر)" : "20% OFF (First 3 Months)"}
+                    </th>
+                    <th className="px-4 py-3 text-start text-[12px] font-bold border-b border-[#E6DCCB]">
+                      {isAr ? "3 أعضاء" : "3 Members"}
+                    </th>
+                    <th className="px-4 py-3 text-start text-[12px] font-bold border-b border-[#E6DCCB]">
+                      {isAr ? "خصم 20%" : "20% OFF"}
+                    </th>
+                    <th className="px-4 py-3 text-start text-[12px] font-bold border-b border-[#E6DCCB]">
+                      {isAr ? "+4 أعضاء" : "4+ Members"}
+                    </th>
+                    <th className="px-4 py-3 text-start text-[12px] font-bold border-b border-[#E6DCCB]">
+                      {isAr ? "خصم 20%" : "20% OFF"}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {FAM_ROWS.map((row, idx) => (
+                    <tr key={row.hours} className={idx % 2 === 0 ? "bg-white" : "bg-[#FBF8F1]"}>
+                      <td className="px-4 py-3 border-b border-[#EEE5D6]">
+                        <p className="text-[13px] font-semibold text-[#2F433B]">
+                          {row.hours} {isAr ? "ساعات / شهر" : "Hours / Month"}
+                        </p>
+                      </td>
+                      <td className="px-4 py-3 border-b border-[#EEE5D6]">
+                        <span className="text-[12px] text-[#60746B] tabular-nums">{row.m2.regular}</span>
+                      </td>
+                      <td className="px-4 py-3 border-b border-[#EEE5D6]">
+                        <span className="text-[12px] font-bold text-[#8B6508] tabular-nums">🔥 {row.m2.discounted}</span>
+                      </td>
+                      <td className="px-4 py-3 border-b border-[#EEE5D6]">
+                        <span className="text-[12px] text-[#60746B] tabular-nums">{row.m3.regular}</span>
+                      </td>
+                      <td className="px-4 py-3 border-b border-[#EEE5D6]">
+                        <span className="text-[12px] font-bold text-[#8B6508] tabular-nums">🔥 {row.m3.discounted}</span>
+                      </td>
+                      <td className="px-4 py-3 border-b border-[#EEE5D6]">
+                        <span className="text-[12px] text-[#60746B] tabular-nums">{row.m4.regular}</span>
+                      </td>
+                      <td className="px-4 py-3 border-b border-[#EEE5D6]">
+                        <span className="text-[12px] font-bold text-[#8B6508] tabular-nums">🔥 {row.m4.discounted}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="grid grid-cols-1 gap-2.5 sm:gap-3 md:hidden">
+              {FAM_ROWS.map((row) => (
+                <article
+                  key={row.hours}
+                  className="rounded-xl border border-[#DED3BD] bg-white p-3 sm:p-4 shadow-[0_4px_14px_rgba(26,26,20,0.04)]"
+                >
+                  <div className="mb-3 flex items-center justify-between">
+                    <h4 className="text-[13px] sm:text-[14px] font-bold text-[#2F433B]">
+                      {row.hours} {isAr ? "ساعات / شهر" : "Hours / Month"}
+                    </h4>
+                    <span className="rounded-full border border-[#D4A017]/35 bg-[#FFF6DE] px-2 py-0.5 text-[10px] font-semibold text-[#8B6508]">
+                      {isAr ? "خطة عائلية" : "Family Plan"}
+                    </span>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="rounded-lg border border-[#ECE3D3] bg-[#FAF7F1] px-2.5 py-2">
+                      <p className="text-[11px] font-semibold text-[#2F433B]">{isAr ? "عضوان" : "2 Members"}</p>
+                      <div className="mt-1 flex items-baseline justify-between text-[12px]">
+                        <span className="text-[#60746B] tabular-nums">{row.m2.regular}</span>
+                        <span className="font-bold text-[#8B6508] tabular-nums">{row.m2.discounted}</span>
+                      </div>
+                    </div>
+
+                    <div className="rounded-lg border border-[#ECE3D3] bg-[#FAF7F1] px-2.5 py-2">
+                      <p className="text-[11px] font-semibold text-[#2F433B]">{isAr ? "3 أعضاء" : "3 Members"}</p>
+                      <div className="mt-1 flex items-baseline justify-between text-[12px]">
+                        <span className="text-[#60746B] tabular-nums">{row.m3.regular}</span>
+                        <span className="font-bold text-[#8B6508] tabular-nums">{row.m3.discounted}</span>
+                      </div>
+                    </div>
+
+                    <div className="rounded-lg border border-[#ECE3D3] bg-[#FAF7F1] px-2.5 py-2">
+                      <p className="text-[11px] font-semibold text-[#2F433B]">{isAr ? "+4 أعضاء" : "4+ Members"}</p>
+                      <div className="mt-1 flex items-baseline justify-between text-[12px]">
+                        <span className="text-[#60746B] tabular-nums">{row.m4.regular}</span>
+                        <span className="font-bold text-[#8B6508] tabular-nums">{row.m4.discounted}</span>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Included in all plans strip ── */}
+        <div className="border-t border-[#DCCFB6] px-4 sm:px-5 py-3.5 bg-[#F1EBDF]">
+          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#7E9189] mb-3">
+            {isAr ? "ضمان نبراس" : "The Nibras Guarantee"}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+            {includedItems.map(({ icon, en, ar }, gi) => (
+              <div key={`${activeTab}-${gi}`} className="flex items-center gap-2 text-[12.5px] text-[#43564E]">
+                <span className="shrink-0 text-[#B49B44]">{icon}</span>
+                {isAr ? ar : en}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Footer CTA ── */}
+        <div className="px-4 sm:px-5 py-4 bg-[#FBF8F1] border-t border-[#E1D7C3]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <p className="text-[12px] text-[#61746C]">
+              {isAr
+                ? "الأسعار المعروضة هي أسعار الإطلاق (خصم 30% لأول 3 أشهر)"
+                : "Prices shown are launch rates (30% off for first 3 months)"}
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold text-[#F2D58C]"
+              style={{ backgroundColor: brandGreen }}
+            >
+              {isAr ? "اشترك / استفسر" : "Subscribe / Enquire"}
+              <IconArrowRight />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Types (kept for INCLUDED_ITEMS below) ──────────────────────── */
+const INCLUDED_ITEMS: { icon: ReactNode; key: string }[] = [
+  { icon: <IconClock />,    key: "pricing.included.flexSchedule" },
+  { icon: <IconCalendar />, key: "pricing.included.reschedule" },
+  { icon: <IconBook />,     key: "pricing.included.materials" },
+  { icon: <IconChartBar />, key: "pricing.included.reports" },
+  { icon: <IconUsers />,    key: "pricing.included.community" },
+  { icon: <IconTarget />,   key: "pricing.included.plan" },
+];
+
+/* ─── Main Component ─────────────────────────────────────────────── */
+export default function PricingPageContent() {
+  const { locale, t } = useI18n();
+  const isAr = locale === "ar";
+  const brandGreen = "#254A3A";
+
+  const [heroReady, setHeroReady] = useState(false);
+  const packagesReveal = useReveal<HTMLElement>();
+  const includedReveal = useReveal<HTMLElement>();
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setHeroReady(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  const whatsappHref =
+    "https://wa.me/201099493640?text=" +
+    encodeURIComponent(
+      isAr
+        ? "مرحباً، أود الاستفسار عن باقات التعلّم في شبكة نبراس."
+        : "Hello, I'd like to ask about Nibras Network learning packages."
+    );
+
+  return (
+    <>
+      <style jsx global>{`
+        @keyframes pricingFadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .pfu { opacity: 0; transform: translateY(24px); }
+        .pfu-on { animation: pricingFadeUp 650ms cubic-bezier(.2,.8,.2,1) both; }
+        .pfu-d1 { animation-delay: 90ms; }
+        .pfu-d2 { animation-delay: 180ms; }
+        .pfu-d3 { animation-delay: 270ms; }
+        @keyframes shimmer {
+          0%   { background-position: -200% center; }
+          100% { background-position:  200% center; }
+        }
+        .launch-pill {
+          background: linear-gradient(90deg,
+            rgba(212,160,23,0.12) 0%,
+            rgba(242,213,140,0.28) 40%,
+            rgba(212,160,23,0.12) 100%
+          );
+          background-size: 200% auto;
+          animation: shimmer 4s linear infinite;
+        }
+        /* Section 2 tab/pkg styles */
+        .ps2-tab { transition: all 0.18s; }
+        .ps2-tab.active { background: #254A3A !important; color: #F2D58C !important; border-color: #254A3A !important; }
+        .ps2-tab:not(.active):hover { border-color: #B49B44; color: #254A3A; }
+        .pkg-btn { transition: all 0.18s; }
+        .pkg-btn.sel { background: #254A3A !important; color: #F2D58C !important; border-color: #254A3A !important; }
+        .pkg-btn:not(.sel):hover { border-color: #254A3A; color: #254A3A; }
+        .pkg-card-anim { animation: pkgFadeIn 0.22s ease; }
+        @keyframes pkgFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .pricing-tab-card {
+          transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+        .pricing-tab-card:hover {
+          transform: translateY(-1px);
+          border-color: #ccb998;
+          box-shadow: 0 10px 24px rgba(38, 33, 23, 0.1);
+        }
+        .pricing-btn-sub {
+          background: linear-gradient(90deg, #a8bf68 0%, #95ae56 100%);
+          box-shadow: 0 6px 14px rgba(128, 154, 70, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+        }
+        .pricing-btn-sub:hover {
+          filter: brightness(0.97);
+          transform: translateY(-0.5px);
+        }
+        .pricing-btn-trial:hover {
+          background: #f5eee4;
+        }
+        .pricing-perks-title {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+        }
+        .pricing-perks-title::before,
+        .pricing-perks-title::after {
+          content: "";
+          width: 30px;
+          height: 1px;
+          background: #d6cbb8;
+        }
+        .btn-sub-s { transition: opacity 0.18s, transform 0.18s; }
+        .btn-sub-s:hover { opacity: 0.95; }
+        .btn-trial-s:hover { background: rgba(37,74,58,0.06); }
+        .fam-tr:hover td { background: rgba(37,74,58,0.04); }
+        /* Section 1 (hero) card polish */
+        .s1-card { transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }
+        .s1-card:hover { transform: translateY(-2px); box-shadow: 0 18px 50px rgba(26,26,20,0.10); border-color: rgba(180,155,68,0.45); }
+        .s1-soft {
+          background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.72) 100%);
+          backdrop-filter: blur(8px);
+        }
+      `}</style>
+
+      {/* ══════════════════════════════════════════════
+          SECTION 1 — Hero / Payment Terms
+      ══════════════════════════════════════════════ */}
+      <section
+        className="relative w-full overflow-hidden bg-[#F7F5F0] py-16 md:py-24 px-4 sm:px-6"
+        dir={isAr ? "rtl" : "ltr"}
+      >
+        <div className="pointer-events-none absolute inset-0">
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 70% 40% at 50% 0%, rgba(180,155,80,0.12) 0%, transparent 70%)",
+            }}
+          />
+          <div
+            className="absolute -top-24 left-1/2 h-64 w-[42rem] -translate-x-1/2 rounded-full blur-3xl opacity-40"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(180,155,68,0.25), rgba(37,74,58,0.18), rgba(180,155,68,0.25))",
+            }}
+          />
+        </div>
+
+        <div className="relative max-w-6xl mx-auto">
+          {/* ── Header ── */}
+          <div
+            className={[
+              "pfu",
+              heroReady ? "pfu-on" : "",
+            ].join(" ")}
+          >
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="w-7 h-px bg-[#B49B44] opacity-70" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#B49B44]">
+                {isAr ? "الدفع والضمان" : "Payment & guarantee"}
+              </span>
+              <span className="w-7 h-px bg-[#B49B44] opacity-70" />
+            </div>
+
+            <h2 className="font-serif text-[clamp(28px,4.2vw,40px)] font-normal text-[#1A1A14] text-center mb-3">
+              {isAr ? (
+                <>
+                  فواتير <em className="italic text-[#B49B44]">واضحة</em> وبسيطة.
+                </>
+              ) : (
+                <>
+                  Clear, <em className="italic text-[#B49B44]">simple</em> billing.
+                </>
+              )}
+            </h2>
+            <p className="text-sm md:text-[15px] text-[#6F6F5C] text-center max-w-2xl mx-auto mb-10 md:mb-12 leading-relaxed">
+              {isAr
+                ? "بدون مفاجآت وبدون رسوم مخفية. كل التفاصيل المهمة قبل الاشتراك."
+                : "No surprises, no hidden fees. Everything important before you subscribe."}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] gap-7 lg:gap-10 lg:items-start">
+            {/* ── Left: Policy (soft glass) ── */}
+            <div
+              className={[
+                "pfu",
+                heroReady ? "pfu-on pfu-d1" : "",
+                "s1-card s1-soft rounded-2xl border border-[#B49B44]/20 shadow-[0_14px_50px_rgba(26,26,20,0.08)]",
+              ].join(" ")}
+            >
+              <div className="p-6 md:p-7">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#B49B44]">
+                      {isAr ? "سياسة الدفع" : "Payment policy"}
+                    </p>
+                    <h3 className="mt-1 font-serif text-[20px] text-[#1A1A14]">
+                      {isAr ? "قواعد واضحة من البداية" : "Clear rules, upfront"}
+                    </h3>
+                  </div>
+                  <div className="shrink-0 w-10 h-10 rounded-2xl bg-white/70 border border-[#B49B44]/20 flex items-center justify-center text-[#B49B44]">
+                    <IconPolicy />
+                  </div>
+                </div>
+
+                <div className="mt-5 space-y-3">
+                  {(isAr
+                    ? [
+                        { t: "الدفع الشهري مقدمًا لحجز مكانك.", i: "1" },
+                        { t: "يتم تأكيد الحجز بعد استلام الدفع فقط.", i: "2" },
+                        { t: "قد تُضاف رسوم المعاملات/الدفع حسب طريقة الدفع.", i: "3" },
+                      ]
+                    : [
+                        { t: "Monthly advance payment is required to secure your place.", i: "1" },
+                        { t: "Your seat is confirmed only after payment is received.", i: "2" },
+                        { t: "Transaction/processing fees may apply depending on payment method.", i: "3" },
+                      ]
+                  ).map((x) => (
+                    <div key={x.i} className="flex items-start gap-3 rounded-xl border border-[#B49B44]/15 bg-white/70 px-4 py-3">
+                      <span className="mt-0.5 shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#254A3A] text-[#F2D58C] text-[12px] font-bold">
+                        {x.i}
+                      </span>
+                      <p className="text-[13.5px] text-[#3D3D30] leading-relaxed">{x.t}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-5 flex items-start gap-3 rounded-xl border border-[#B49B44]/15 bg-white/70 px-4 py-3">
+                  <span className="text-[#B49B44] shrink-0 mt-0.5">
+                    <IconShieldCheck />
+                  </span>
+                  <p className="text-[13px] text-[#3D3D30] leading-relaxed">
+                    {isAr ? (
+                      <>
+                        كل عمليات الدفع <strong className="text-[#1A1A14] font-semibold">مؤمنة ومشفرة</strong> وبياناتك محمية.
+                      </>
+                    ) : (
+                      <>
+                        Payments are <strong className="text-[#1A1A14] font-semibold">secured &amp; encrypted</strong> and your data stays protected.
+                      </>
+                    )}
+                  </p>
+                </div>
+
+                <div className="mt-5">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6F6F5C]">
+                    {isAr ? "طرق الدفع" : "Payment methods"}
+                  </p>
+                  <div className="mt-2.5 flex flex-wrap gap-2">
+                    {[
+                      { key: "visa", label: "Visa" },
+                      { key: "mc", label: "Mastercard" },
+                      { key: "pp", label: "PayPal" },
+                      { key: "bt", label: isAr ? "تحويل بنكي" : "Bank transfer" },
+                    ].map((m) => (
+                      <span
+                        key={m.key}
+                        className="text-[11px] font-semibold text-[#254A3A] border border-[#254A3A]/15 rounded-full px-3 py-1 bg-white/70"
+                      >
+                        {m.label}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Right: Feature cards (new style) ── */}
+            <div
+              className={[
+                "pfu",
+                heroReady ? "pfu-on pfu-d2" : "",
+                "min-w-0 flex flex-col gap-4",
+              ].join(" ")}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 auto-rows-fr">
+                {[
+                  {
+                    icon: <IconBanknote />,
+                    label: isAr ? "الفوترة" : "Billing",
+                    tone: "soft",
+                    body: isAr ? (
+                      <>
+                        الدفع <strong className="text-[#1A1A14] font-semibold">شهرياً مقدمًا</strong> بالدولار.
+                        قد تُضاف <strong className="text-[#1A1A14] font-semibold">رسوم معالجة 3–4%</strong> حسب طريقة الدفع.
+                      </>
+                    ) : (
+                      <>
+                        <strong className="text-[#1A1A14] font-semibold">Monthly in advance</strong> billing in USD.
+                        A <strong className="text-[#1A1A14] font-semibold">3–4% processing fee</strong> may apply by method.
+                      </>
+                    ),
+                  },
+                  {
+                    icon: <IconTag />,
+                    label: isAr ? "عرض الإطلاق" : "Launch offer",
+                    tone: "gold",
+                    body: isAr ? (
+                      <>
+                        خصم <strong className="text-[#1A1A14] font-semibold">30%</strong> لأول{" "}
+                        <strong className="text-[#1A1A14] font-semibold">3 شهور</strong> فقط.
+                        يعود السعر العادي من الشهر الرابع.
+                      </>
+                    ) : (
+                      <>
+                        <strong className="text-[#1A1A14] font-semibold">30% off</strong> for the first{" "}
+                        <strong className="text-[#1A1A14] font-semibold">3 months</strong>.
+                        Regular pricing starts month 4.
+                      </>
+                    ),
+                  },
+                  {
+                    icon: <IconRefresh />,
+                    label: isAr ? "مرونة" : "Flexibility",
+                    tone: "soft",
+                    body: isAr ? (
+                      <>
+                        تغيير أو إلغاء الباقة بإشعار{" "}
+                        <strong className="text-[#1A1A14] font-semibold">7 أيام</strong> — بدون تعقيدات.
+                      </>
+                    ) : (
+                      <>
+                        Change or cancel with{" "}
+                        <strong className="text-[#1A1A14] font-semibold">7 days notice</strong> — no hassle.
+                      </>
+                    ),
+                  },
+                  {
+                    icon: <IconShieldCheck />,
+                    label: isAr ? "مدفوعات آمنة" : "Secure payments",
+                    tone: "soft",
+                    body: isAr ? (
+                      <>
+                        المدفوعات <strong className="text-[#1A1A14] font-semibold">مشفّرة</strong> وبياناتك محمية — ولا يتم مشاركة معلوماتك.
+                      </>
+                    ) : (
+                      <>
+                        <strong className="text-[#1A1A14] font-semibold">Encrypted</strong> payments and protected data — never shared.
+                      </>
+                    ),
+                  },
+                ].map((card, i) => (
+                  <div
+                    key={i}
+                    className={[
+                      "s1-card rounded-2xl border p-6",
+                      card.tone === "gold"
+                        ? "bg-[#FFFBEF] border-[#B49B44]/45 shadow-[0_14px_50px_rgba(180,155,68,0.10)]"
+                        : "s1-soft border-[#B49B44]/20 shadow-[0_14px_50px_rgba(26,26,20,0.08)]",
+                    ].join(" ")}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div
+                        className={[
+                          "shrink-0 w-11 h-11 rounded-2xl border flex items-center justify-center",
+                          card.tone === "gold"
+                            ? "bg-white border-[#B49B44]/25 text-[#B49B44]"
+                            : "bg-white/70 border-[#B49B44]/20 text-[#254A3A]",
+                        ].join(" ")}
+                      >
+                        {card.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6F6F5C]">
+                          {card.label}
+                        </p>
+                        <p className="mt-2 text-[13.5px] text-[#3D3D30] leading-relaxed">
+                          {card.body}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Money-Back — new banner style */}
+              <div className="s1-card rounded-2xl border border-[#B49B44]/35 bg-[#1A1A14] px-6 py-4 shadow-[0_18px_60px_rgba(26,26,20,0.14)]">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="shrink-0 w-10 h-10 rounded-2xl bg-[#B49B44]/15 border border-[#B49B44]/30 flex items-center justify-center text-[#B49B44]">
+                      <IconShieldCheck />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#B49B44]">
+                        {isAr ? "ضمان استرداد" : "Money-back guarantee"}
+                      </p>
+                      <p className="mt-1 text-[13.5px] text-[#C8C4B0] leading-relaxed">
+                        {isAr ? (
+                          <>
+                            استرداد <strong className="text-[#F0E8CC] font-semibold">100%</strong> بعد أول جلسة لو مش مناسب لك.
+                          </>
+                        ) : (
+                          <>
+                            <strong className="text-[#F0E8CC] font-semibold">100% refund</strong> after your first session if it&apos;s not a fit.
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="sm:ms-auto">
+                    <span className="inline-flex text-[11px] font-bold uppercase tracking-wide bg-[#B49B44]/20 text-[#B49B44] border border-[#B49B44]/30 px-3 py-1.5 rounded-full whitespace-nowrap">
+                      {isAr ? "بدون مخاطرة" : "Zero risk"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* ── CTA Strip ── */}
+              <div
+                className={[
+                  "pfu",
+                  heroReady ? "pfu-on pfu-d3" : "",
+                  "mt-2 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white border border-[#B49B44]/20 rounded-2xl px-5 py-4",
+                ].join(" ")}
+              >
+                <p className="text-[13px] text-[#3D3D30] leading-snug text-center sm:text-left">
+                  {isAr ? "جاهز تبدأ؟" : "Ready to start?"}{" "}
+                  <span className="text-[#1A1A14] font-semibold">
+                    {isAr ? "أول جلسة قابلة للاسترداد بالكامل." : "Your first session is fully refundable."}
+                  </span>
+                </p>
+                <div className="flex items-center gap-2.5">
+                  <Link
+                    href="/book"
+                    className="shrink-0 inline-flex items-center gap-2 bg-[#1A1A14] hover:bg-[#2a2a1e] text-[#F0E8CC] text-[13px] font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-[0_4px_16px_rgba(26,26,20,0.25)] hover:-translate-y-0.5 whitespace-nowrap"
+                  >
+                    {isAr ? "احجز تجربة مجانية" : "Book free trial"}
+                    <IconArrowRight />
+                  </Link>
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-trial-s shrink-0 inline-flex items-center gap-2 border border-[#B49B44]/35 bg-[#FBF8EE] text-[#1A1A14] text-[13px] font-semibold px-4 py-2.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap"
+                  >
+                    <span className="text-[#B49B44]">
+                      <IconBrandWhatsapp />
+                    </span>
+                    {isAr ? "اسأل على واتساب" : "Ask on WhatsApp"}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* ══════════════════════════════════════════════
+          SECTION 2 — Tabbed Pricing
+      ══════════════════════════════════════════════ */}
+      <section
+        ref={packagesReveal.ref}
+        className="relative bg-[#F5F0E8] py-16 md:py-24 px-4 sm:px-6 -mt-1"
+      >
+        <div className="max-w-7xl mx-auto">
+
+          {/* Header */}
+          <header className={`text-center mb-10 transition-all duration-700 ease-out ${
+            packagesReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#B49B44] mb-2">
+              {isAr ? "اختر خطتك" : "Choose your plan"}
+            </p>
+            <h2 className="font-serif text-3xl md:text-[2.4rem] font-bold mb-3" style={{ color: brandGreen }}>
+              {t("pricing.packages.title")}
+            </h2>
+            <p className="text-[#4a5c54] text-sm md:text-base max-w-xl mx-auto leading-relaxed mb-5">
+              {t("pricing.packages.subtitle")}
+            </p>
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#D4A017]/40 bg-[#FDFAF4] px-5 py-2 text-xs sm:text-sm font-semibold text-[#8B6508] shadow-sm">
+              <IconSparkles />
+              {t("pricing.packages.discountPill")}
+            </span>
+            <div className="mx-auto mt-7 w-14 h-[3px] rounded-full bg-gradient-to-r from-[#D4A017] to-[#B8860B]" />
+          </header>
+
+          <PricingTabs
+            isAr={isAr}
+            brandGreen={brandGreen}
+            packagesVisible={packagesReveal.visible}
+          />
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════
+          SECTION 3 — FAQs
+      ══════════════════════════════════════════════ */}
+      <section className="bg-[#F7F5F0] py-16 md:py-24 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto" dir={isAr ? "rtl" : "ltr"}>
+          <header className="text-center mb-10 md:mb-12">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#B49B44] mb-2">
+              Pricing &amp; Packages
+            </p>
+            <h2 className="font-serif text-3xl md:text-[2.4rem] font-bold mb-3" style={{ color: brandGreen }}>
+              FAQs
+            </h2>
+            <p className="text-[#4a5c54] text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+              Quick answers about subscriptions, discounts, payments, and flexibility.
+            </p>
+            <div className="mx-auto mt-7 w-14 h-[3px] rounded-full bg-gradient-to-r from-[#D4A017] to-[#B8860B]" />
+          </header>
+
+          <div className="space-y-3">
+            {[
+              {
+                q: "How do your monthly packages work?",
+                a: <>Our programs operate on a <em className="italic">monthly subscription basis</em>. You choose the number of hours per month that fits your goals, and your schedule is reserved once payment is completed.</>,
+              },
+              {
+                q: "Can I choose the session duration?",
+                a: (
+                  <>
+                    Yes. You can divide your monthly hours into:
+                    <ul className="mt-2 space-y-1">
+                      {["30-minute sessions", "45-minute sessions", "60-minute sessions"].map((s) => (
+                        <li key={s} className="flex items-start gap-2">
+                          <span className="mt-[7px] shrink-0 w-1.5 h-1.5 rounded-full bg-[#B49B44] opacity-80" />
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-2">This allows flexibility for children, adults, and busy families.</p>
+                  </>
+                ),
+              },
+              {
+                q: "Is there a discount for new students?",
+                a: <>Yes. All new students receive a <em className="italic">30% launch discount for the first 3 months only</em>. After the third month, regular pricing applies automatically.</>,
+              },
+              {
+                q: "Do you offer family discounts?",
+                a: <>Yes. Families who enroll together benefit from <em className="italic">special reduced hourly rates per person</em>. This is designed to encourage a Qur'an-centered home learning environment.</>,
+              },
+              {
+                q: "Are there any hidden fees?",
+                a: <>No. We believe in full transparency. There are <em className="italic">no hidden charges or surprise fees</em>. Only standard transaction/processing fees (3–4%) may apply depending on your payment method.</>,
+              },
+              {
+                q: "When is payment due?",
+                a: <>Payment is required <em className="italic">monthly in advance</em> to confirm and secure your class schedule.</>,
+              },
+              {
+                q: "What payment methods do you accept?",
+                a: (
+                  <>
+                    We accept:
+                    <ul className="mt-2 space-y-1">
+                      {["Visa / Mastercard", "PayPal", "Bank Transfer"].map((s) => (
+                        <li key={s} className="flex items-start gap-2">
+                          <span className="mt-[7px] shrink-0 w-1.5 h-1.5 rounded-full bg-[#B49B44] opacity-80" />
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-2">All payments are processed securely.</p>
+                  </>
+                ),
+              },
+              {
+                q: "What happens after the 3-month discount ends?",
+                a: <>Starting from <em className="italic">Month 4</em>, your plan continues at the regular published rate. You will receive a reminder before any billing adjustment.</>,
+              },
+              {
+                q: "Can I upgrade or change my package?",
+                a: <>Yes. You may upgrade, downgrade, or adjust your package with <em className="italic">7 days' notice</em>, based on availability.</>,
+              },
+              {
+                q: "Is there a refund policy?",
+                a: <>Yes. We offer a <em className="italic">100% satisfaction guarantee for your first session</em>. If you're not satisfied, you may request a full refund for that session.</>,
+              },
+            ].map((item) => (
+              <details
+                key={item.q}
+                className="group rounded-2xl border border-[#D4A017]/15 bg-white/80 shadow-sm overflow-hidden"
+              >
+                <summary className="cursor-pointer list-none px-5 sm:px-6 py-4 flex items-start justify-between gap-4">
+                  <span className="font-serif text-[15px] sm:text-[16px] font-bold leading-snug" style={{ color: brandGreen }}>
+                    {item.q}
+                  </span>
+                  <span
+                    className="shrink-0 mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#D4A017]/25 bg-[#FBF8EE] text-[#8B6508] transition-transform duration-200 rotate-90 group-open:-rotate-90"
+                    aria-hidden
+                  >
+                    <IconArrowRight />
+                  </span>
+                </summary>
+                <div className="px-5 sm:px-6 pb-5 -mt-1 text-[13.5px] sm:text-[14px] text-[#3D3D30] leading-relaxed">
+                  {item.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════
+          SECTION 4 — What's included (overview)
+      ══════════════════════════════════════════════ */}
+      <section
+        ref={includedReveal.ref}
+        className="bg-[#EDE7D9] py-16 md:py-24 px-4 sm:px-6"
+      >
+        <div className="max-w-4xl mx-auto">
+          <header className={`text-center mb-12 md:mb-14 transition-all duration-700 ease-out ${
+            includedReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}>
+            <h2 className="font-serif text-3xl md:text-[2.4rem] font-bold mb-3" style={{ color: brandGreen }}>
+              {t("pricing.included.title")}
+            </h2>
+            <p className="text-[#4a5c54] text-sm md:text-base leading-relaxed max-w-xl mx-auto">
+              {t("pricing.included.subtitle")}
+            </p>
+            <div className="mx-auto mt-8 w-14 h-[3px] rounded-full bg-gradient-to-r from-[#D4A017] to-[#B8860B]" />
+          </header>
+
+          <ul className="grid sm:grid-cols-2 gap-3 mb-14">
+            {INCLUDED_ITEMS.map(({ icon, key }, i) => (
+              <li
+                key={key}
+                className={`flex items-start gap-4 rounded-xl border border-[#D4A017]/12 bg-white/70 px-5 py-4 ${
+                  includedReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                }`}
+                style={{
+                  transitionProperty: "opacity, transform",
+                  transitionDuration: "700ms",
+                  transitionTimingFunction: "ease-out",
+                  transitionDelay: includedReveal.visible ? `${80 + i * 60}ms` : "0ms",
+                }}
+              >
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: "rgba(37,74,58,0.07)", color: brandGreen }}>
+                  {icon}
+                </span>
+                <div className="flex items-start gap-2.5 min-w-0">
+                  <span className="mt-[3px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white" style={{ backgroundColor: brandGreen }}>
+                    <IconCheck />
+                  </span>
+                  <span className="text-[#2d3e36] text-sm sm:text-[15px] leading-relaxed">
+                    {t(key)}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* Contact card */}
+          <div
+            className={`relative overflow-hidden rounded-2xl p-8 md:p-10 shadow-[0_24px_60px_rgba(28,58,46,0.28)] ring-1 ring-[#B8860B]/20 ${
+              includedReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+            style={{
+              transitionProperty: "opacity, transform",
+              transitionDuration: "700ms",
+              transitionTimingFunction: "ease-out",
+              transitionDelay: includedReveal.visible ? "240ms" : "0ms",
+              background: "linear-gradient(160deg, rgba(255,252,245,1) 0%, rgba(251,248,238,1) 55%, rgba(237,231,217,1) 100%)",
+            }}
+          >
+            <div className="pointer-events-none absolute -top-12 -right-12 h-52 w-52 rounded-full bg-[#D4A017]/[0.09] blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-10 -left-10 h-52 w-52 rounded-full bg-[#B49B44]/[0.08] blur-3xl" />
+
+            <h3 className="font-serif text-xl md:text-2xl font-bold mb-1.5 text-center" style={{ color: brandGreen }}>
+              {t("pricing.contact.title")}
+            </h3>
+            <p className="text-[#4a5c54] text-sm text-center mb-8">
+              {t("pricing.launch.badge")}
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-stretch justify-center gap-4">
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex-1 flex flex-col items-center gap-2.5 rounded-xl border border-[#D4A017]/25 px-5 py-5 text-sm font-semibold transition-all duration-200 hover:shadow-lg"
+                style={{ backgroundColor: brandGreen }}
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#D4A017]/15 text-[#F2D58C] group-hover:bg-[#D4A017]/25 transition-colors">
+                  <IconBrandWhatsapp />
+                </span>
+                <span className="text-[#8bbfaa] text-xs font-medium">{t("pricing.contact.whatsappLabel")}</span>
+                <span className="text-[#F2D58C] font-bold tabular-nums">+201099493640</span>
+              </a>
+
+              <a
+                href="mailto:nibrasnetwork55@gmail.com"
+                className="group flex-1 flex flex-col items-center gap-2.5 rounded-xl border border-[#D4A017]/20 bg-white/70 hover:bg-white px-5 py-5 text-sm font-semibold transition-all duration-200 hover:shadow-lg"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#D4A017]/10 text-[#8B6508] group-hover:bg-[#D4A017]/20 transition-colors">
+                  <IconMail />
+                </span>
+                <span className="text-[#6b7d75] text-xs font-medium">{t("pricing.contact.emailLabel")}</span>
+                <span className="break-all text-center" style={{ color: brandGreen }}>
+                  nibrasnetwork55@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
