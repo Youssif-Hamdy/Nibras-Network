@@ -3,6 +3,13 @@ import type { Locale } from "@/lib/i18n/types";
 const en: Record<string, string> = {
   "nav.home": "Home",
   "nav.blog": "Blog",
+  "blog.kicker": "Blog",
+  "blog.heroCta": "Book your free trial",
+  "blog.topicsTitle": "Topics in this guide",
+  "blog.topicsSubtitle":
+    "Ten questions parents ask — clear answers in one place.",
+  "blog.close": "Close",
+  "blog.readMore": "Read more",
   "nav.contact": "Contact",
   "nav.testimonials": "Testimonials & Reviews",
   "nav.testimonialsNarrow": "Reviews",
@@ -41,6 +48,9 @@ const en: Record<string, string> = {
   "more.faqs": "FAQs",
   "more.ebooks": "Free E-Books",
   "more.howItWorks": "How it works",
+  "more.teachingMethodology": "Teaching Methodology",
+  "more.policiesTerms": "Policies & Terms",
+  "more.policiesIntro": "Choose the document you would like to read.",
   "more.privacy": "Privacy Policy",
   "more.terms": "Terms & Conditions",
 
@@ -181,6 +191,13 @@ const en: Record<string, string> = {
 const ar: Record<string, string> = {
   "nav.home": "الرئيسية",
   "nav.blog": "المدونة",
+  "blog.kicker": "المدونة",
+  "blog.heroCta": "احجز تجربتك المجانية",
+  "blog.topicsTitle": "موضوعات هذا الدليل",
+  "blog.topicsSubtitle":
+    "عشرة أسئلة يطرحها الآباء — إجابات واضحة في مكان واحد.",
+  "blog.close": "إغلاق",
+  "blog.readMore": "اقرأ المزيد",
   "nav.contact": "اتصل بنا",
   "nav.testimonials": "آراء الطلاب والتقييمات",
   "nav.testimonialsNarrow": "مراجعات",
@@ -219,6 +236,9 @@ const ar: Record<string, string> = {
   "more.faqs": "الأسئلة الشائعة",
   "more.ebooks": "كتب إلكترونية مجانية",
   "more.howItWorks": "كيف نعمل",
+  "more.teachingMethodology": "منهجية التدريس",
+  "more.policiesTerms": "السياسات والشروط",
+  "more.policiesIntro": "اختر المستند الذي تريد قراءته.",
   "more.privacy": "سياسة الخصوصية",
   "more.terms": "الشروط والأحكام",
 

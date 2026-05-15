@@ -53,7 +53,7 @@ export const MEGA_BY_SUBJECT: SubjectColumn[] = [
   {
     title: "Islamic Studies",
     icon: "Landmark",
-    count: 6,
+    count: 7,
     links: [
       { label: "Islamic General (Comprehensive)",   href: "/courses/islamic-general"      },
       { label: "Aqeedah (Islamic Creed)",           href: "/courses/aqeedah"              },
@@ -61,6 +61,7 @@ export const MEGA_BY_SUBJECT: SubjectColumn[] = [
       { label: "Hadith Studies",                    href: "/courses/hadith-studies"       },
       { label: "Seerah (Prophet's Biography)",      href: "/courses/seerah"               },
       { label: "Tafsir (Quran Interpretation)",     href: "/courses/tafsir-islamic"       },
+      { label: "New Muslims Track (FREE 3 months)", href: "/courses/new-muslims-track"    },
     ],
   },
   {
@@ -77,9 +78,8 @@ export const MEGA_BY_SUBJECT: SubjectColumn[] = [
   {
     title: "Special Programs",
     icon: "Briefcase",
-    count: 6,
+    count: 5,
     links: [
-      { label: "New Muslims Track (FREE 3 months)", href: "/courses/new-muslims-track"    },
       { label: "Family Packages (Save 30%)",        href: "/courses/family-packages"      },
       { label: "Special Needs Support",             href: "/courses/special-needs-support"},
       { label: "Ijazah Pathway (Advanced)",         href: "/courses/ijazah-pathway"       },
