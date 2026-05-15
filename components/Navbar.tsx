@@ -84,12 +84,11 @@ function buildPrimaryNav(t: (key: string) => string): NavItem[] {
 function buildMoreNav(t: (key: string) => string): SimpleLink[] {
   return [
     { label: t("more.studentAchievements"), href: "/student-achievements" },
-    { label: t("more.editorial"),           href: "/editorial-policy" },
-    { label: t("more.faqs"),                href: "/faqs" },
-    { label: t("more.ebooks"),              href: "/ebooks" },
-    { label: t("more.howItWorks"),          href: "/how-it-works" },
-    { label: t("more.privacy"),             href: "/privacy" },
-    { label: t("more.terms"),               href: "/terms" },
+    { label: t("more.faqs"), href: "/faqs" },
+    { label: t("more.ebooks"), href: "/ebooks" },
+    { label: t("more.howItWorks"), href: "/how-it-works" },
+    { label: t("more.teachingMethodology"), href: "/teaching-methodology" },
+    { label: t("more.policiesTerms"), href: "/policies" },
   ];
 }
 
@@ -455,7 +454,7 @@ export default function Navbar() {
 
             {/* CTA */}
             <Link
-              href="/contact"
+              href="/book-trial"
               className="bg-[#1C3A2E] text-[#F5F0E8] text-[10px] lg:text-[11px] xl:text-[13px] font-semibold px-3 lg:px-4 xl:px-5 py-2 xl:py-2.5 rounded-full hover:bg-[#2D5A3D] hover:scale-[1.04] transition-all duration-200 shadow-md shadow-[#1C3A2E]/20 whitespace-nowrap tracking-wide flex items-center gap-1 flex-shrink-0"
             >
               {t("nav.bookTrial")}
@@ -514,7 +513,7 @@ export default function Navbar() {
             />
           ))}
           <Link
-            href="/contact"
+            href="/book-trial"
             onClick={() => setMenuOpen(false)}
             className="mt-4 bg-[#1C3A2E] text-[#F5F0E8] text-sm font-semibold px-5 py-3 rounded-full text-center hover:bg-[#2D5A3D] transition-colors tracking-wide flex items-center justify-center gap-2"
           >

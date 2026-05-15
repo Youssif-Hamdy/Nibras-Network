@@ -9,14 +9,26 @@ export function useReveal<T extends HTMLElement>() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    let timeoutId: number | undefined;
+
     const obs = new IntersectionObserver(
       ([e]) => {
-        if (e?.isIntersecting) setVisible(true);
+        if (!e?.isIntersecting) return;
+        obs.disconnect();
+        // Defer: some browsers fire this synchronously from `observe()`,
+        // which can overlap React commit / Strict Mode remounts.
+        timeoutId = window.setTimeout(() => {
+          setVisible(true);
+        }, 0);
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
     obs.observe(el);
-    return () => obs.disconnect();
+    return () => {
+      obs.disconnect();
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    };
   }, []);
 
   return { ref, visible };

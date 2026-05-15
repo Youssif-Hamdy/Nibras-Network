@@ -88,3 +88,24 @@ body::-webkit-scrollbar-corner,
 .whatsapp-float:hover {
   animation: none;
 }
+
+/* Policies page — hero icon */
+@keyframes policies-hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.policies-hero-icon {
+  animation: policies-hero-float 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .policies-hero-icon {
+    animation: none;
+  }
+}

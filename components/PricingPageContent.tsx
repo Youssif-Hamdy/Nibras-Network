@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import { useI18n } from "@/components/LocaleProvider";
+import { PRIVATE_PKGS, GROUP_PKGS, FAM_ROWS } from "@/lib/pricing/packageTiers";
 
 /* ─── Inline SVG icons (Tabler outline style) ───────────────────── */
 const IconClock = () => (
@@ -122,111 +123,6 @@ const IconPolicy = () => (
     <path d="M14 2v6h6M10 13h4M10 17h4M8 13h.01M8 17h.01" />
   </svg>
 );
-
-/* ─── Pricing Section 2 Data ─────────────────────────────────────── */
-const PRIVATE_PKGS = [
-  {
-    name: { en: "Starter", ar: "المبتدئ" },
-    hours: 4,
-    launch: "$22.40", regular: "$32.00",
-    bestFor: { en: "Absolute beginners", ar: "المبتدئون تماماً" },
-    features: {
-      en: ["Build core foundations at your own pace", "Basic step-by-step progress tracking"],
-      ar: ["بناء الأسس الجوهرية بالوتيرة المناسبة", "تتبع التقدم خطوة بخطوة", "مدرس أصيل معتمد", "جدولة مرنة للجلسات"],
-    },
-    popular: false,
-  },
-  {
-    name: { en: "Beginner", ar: "المبتدئ +" },
-    hours: 6,
-    launch: "$33.60", regular: "$48.00",
-    bestFor: { en: "Busy schedules", ar: "الجداول المزدحمة" },
-    features: {
-      en: ["Access to exclusive extra practice files", "Direct out-of-class messaging with tutor"],
-      ar: ["مواد تدريبية إضافية", "مراسلة مباشرة مع المعلم", "مدرس أصيل معتمد", "جدولة مرنة للجلسات"],
-    },
-    popular: false,
-  },
-  {
-    name: { en: "Growth", ar: "النمو" },
-    hours: 8,
-    launch: "$44.80", regular: "$64.00",
-    bestFor: { en: "Consistent progress", ar: "التقدم المستمر" },
-    features: {
-      en: ["100% personalized study plan", "Detailed weekly teacher feedback reports"],
-      ar: ["خطة دراسية شخصية", "تقارير أسبوعية من المعلم", "مدرس أصيل معتمد", "جدولة مرنة للجلسات"],
-    },
-    popular: true,
-  },
-  {
-    name: { en: "Accelerated", ar: "المتسارع" },
-    hours: 10,
-    launch: "$52.50", regular: "$75.00",
-    bestFor: { en: "Goal-oriented learners", ar: "المتعلمون الهادفون" },
-    features: {
-      en: ["Priority scheduling and VIP teacher matching", "Advanced goal-setting and milestone tracking"],
-      ar: ["جدولة بالأولوية", "تتبع الإنجازات المتقدمة", "مدرس أصيل معتمد", "تجربة تعليمية شخصية"],
-    },
-    popular: false,
-  },
-  {
-    name: { en: "Intensive", ar: "المكثف" },
-    hours: 12,
-    launch: "$63.00", regular: "$90.00",
-    bestFor: { en: "Rapid fluency seekers", ar: "الساعون للطلاقة السريعة" },
-    features: {
-      en: ["Deep immersion curriculum for rapid fluency", "Premium digital library access"],
-      ar: ["منهج انغماس عميق", "وصول لمكتبة رقمية متميزة", "مدرس أصيل معتمد", "تتبع التقدم والتقارير"],
-    },
-    popular: false,
-  },
-];
-
-const GROUP_PKGS = [
-  {
-    name: { en: "Group Starter", ar: "المجموعة المبتدئة" },
-    hours: 4,
-    launch: "$14.00", regular: "$20.00",
-    bestFor: { en: "Social learning on a budget", ar: "التعلم الاجتماعي باقتصاد" },
-    features: {
-      en: ["Interactive social learning", "Fixed schedule and standard curriculum"],
-      ar: ["تعلم جماعي تفاعلي", "جدول أسبوعي ثابت", "مجموعات صغيرة (3–5 طلاب)", "مدرس أصيل معتمد"],
-    },
-    popular: false,
-  },
-  {
-    name: { en: "Group Growth", ar: "نمو المجموعة" },
-    hours: 8,
-    launch: "$28.00", regular: "$40.00",
-    bestFor: { en: "Consistent community routine", ar: "الروتين المجتمعي المنتظم" },
-    features: {
-      en: ["Healthy peer motivation", "Collaborative reading and discussions"],
-      ar: ["تحفيز الأقران والنقاشات", "أنشطة تعاونية", "تتبع التقدم الشهري", "مدرس أصيل معتمد"],
-    },
-    popular: true,
-  },
-  {
-    name: { en: "Group Intensive", ar: "المجموعة المكثفة" },
-    hours: 12,
-    launch: "$42.00", regular: "$60.00",
-    bestFor: { en: "Active and fast-paced learning", ar: "المتعلمون السريعون" },
-    features: {
-      en: ["Fast-paced group study", "Maximum community engagement"],
-      ar: ["تدريب مكثف جماعي", "أقصى تفاعل كلامي", "دروس أسبوعية منظمة", "مدرس أصيل معتمد"],
-    },
-    popular: false,
-  },
-];
-
-const FAM_ROWS = [
-  { hours: 8,  m2: { regular: "$60.00", discounted: "$48.00" }, m3: { regular: "$56.00", discounted: "$44.80" }, m4: { regular: "$52.00", discounted: "$41.60" } },
-  { hours: 10, m2: { regular: "$75.00", discounted: "$60.00" }, m3: { regular: "$70.00", discounted: "$56.00" }, m4: { regular: "$65.00", discounted: "$52.00" } },
-  { hours: 12, m2: { regular: "$90.00", discounted: "$72.00" }, m3: { regular: "$84.00", discounted: "$67.20" }, m4: { regular: "$78.00", discounted: "$62.40" } },
-  { hours: 14, m2: { regular: "$105.00", discounted: "$84.00" }, m3: { regular: "$98.00", discounted: "$78.40" }, m4: { regular: "$91.00", discounted: "$72.80" } },
-  { hours: 16, m2: { regular: "$120.00", discounted: "$96.00" }, m3: { regular: "$112.00", discounted: "$89.60" }, m4: { regular: "$104.00", discounted: "$83.20" } },
-  { hours: 18, m2: { regular: "$135.00", discounted: "$108.00" }, m3: { regular: "$126.00", discounted: "$100.80" }, m4: { regular: "$117.00", discounted: "$93.60" } },
-  { hours: 20, m2: { regular: "$150.00", discounted: "$120.00" }, m3: { regular: "$140.00", discounted: "$112.00" }, m4: { regular: "$130.00", discounted: "$104.00" } },
-];
 
 const PRIVATE_INCLUDED = [
   { icon: <IconClock />,        en: "Flexible sessions: 30, 45, or 60 minutes.", ar: "جلسات مرنة: 30 أو 45 أو 60 دقيقة." },
@@ -463,11 +359,13 @@ function PricingTabs({
   ];
 
   const groupIcons = [
-    <IconUsers key="u1" />,
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden key="award">
+    <IconUsers key="g0" />,
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden key="g1">
       <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
     </svg>,
-    <IconTarget key="tg1" />,
+    <IconTarget key="g2" />,
+    <IconBook key="g3" />,
+    <IconChartBar key="g4" />,
   ];
 
   return (
@@ -529,16 +427,11 @@ function PricingTabs({
       <div className="overflow-hidden rounded-b-2xl border border-[#DCCFB6] bg-[#F7F4EE]">
         {activeTab !== "family" ? (
           <div
-            className={`grid grid-cols-1 sm:grid-cols-2 ${
-              activeTab === "private"
-                ? "lg:grid-cols-3 xl:grid-cols-5"
-                : "md:grid-cols-3"
-            } gap-2.5 p-2.5 sm:gap-3 sm:p-3 bg-[#F7F4EE]`}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2.5 p-2.5 sm:gap-3 sm:p-3 bg-[#F7F4EE]"
           >
             {currentPlans.map((pkg, i) => {
               const icons = activeTab === "group" ? groupIcons : planIcons;
               const pkgIcon = icons[i % icons.length];
-              const isPrivate = activeTab === "private";
 
               return (
                 <article
@@ -560,11 +453,11 @@ function PricingTabs({
                     </div>
                   )}
 
-                  <div className={`flex flex-col flex-1 items-center text-center ${isPrivate ? "px-2.5 pt-4 pb-3.5 sm:px-3 sm:pt-5 sm:pb-4" : "px-3 pt-5 pb-4 sm:px-4 sm:pt-6 sm:pb-5"}`}>
+                  <div className="flex flex-col flex-1 items-center text-center px-2.5 pt-4 pb-3.5 sm:px-3 sm:pt-5 sm:pb-4">
 
                     {/* Icon badge */}
                     <div className="mb-3 inline-flex items-center justify-center rounded-xl border border-[#CFBF9A] bg-[#F5F2EA] text-[#B38A55] shadow-[inset_0_1px_0_rgba(255,255,255,0.75),0_4px_10px_rgba(38,33,23,0.08)]"
-                        style={{ width: isPrivate ? 40 : 48, height: isPrivate ? 40 : 48 }}
+                        style={{ width: 40, height: 40 }}
                     >
                       {pkgIcon}
                     </div>
@@ -572,13 +465,13 @@ function PricingTabs({
                     {/* Name + hours */}
                     <h3
                       className="font-extrabold leading-tight tracking-[-0.01em] text-[#3A2414]"
-                      style={{ fontSize: isPrivate ? "clamp(0.78rem, 1.25vw, 0.95rem)" : "1rem" }}
+                      style={{ fontSize: "clamp(0.78rem, 1.25vw, 0.95rem)" }}
                     >
                       {isAr ? pkg.name.ar : pkg.name.en}
                     </h3>
                     <p
                       className="mt-0.5 font-semibold text-[#7A6A55]"
-                      style={{ fontSize: isPrivate ? "0.68rem" : "0.76rem" }}
+                      style={{ fontSize: "0.68rem" }}
                     >
                       {pkg.hours} {isAr ? "ساعات / شهر" : "Hours / Mo."}
                     </p>
@@ -586,7 +479,7 @@ function PricingTabs({
                     {/* Best for */}
                     <p
                       className="mt-1.5 font-serif italic text-[#6A6057]"
-                      style={{ fontSize: isPrivate ? "0.72rem" : "0.82rem" }}
+                      style={{ fontSize: "0.72rem" }}
                     >
                       {isAr ? "الأنسب لـ" : "Best For"}: {isAr ? pkg.bestFor.ar : pkg.bestFor.en}
                     </p>
@@ -598,7 +491,7 @@ function PricingTabs({
                     <p
                       className="text-[#9aada6] tabular-nums"
                       style={{
-                        fontSize: isPrivate ? "1rem" : "0.9rem",
+                        fontSize: "1rem",
                         color: "#8A9A5B"
                       }}                    >
                       <span className="line-through">{pkg.regular}</span>
@@ -610,17 +503,16 @@ function PricingTabs({
                       <p className="flex items-end justify-center gap-1 text-[#4B2B11] tabular-nums">
                         <span
                           className="font-black leading-none tracking-[-0.015em]"
-                          style={{ fontSize: isPrivate ? "clamp(1.25rem, 2.6vw, 1.8rem)" : "2.1rem" }}
+                          style={{ fontSize: "clamp(1.25rem, 2.6vw, 1.8rem)" }}
                         >
                           {pkg.launch}
                         </span>
                         <span
                           className="mb-1 font-semibold"
-                          style={{ fontSize: isPrivate ? "0.68rem" : "0.82rem" }}
+                          style={{ fontSize: "0.68rem" }}
                         >
                           / {isAr ? "شهر" : "mo"}
                         </span>
-                        <span className="mb-1 text-[14px]">🔥</span>
                       </p>
                     </div>
 
@@ -640,7 +532,7 @@ function PricingTabs({
                         <li
                           key={feature}
                           className="flex items-start gap-1.5 leading-snug text-[#625547]"
-                          style={{ fontSize: isPrivate ? "0.7rem" : "0.8rem" }}
+                          style={{ fontSize: "0.7rem" }}
                         >
                           <span className="mt-[2px] shrink-0 text-[#9FB366]">
                             <IconCheck />
@@ -655,14 +547,14 @@ function PricingTabs({
                       <Link
                         href="/contact"
                         className="btn-trial-s pricing-btn-trial flex-1 inline-flex items-center justify-center rounded-full border border-[#9C6A46] bg-[#FBF8F1] font-semibold text-[#6B4220] transition-all"
-                        style={{ padding: isPrivate ? "7px 6px" : "9px 11px", fontSize: isPrivate ? "0.69rem" : "0.8rem" }}
+                        style={{ padding: "7px 6px", fontSize: "0.69rem" }}
                       >
                         {isAr ? "احجز تجربة" : "Book Trial"}
                       </Link>
                       <Link
                         href="/contact"
                         className="btn-sub-s pricing-btn-sub flex-1 inline-flex items-center justify-center rounded-full font-semibold text-[#F8F5EB] transition-all"
-                        style={{ padding: isPrivate ? "7px 6px" : "9px 11px", fontSize: isPrivate ? "0.69rem" : "0.8rem" }}
+                        style={{ padding: "7px 6px", fontSize: "0.69rem" }}
                       >
                         {isAr ? "اشترك" : "Subscribe"}
                       </Link>
@@ -697,13 +589,13 @@ function PricingTabs({
                       {isAr ? "3 أعضاء" : "3 Members"}
                     </th>
                     <th className="px-4 py-3 text-start text-[12px] font-bold border-b border-[#E6DCCB]">
-                      {isAr ? "خصم 20%" : "20% OFF"}
+                      {isAr ? "خصم 20% (أول 3 أشهر)" : "20% OFF (First 3 Months)"}
                     </th>
                     <th className="px-4 py-3 text-start text-[12px] font-bold border-b border-[#E6DCCB]">
                       {isAr ? "+4 أعضاء" : "4+ Members"}
                     </th>
                     <th className="px-4 py-3 text-start text-[12px] font-bold border-b border-[#E6DCCB]">
-                      {isAr ? "خصم 20%" : "20% OFF"}
+                      {isAr ? "خصم 20% (أول 3 أشهر)" : "20% OFF (First 3 Months)"}
                     </th>
                   </tr>
                 </thead>
