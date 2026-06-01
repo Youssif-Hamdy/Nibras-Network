@@ -122,12 +122,12 @@ export function PhoneCountryPicker({
   return (
     <div>
       <label className="block text-sm font-bold text-[#1C3A2E]">{label}</label>
-      <div className="mt-2 flex items-center gap-0 overflow-visible">
-        <div ref={dropdownRef} className="relative self-stretch">
+      <div className="mt-2 flex flex-col gap-2 overflow-visible min-[420px]:flex-row min-[420px]:items-stretch min-[420px]:gap-0">
+        <div ref={dropdownRef} className="relative min-[420px]:self-stretch">
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
-            className="flex h-full min-w-[112px] items-center gap-2 rounded-s-xl border border-[#B8860B]/30 bg-[#faf8f3] px-3 py-3 text-[15px] transition-all duration-200 hover:bg-[#f5f0e4] focus:border-[#D4A017] focus:shadow-[0_0_0_3px_rgba(212,160,23,0.25)] focus:outline-none"
+            className="flex h-full w-full min-w-0 items-center gap-2 rounded-xl border border-[#B8860B]/30 bg-[#faf8f3] px-3 py-3 text-[15px] transition-all duration-200 hover:bg-[#f5f0e4] focus:border-[#D4A017] focus:shadow-[0_0_0_3px_rgba(212,160,23,0.25)] focus:outline-none min-[420px]:min-w-[112px] min-[420px]:rounded-s-xl min-[420px]:rounded-e-none"
             aria-haspopup="listbox"
             aria-expanded={open}
           >
@@ -145,7 +145,7 @@ export function PhoneCountryPicker({
           </button>
 
           {open && (
-            <div className="absolute start-0 top-full z-50 mt-1.5 w-72 overflow-hidden rounded-2xl border border-[#B8860B]/20 bg-white shadow-[0_20px_60px_rgba(28,58,46,0.18)] ring-1 ring-black/[0.04]">
+            <div className="absolute start-0 top-full z-50 mt-1.5 w-[min(100vw-2rem,18rem)] overflow-hidden rounded-2xl border border-[#B8860B]/20 bg-white shadow-[0_20px_60px_rgba(28,58,46,0.18)] ring-1 ring-black/[0.04] sm:w-72">
               <div className="border-b border-[#B8860B]/15 p-2.5">
                 <div className="flex items-center gap-2 rounded-xl bg-[#f5f0e4] px-3 py-2">
                   <svg className="h-4 w-4 shrink-0 text-[#8a9e92]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -218,7 +218,7 @@ export function PhoneCountryPicker({
           onChange={(e) => setLocalNumber(e.target.value)}
           autoComplete="tel"
           placeholder="1XX XXX XXXX"
-          className="min-w-0 flex-1 rounded-e-xl border border-s-0 border-[#B8860B]/30 bg-[#faf8f3] px-4 py-3 text-[15px] text-[#1C3A2E] outline-none transition-shadow duration-300 placeholder:text-[#b0bdb7] focus:border-[#D4A017] focus:shadow-[0_0_0_3px_rgba(212,160,23,0.25)]"
+          className="min-w-0 w-full flex-1 rounded-xl border border-[#B8860B]/30 bg-[#faf8f3] px-4 py-3 text-[15px] text-[#1C3A2E] outline-none transition-shadow duration-300 placeholder:text-[#b0bdb7] focus:border-[#D4A017] focus:shadow-[0_0_0_3px_rgba(212,160,23,0.25)] min-[420px]:rounded-s-none min-[420px]:rounded-e-xl min-[420px]:border-s-0"
         />
       </div>
     </div>

@@ -1,126 +1,165 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode, type SVGProps } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import { useI18n } from "@/components/LocaleProvider";
 import { PRIVATE_PKGS, GROUP_PKGS, FAM_ROWS } from "@/lib/pricing/packageTiers";
 
 /* ─── Inline SVG icons (Tabler outline style) ───────────────────── */
-const IconClock = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+type IconProps = SVGProps<SVGSVGElement> & { size?: number };
+
+const IconClock = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" />
   </svg>
 );
-const IconCalendar = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconCalendar = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <rect x="4" y="5" width="16" height="16" rx="2" /><path d="M16 3v4M8 3v4M4 11h16" />
   </svg>
 );
-const IconBook = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconBook = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <path d="M4 19V6a2 2 0 0 1 2-2h13a1 1 0 0 1 1 1v13" />
     <path d="M4 19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1H5a1 1 0 0 0-1 1Z" />
     <path d="M8 7h6M8 11h5" />
   </svg>
 );
-const IconChartBar = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconChartBar = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <path d="M3 20h18M8 20V10M12 20V4M16 20v-6" />
   </svg>
 );
-const IconUsers = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconUsers = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <circle cx="9" cy="7" r="3" />
     <path d="M3 20c0-3.314 2.686-6 6-6s6 2.686 6 6" />
     <path d="M16 3.13a4 4 0 0 1 0 7.75M21 20c0-2.761-2-5-4.5-5.5" />
   </svg>
 );
-const IconTarget = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconTarget = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" />
     <path d="M12 3v2M12 19v2M3 12h2M19 12h2" />
   </svg>
 );
-const IconBrandWhatsapp = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconBrandWhatsapp = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
     <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
   </svg>
 );
-const IconMail = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconMail = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" />
   </svg>
 );
-const IconArrowRight = () => (
-  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="rtl:rotate-180" aria-hidden>
+const IconArrowRight = ({ size = 15, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={["rtl:rotate-180", className].filter(Boolean).join(" ")} aria-hidden {...props}>
     <path d="M3 8h10M9 4l4 4-4 4" />
   </svg>
 );
-const IconStar = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden>
+const IconStar = ({ size = 12, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" stroke="none" className={className} aria-hidden {...props}>
     <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2Z" />
   </svg>
 );
-const IconCheck = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconCheck = ({ size = 13, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <path d="M5 13l4 4L19 7" />
   </svg>
 );
-const IconSparkles = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconSparkles = ({ size = 16, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <path d="M12 3v3M12 18v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M3 12h3M18 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12" />
   </svg>
 );
-const IconBanknote = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconBanknote = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <rect x="4" y="6" width="16" height="12" rx="2" />
     <circle cx="12" cy="12" r="2" />
     <path d="M8 6V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1M8 18v1a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-1" />
   </svg>
 );
-const IconTag = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconTag = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.41 0l6.59-6.59a1 1 0 0 0 0-1.41L12 2Z" />
     <path d="M7 7h.01" />
   </svg>
 );
-const IconReceipt = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconReceipt = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2H4Z" />
     <path d="M8 10h8M8 14h6" />
   </svg>
 );
-const IconCreditCard = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconCreditCard = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <rect x="2" y="5" width="20" height="14" rx="2" />
     <path d="M2 10h20" />
   </svg>
 );
-const IconShieldCheck = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconShieldCheck = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
     <path d="m9 12 2 2 4-4" />
   </svg>
 );
-const IconRefresh = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconRefresh = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
     <path d="M3 3v5h5M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
     <path d="M21 21v-5h-5" />
   </svg>
 );
-const IconAward = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconAward = ({ size = 20, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <circle cx="12" cy="8" r="6" />
     <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
   </svg>
 );
-const IconPolicy = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+const IconPolicy = ({ size = 18, className, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden {...props}>
     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z" />
     <path d="M14 2v6h6M10 13h4M10 17h4M8 13h.01M8 17h.01" />
+  </svg>
+);
+
+/* ─── Mini payment brand marks (simple, recognizable) ───────────── */
+const IconVisa = ({ size = 24, className, ...props }: IconProps) => (
+  <svg width={size} height={size * 0.62} viewBox="0 0 40 25" fill="none" className={className} aria-hidden {...props}>
+    <rect x="1" y="1" width="38" height="23" rx="5" fill="#FFFFFF" stroke="rgba(180,155,68,0.25)" />
+    <path
+      d="M10.2 17.9 7.7 7.1h3l1.6 7.3 1.6-7.3h3l-2.5 10.8h-3.2Zm9.2 0V7.1h2.8v10.8h-2.8Zm11.1-7.7c-.6-.3-1.6-.6-2.8-.6-1 0-1.6.3-1.6.9 0 1.6 4.8.9 4.8 4.4 0 2-1.8 3.3-4.2 3.3-1.8 0-3.1-.4-3.9-.7l.6-2.3c.8.4 2 .8 3.3.8 1 0 1.7-.2 1.7-.9 0-1.5-4.8-.8-4.8-4.3 0-1.9 1.7-3.3 4.1-3.3 1.6 0 2.8.3 3.7.6l-.6 2.1Zm6.3 7.7-.3-1.5h-3.7l-.5 1.5h-3l4.4-10.8h3.6l2.6 10.8h-3.1Zm-3.2-3.7h2.4l-.8-4-.6 1.6-.9 2.4Z"
+      fill="#1A1A14"
+      opacity="0.82"
+    />
+  </svg>
+);
+
+const IconMastercard = ({ size = 24, className, ...props }: IconProps) => (
+  <svg width={size} height={size * 0.62} viewBox="0 0 40 25" fill="none" className={className} aria-hidden {...props}>
+    <rect x="1" y="1" width="38" height="23" rx="5" fill="#FFFFFF" stroke="rgba(180,155,68,0.25)" />
+    <circle cx="18" cy="12.5" r="6.2" fill="#EB001B" opacity="0.9" />
+    <circle cx="22" cy="12.5" r="6.2" fill="#F79E1B" opacity="0.9" />
+    <path d="M20 7.4a6.5 6.5 0 0 0 0 10.2 6.5 6.5 0 0 0 0-10.2Z" fill="#FF5F00" />
+  </svg>
+);
+
+const IconPayPal = ({ size = 24, className, ...props }: IconProps) => (
+  <svg width={size} height={size * 0.62} viewBox="0 0 40 25" fill="none" className={className} aria-hidden {...props}>
+    <rect x="1" y="1" width="38" height="23" rx="5" fill="#FFFFFF" stroke="rgba(180,155,68,0.25)" />
+    <path
+      d="M16 18.5h-2.7l1.4-10h4.4c2.6 0 4.1 1.1 3.8 3.4-.3 2.6-2.2 3.9-4.7 3.9h-1.5l-.7 2.7Zm1-4.9h1.4c1.1 0 2-.4 2.1-1.6.1-1-.6-1.4-1.6-1.4h-1.4l-.5 3Z"
+      fill="#003087"
+      opacity="0.92"
+    />
+    <path
+      d="M23.2 18.5h-2.6l1.5-10h4.2c2.4 0 3.7 1.1 3.4 3.2-.3 2.3-1.9 3.4-4.3 3.4h-1.4l-.8 3.4Zm1.1-5h1.2c1 0 1.8-.3 2-1.4.1-.9-.6-1.3-1.5-1.3h-1.3l-.4 2.7Z"
+      fill="#0070E0"
+      opacity="0.9"
+    />
   </svg>
 );
 
@@ -825,331 +864,485 @@ export default function PricingPageContent() {
           background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.72) 100%);
           backdrop-filter: blur(8px);
         }
+
+        /* Section 1 floating card system (stable 3-card stack) */
+        .s1-stack {
+          position: relative;
+          perspective: 900px;
+        }
+
+        .s1-card {
+          position: absolute;
+          backface-visibility: hidden;
+          transform-style: preserve-3d;
+          will-change: transform;
+          transition: border-color 220ms ease, box-shadow 220ms ease;
+        }
+        .s1-card:hover {
+          border-color: rgba(180,155,68,0.55) !important;
+        }
+
+        .s1-card::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: linear-gradient(
+            105deg,
+            transparent 35%,
+            rgba(255,255,255,0.55) 50%,
+            transparent 65%
+          );
+          background-size: 220% 100%;
+          background-position: 150% center;
+          transition: background-position 600ms ease;
+          pointer-events: none;
+          z-index: 1;
+        }
+        .s1-card:hover::before {
+          background-position: -50% center;
+        }
+
+        .s1-main-card::after {
+          content: "";
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          background: transparent;
+          box-shadow: 0 0 0 0 rgba(180,155,68,0);
+          animation: cardGlowPulse 3.6s ease-in-out infinite;
+          pointer-events: none;
+          z-index: -1;
+        }
+        @keyframes cardGlowPulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(180,155,68,0); }
+          45%       { box-shadow: 0 0 22px 4px rgba(180,155,68,0.18); }
+        }
+
+        @keyframes floatA {
+          0%   { transform: rotate(2deg) translate3d(0px, 0px, 0) scale(1); }
+          30%  { transform: rotate(1.2deg) translate3d(2px, -10px, 0) scale(1.008); }
+          60%  { transform: rotate(2.5deg) translate3d(-1px, -14px, 0) scale(1.004); }
+          100% { transform: rotate(2deg) translate3d(0px, 0px, 0) scale(1); }
+        }
+        @keyframes floatB {
+          0%   { transform: rotate(-7deg) translate3d(var(--bx), var(--by), 0) scale(0.97); }
+          35%  { transform: rotate(-5.8deg) translate3d(calc(var(--bx) + 3px), calc(var(--by) - 13px), 0) scale(0.975); }
+          65%  { transform: rotate(-7.5deg) translate3d(calc(var(--bx) - 1px), calc(var(--by) - 9px), 0) scale(0.967); }
+          100% { transform: rotate(-7deg) translate3d(var(--bx), var(--by), 0) scale(0.97); }
+        }
+        @keyframes floatC {
+          0%   { transform: rotate(6deg) translate3d(var(--cx), var(--cy), 0) scale(0.95); }
+          40%  { transform: rotate(7.2deg) translate3d(calc(var(--cx) + 2px), calc(var(--cy) - 11px), 0) scale(0.957); }
+          70%  { transform: rotate(5.5deg) translate3d(calc(var(--cx) - 1px), calc(var(--cy) - 16px), 0) scale(0.952); }
+          100% { transform: rotate(6deg) translate3d(var(--cx), var(--cy), 0) scale(0.95); }
+        }
+
+        .s1-card-b {
+          --bx: clamp(-175px, -13vw, -115px);
+          --by: clamp(38px, 5vw, 72px);
+          animation: floatB 5.2s cubic-bezier(.45,.05,.55,.95) infinite;
+          animation-delay: 0.15s;
+        }
+        .s1-card-c {
+          --cx: clamp(115px, 11vw, 162px);
+          --cy: clamp(95px, 9.5vw, 158px);
+          animation: floatC 5.8s cubic-bezier(.45,.05,.55,.95) infinite;
+          animation-delay: 0.28s;
+        }
+        .s1-card-a {
+          animation: floatA 4.2s cubic-bezier(.45,.05,.55,.95) infinite;
+        }
+        @media (min-width: 1024px) {
+          .s1-card-b { --bx: clamp(-165px, -10.5vw, -120px); }
+          .s1-card-c { --cx: clamp(105px, 9vw, 148px); }
+        }
+
+        /* Mobile / tablet: stack cards vertically — no absolute overlap or horizontal overflow */
+        @media (max-width: 1023px) {
+          .s1-stack {
+            height: auto !important;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.85rem;
+            width: 100%;
+            max-width: 22rem;
+            margin-inline: auto;
+            padding-inline: 0.25rem;
+          }
+          .s1-card {
+            position: relative !important;
+            inset: auto !important;
+            transform: none !important;
+            animation: none !important;
+            width: 100% !important;
+            max-width: 100%;
+          }
+          .s1-card-b,
+          .s1-card-c {
+            --bx: 0;
+            --by: 0;
+            --cx: 0;
+            --cy: 0;
+          }
+          .s1-main-card::after {
+            animation: none !important;
+          }
+        }
+
+        /* RTL: mirror the horizontal offsets so cards don't overlap the right column */
+        [dir="rtl"] .s1-stack .s1-card-b { --bx: clamp(115px, 13vw, 175px); }
+        [dir="rtl"] .s1-stack .s1-card-c { --cx: clamp(-162px, -11vw, -115px); }
+        @media (min-width: 1024px) {
+          [dir="rtl"] .s1-stack .s1-card-b { --bx: clamp(120px, 10.5vw, 165px); }
+          [dir="rtl"] .s1-stack .s1-card-c { --cx: clamp(-148px, -9vw, -105px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .pfu-on { animation: none !important; opacity: 1 !important; transform: none !important; }
+          .launch-pill { animation: none !important; }
+          .s1-card-a, .s1-card-b, .s1-card-c { animation: none !important; transform: none !important; }
+          .s1-main-card::after { animation: none !important; }
+        }
       `}</style>
 
       {/* ══════════════════════════════════════════════
           SECTION 1 — Hero / Payment Terms
       ══════════════════════════════════════════════ */}
       <section
-        className="relative w-full overflow-hidden bg-[#F7F5F0] py-16 md:py-24 px-4 sm:px-6"
-        dir={isAr ? "rtl" : "ltr"}
-      >
-        <div className="pointer-events-none absolute inset-0">
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 70% 40% at 50% 0%, rgba(180,155,80,0.12) 0%, transparent 70%)",
-            }}
-          />
-          <div
-            className="absolute -top-24 left-1/2 h-64 w-[42rem] -translate-x-1/2 rounded-full blur-3xl opacity-40"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(180,155,68,0.25), rgba(37,74,58,0.18), rgba(180,155,68,0.25))",
-            }}
-          />
-        </div>
+  className="relative w-full overflow-x-hidden bg-[#F7F5F0] pt-[calc(70px+2rem)] pb-12 md:pt-[calc(80px+3.5rem)] md:pb-24 px-4 sm:px-6"
+  dir={isAr ? "rtl" : "ltr"}
+>
+  {/* ── Glow bg ── */}
+  <div className="pointer-events-none absolute inset-0">
+    <div
+      className="absolute inset-0"
+      style={{
+        background:
+          "radial-gradient(ellipse 70% 40% at 50% 0%, rgba(180,155,80,0.12) 0%, transparent 70%)",
+      }}
+    />
+    <div
+      className="absolute -top-16 left-1/2 -translate-x-1/2 h-52 w-[42rem] rounded-full blur-3xl opacity-30"
+      style={{
+        background:
+          "radial-gradient(ellipse at center, rgba(180,155,68,0.18) 0%, transparent 70%)",
+      }}
+    />
+    <div
+      className="absolute top-[30%] -left-20 h-64 w-64 rounded-full blur-3xl opacity-20"
+      style={{ background: "radial-gradient(circle, rgba(37,74,58,0.1) 0%, transparent 70%)" }}
+    />
+  </div>
 
-        <div className="relative max-w-6xl mx-auto">
-          {/* ── Header ── */}
-          <div
-            className={[
-              "pfu",
-              heroReady ? "pfu-on" : "",
-            ].join(" ")}
-          >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="w-7 h-px bg-[#B49B44] opacity-70" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#B49B44]">
-                {isAr ? "الدفع والضمان" : "Payment & guarantee"}
-              </span>
-              <span className="w-7 h-px bg-[#B49B44] opacity-70" />
+  <div className="relative max-w-5xl mx-auto">
+
+    {/* ── TOP: Badge + Heading + Sub ── */}
+    <div className={["pfu", heroReady ? "pfu-on" : ""].join(" ")}>
+      <div className="flex items-center justify-center gap-3 mb-4">
+        <span className="w-7 h-px bg-[#B49B44] opacity-60" />
+        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#B49B44]">
+          {isAr ? "الدفع والضمان" : "Payment & guarantee"}
+        </span>
+        <span className="w-7 h-px bg-[#B49B44] opacity-60" />
+      </div>
+
+      <h2 className="font-serif text-[clamp(26px,6vw,52px)] font-normal text-[#1A1A14] text-center leading-[1.2] mb-4 px-1">
+        {isAr ? (
+          <>فواتير <em className="italic text-[#B49B44]">واضحة</em> وبسيطة.</>
+        ) : (
+          <>Clear, <em className="italic text-[#B49B44]">simple</em> billing.</>
+        )}
+      </h2>
+
+      <p className="text-[14px] sm:text-[15px] text-[#6F6F5C] text-center max-w-[500px] mx-auto mb-8 sm:mb-14 leading-relaxed px-1">
+        {isAr
+          ? "بدون مفاجآت وبدون رسوم مخفية. كل التفاصيل المهمة قبل الاشتراك."
+          : "No surprises, no hidden fees. Everything important before you subscribe."}
+      </p>
+    </div>
+
+    {/* ── HERO ROW: Visual left + Content right ── */}
+    <div
+      className={[
+        "pfu pfu-d1 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-start lg:items-center mb-8 sm:mb-10",
+        heroReady ? "pfu-on" : "",
+      ].join(" ")}
+    >
+      {/* ── Left: Card stack ── */}
+      <div className="s1-stack order-2 lg:order-1 mx-auto flex w-full max-w-[22rem] select-none lg:h-[510px] lg:max-w-[520px] lg:items-center lg:justify-center">
+
+        {/* Card B — Launch offer (back-left) */}
+        <div
+          className="s1-card s1-card-b z-10 w-full max-w-[352px] rounded-2xl border border-[#B49B44]/28 bg-white overflow-hidden"
+          style={{
+            boxShadow: "0 8px 32px rgba(180,155,68,0.10), 0 2px 8px rgba(26,26,20,0.06)",
+          }}
+        >
+          <div className="h-[3px] w-full bg-gradient-to-r from-[#B49B44]/40 via-[#F2D58C]/60 to-[#B49B44]/40" />
+          <div className="px-4 sm:px-6 pt-4 pb-5">
+            <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 mb-2.5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[#9A9282]">
+              {isAr ? "عرض الإطلاق" : "Launch offer"}
+            </p>
+            <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF4D6] border border-[#B49B44]/25 text-[10px] font-bold tracking-wide text-[#8A7430] px-2.5 py-1">
+              <IconSparkles size={11} />
+              {isAr ? "خصم 30%" : "30% OFF"}
+            </span>
             </div>
-
-            <h2 className="font-serif text-[clamp(28px,4.2vw,40px)] font-normal text-[#1A1A14] text-center mb-3">
-              {isAr ? (
-                <>
-                  فواتير <em className="italic text-[#B49B44]">واضحة</em> وبسيطة.
-                </>
-              ) : (
-                <>
-                  Clear, <em className="italic text-[#B49B44]">simple</em> billing.
-                </>
-              )}
-            </h2>
-            <p className="text-sm md:text-[15px] text-[#6F6F5C] text-center max-w-2xl mx-auto mb-10 md:mb-12 leading-relaxed">
+            <div className="flex flex-wrap items-baseline gap-1.5 mb-2">
+              <span className="text-[36px] sm:text-[48px] font-serif font-normal text-[#B49B44] leading-none">30%</span>
+              <span className="text-[13px] text-[#6F6F5C]">
+              {isAr ? "خصم — أول 3 شهور" : "off — first 3 months"}
+            </span>
+            </div>
+            <p className="text-[12px] text-[#3D3D30] leading-snug opacity-80">
               {isAr
-                ? "بدون مفاجآت وبدون رسوم مخفية. كل التفاصيل المهمة قبل الاشتراك."
-                : "No surprises, no hidden fees. Everything important before you subscribe."}
+                ? "تشوف السعر المخفّض الآن — وبعدها السعر العادي."
+                : "See the discounted rate now — then standard price after."}
             </p>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] gap-7 lg:gap-10 lg:items-start">
-            {/* ── Left: Policy (soft glass) ── */}
-            <div
-              className={[
-                "pfu",
-                heroReady ? "pfu-on pfu-d1" : "",
-                "s1-card s1-soft rounded-2xl border border-[#B49B44]/20 shadow-[0_14px_50px_rgba(26,26,20,0.08)]",
-              ].join(" ")}
-            >
-              <div className="p-6 md:p-7">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#B49B44]">
-                      {isAr ? "سياسة الدفع" : "Payment policy"}
-                    </p>
-                    <h3 className="mt-1 font-serif text-[20px] text-[#1A1A14]">
-                      {isAr ? "قواعد واضحة من البداية" : "Clear rules, upfront"}
-                    </h3>
-                  </div>
-                  <div className="shrink-0 w-10 h-10 rounded-2xl bg-white/70 border border-[#B49B44]/20 flex items-center justify-center text-[#B49B44]">
-                    <IconPolicy />
-                  </div>
-                </div>
-
-                <div className="mt-5 space-y-3">
-                  {(isAr
-                    ? [
-                        { t: "الدفع الشهري مقدمًا لحجز مكانك.", i: "1" },
-                        { t: "يتم تأكيد الحجز بعد استلام الدفع فقط.", i: "2" },
-                        { t: "قد تُضاف رسوم المعاملات/الدفع حسب طريقة الدفع.", i: "3" },
-                      ]
-                    : [
-                        { t: "Monthly advance payment is required to secure your place.", i: "1" },
-                        { t: "Your seat is confirmed only after payment is received.", i: "2" },
-                        { t: "Transaction/processing fees may apply depending on payment method.", i: "3" },
-                      ]
-                  ).map((x) => (
-                    <div key={x.i} className="flex items-start gap-3 rounded-xl border border-[#B49B44]/15 bg-white/70 px-4 py-3">
-                      <span className="mt-0.5 shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#254A3A] text-[#F2D58C] text-[12px] font-bold">
-                        {x.i}
-                      </span>
-                      <p className="text-[13.5px] text-[#3D3D30] leading-relaxed">{x.t}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-5 flex items-start gap-3 rounded-xl border border-[#B49B44]/15 bg-white/70 px-4 py-3">
-                  <span className="text-[#B49B44] shrink-0 mt-0.5">
-                    <IconShieldCheck />
-                  </span>
-                  <p className="text-[13px] text-[#3D3D30] leading-relaxed">
-                    {isAr ? (
-                      <>
-                        كل عمليات الدفع <strong className="text-[#1A1A14] font-semibold">مؤمنة ومشفرة</strong> وبياناتك محمية.
-                      </>
-                    ) : (
-                      <>
-                        Payments are <strong className="text-[#1A1A14] font-semibold">secured &amp; encrypted</strong> and your data stays protected.
-                      </>
-                    )}
-                  </p>
-                </div>
-
-                <div className="mt-5">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6F6F5C]">
-                    {isAr ? "طرق الدفع" : "Payment methods"}
-                  </p>
-                  <div className="mt-2.5 flex flex-wrap gap-2">
-                    {[
-                      { key: "visa", label: "Visa" },
-                      { key: "mc", label: "Mastercard" },
-                      { key: "pp", label: "PayPal" },
-                      { key: "bt", label: isAr ? "تحويل بنكي" : "Bank transfer" },
-                    ].map((m) => (
-                      <span
-                        key={m.key}
-                        className="text-[11px] font-semibold text-[#254A3A] border border-[#254A3A]/15 rounded-full px-3 py-1 bg-white/70"
-                      >
-                        {m.label}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+        {/* Card A — Main / front */}
+        <div
+          className="s1-card s1-card-a s1-main-card z-20 order-first w-full max-w-[388px] rounded-[18px] border border-[#B49B44]/32 bg-white overflow-hidden"
+          style={{
+            boxShadow:
+              "0 20px 54px rgba(180,155,68,0.13), 0 4px 16px rgba(26,26,20,0.08), 0 1px 4px rgba(26,26,20,0.04)",
+          }}
+        >
+          <div className="h-[3px] w-full bg-gradient-to-r from-[#254A3A]/50 via-[#B49B44]/60 to-[#254A3A]/50" />
+          <div className="px-4 sm:px-7 pt-5 pb-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center text-[#F2D58C]"
+                style={{
+                  background: "linear-gradient(135deg, #254A3A 0%, #1e3d2f 100%)",
+                  boxShadow: "0 4px 12px rgba(37,74,58,0.25)",
+                }}
+              >
+                <IconShieldCheck size={18} />
+              </div>
+              <div>
+                <p className="text-[10.5px] font-semibold uppercase tracking-[0.15em] text-[#9A9282]">
+                  {isAr ? "ضمان استرداد" : "Money-back"}
+                </p>
+                <p className="text-[14px] font-semibold text-[#1A1A14] leading-tight">
+                  {isAr ? "100% بعد أول جلسة" : "100% after first session"}
+                </p>
               </div>
             </div>
 
-            {/* ── Right: Feature cards (new style) ── */}
-            <div
-              className={[
-                "pfu",
-                heroReady ? "pfu-on pfu-d2" : "",
-                "min-w-0 flex flex-col gap-4",
-              ].join(" ")}
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 auto-rows-fr">
+            <div className="h-px bg-gradient-to-r from-transparent via-[#B49B44]/20 to-transparent mb-4" />
+
+            <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between mb-4">
+              <span className="text-[13px] text-[#6F6F5C]">
+                {isAr ? "طرق الدفع" : "Payment methods"}
+              </span>
+              <div className="flex flex-wrap gap-1.5">
                 {[
-                  {
-                    icon: <IconBanknote />,
-                    label: isAr ? "الفوترة" : "Billing",
-                    tone: "soft",
-                    body: isAr ? (
-                      <>
-                        الدفع <strong className="text-[#1A1A14] font-semibold">شهرياً مقدمًا</strong> بالدولار.
-                        قد تُضاف <strong className="text-[#1A1A14] font-semibold">رسوم معالجة 3–4%</strong> حسب طريقة الدفع.
-                      </>
-                    ) : (
-                      <>
-                        <strong className="text-[#1A1A14] font-semibold">Monthly in advance</strong> billing in USD.
-                        A <strong className="text-[#1A1A14] font-semibold">3–4% processing fee</strong> may apply by method.
-                      </>
-                    ),
-                  },
-                  {
-                    icon: <IconTag />,
-                    label: isAr ? "عرض الإطلاق" : "Launch offer",
-                    tone: "gold",
-                    body: isAr ? (
-                      <>
-                        خصم <strong className="text-[#1A1A14] font-semibold">30%</strong> لأول{" "}
-                        <strong className="text-[#1A1A14] font-semibold">3 شهور</strong> فقط.
-                        يعود السعر العادي من الشهر الرابع.
-                      </>
-                    ) : (
-                      <>
-                        <strong className="text-[#1A1A14] font-semibold">30% off</strong> for the first{" "}
-                        <strong className="text-[#1A1A14] font-semibold">3 months</strong>.
-                        Regular pricing starts month 4.
-                      </>
-                    ),
-                  },
-                  {
-                    icon: <IconRefresh />,
-                    label: isAr ? "مرونة" : "Flexibility",
-                    tone: "soft",
-                    body: isAr ? (
-                      <>
-                        تغيير أو إلغاء الباقة بإشعار{" "}
-                        <strong className="text-[#1A1A14] font-semibold">7 أيام</strong> — بدون تعقيدات.
-                      </>
-                    ) : (
-                      <>
-                        Change or cancel with{" "}
-                        <strong className="text-[#1A1A14] font-semibold">7 days notice</strong> — no hassle.
-                      </>
-                    ),
-                  },
-                  {
-                    icon: <IconShieldCheck />,
-                    label: isAr ? "مدفوعات آمنة" : "Secure payments",
-                    tone: "soft",
-                    body: isAr ? (
-                      <>
-                        المدفوعات <strong className="text-[#1A1A14] font-semibold">مشفّرة</strong> وبياناتك محمية — ولا يتم مشاركة معلوماتك.
-                      </>
-                    ) : (
-                      <>
-                        <strong className="text-[#1A1A14] font-semibold">Encrypted</strong> payments and protected data — never shared.
-                      </>
-                    ),
-                  },
-                ].map((card, i) => (
-                  <div
-                    key={i}
-                    className={[
-                      "s1-card rounded-2xl border p-6",
-                      card.tone === "gold"
-                        ? "bg-[#FFFBEF] border-[#B49B44]/45 shadow-[0_14px_50px_rgba(180,155,68,0.10)]"
-                        : "s1-soft border-[#B49B44]/20 shadow-[0_14px_50px_rgba(26,26,20,0.08)]",
-                    ].join(" ")}
+                  { k: "visa", label: "Visa", el: <IconVisa size={28} /> },
+                  { k: "mc", label: "Mastercard", el: <IconMastercard size={28} /> },
+                  { k: "pp", label: "PayPal", el: <IconPayPal size={28} /> },
+                ].map((b) => (
+                  <span
+                    key={b.k}
+                    className="h-8 w-[52px] rounded-md border border-[#B49B44]/22 bg-[#FAFAF6] flex items-center justify-center transition-colors hover:border-[#B49B44]/45"
+                    title={b.label}
                   >
-                    <div className="flex items-start gap-4">
-                      <div
-                        className={[
-                          "shrink-0 w-11 h-11 rounded-2xl border flex items-center justify-center",
-                          card.tone === "gold"
-                            ? "bg-white border-[#B49B44]/25 text-[#B49B44]"
-                            : "bg-white/70 border-[#B49B44]/20 text-[#254A3A]",
-                        ].join(" ")}
-                      >
-                        {card.icon}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6F6F5C]">
-                          {card.label}
-                        </p>
-                        <p className="mt-2 text-[13.5px] text-[#3D3D30] leading-relaxed">
-                          {card.body}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                    <span className="sr-only">{b.label}</span>
+                    {b.el}
+                  </span>
                 ))}
               </div>
+            </div>
 
-              {/* Money-Back — new banner style */}
-              <div className="s1-card rounded-2xl border border-[#B49B44]/35 bg-[#1A1A14] px-6 py-4 shadow-[0_18px_60px_rgba(26,26,20,0.14)]">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="shrink-0 w-10 h-10 rounded-2xl bg-[#B49B44]/15 border border-[#B49B44]/30 flex items-center justify-center text-[#B49B44]">
-                      <IconShieldCheck />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#B49B44]">
-                        {isAr ? "ضمان استرداد" : "Money-back guarantee"}
-                      </p>
-                      <p className="mt-1 text-[13.5px] text-[#C8C4B0] leading-relaxed">
-                        {isAr ? (
-                          <>
-                            استرداد <strong className="text-[#F0E8CC] font-semibold">100%</strong> بعد أول جلسة لو مش مناسب لك.
-                          </>
-                        ) : (
-                          <>
-                            <strong className="text-[#F0E8CC] font-semibold">100% refund</strong> after your first session if it&apos;s not a fit.
-                          </>
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="sm:ms-auto">
-                    <span className="inline-flex text-[11px] font-bold uppercase tracking-wide bg-[#B49B44]/20 text-[#B49B44] border border-[#B49B44]/30 px-3 py-1.5 rounded-full whitespace-nowrap">
-                      {isAr ? "بدون مخاطرة" : "Zero risk"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* ── CTA Strip ── */}
-              <div
-                className={[
-                  "pfu",
-                  heroReady ? "pfu-on pfu-d3" : "",
-                  "mt-2 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white border border-[#B49B44]/20 rounded-2xl px-5 py-4",
-                ].join(" ")}
-              >
-                <p className="text-[13px] text-[#3D3D30] leading-snug text-center sm:text-left">
-                  {isAr ? "جاهز تبدأ؟" : "Ready to start?"}{" "}
-                  <span className="text-[#1A1A14] font-semibold">
-                    {isAr ? "أول جلسة قابلة للاسترداد بالكامل." : "Your first session is fully refundable."}
-                  </span>
-                </p>
-                <div className="flex items-center gap-2.5">
-                  <Link
-                    href="/book"
-                    className="shrink-0 inline-flex items-center gap-2 bg-[#1A1A14] hover:bg-[#2a2a1e] text-[#F0E8CC] text-[13px] font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-[0_4px_16px_rgba(26,26,20,0.25)] hover:-translate-y-0.5 whitespace-nowrap"
-                  >
-                    {isAr ? "احجز تجربة مجانية" : "Book free trial"}
-                    <IconArrowRight />
-                  </Link>
-                  <a
-                    href={whatsappHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-trial-s shrink-0 inline-flex items-center gap-2 border border-[#B49B44]/35 bg-[#FBF8EE] text-[#1A1A14] text-[13px] font-semibold px-4 py-2.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap"
-                  >
-                    <span className="text-[#B49B44]">
-                      <IconBrandWhatsapp />
-                    </span>
-                    {isAr ? "اسأل على واتساب" : "Ask on WhatsApp"}
-                  </a>
-                </div>
-              </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#254A3A] bg-[#eef4f0] border border-[#254A3A]/14 rounded-full px-3 py-1">
+                <IconShieldCheck size={10} />
+                {isAr ? "مدفوعات مشفّرة" : "Encrypted"}
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#8A7430] bg-[#FFFBEF] border border-[#B49B44]/22 rounded-full px-3 py-1">
+                {isAr ? "بدون مخاطرة" : "Zero risk"}
+              </span>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* Card C — Flexibility (bottom-right) */}
+        <div
+          className="s1-card s1-card-c z-10 w-full max-w-[296px] rounded-xl border border-[#254A3A]/14 overflow-hidden"
+          style={{
+            background: "linear-gradient(135deg, #eef4f0 0%, #e4ede8 100%)",
+            boxShadow: "0 8px 24px rgba(37,74,58,0.10), 0 2px 6px rgba(37,74,58,0.06)",
+          }}
+        >
+          <div className="h-[2px] w-full bg-gradient-to-r from-[#254A3A]/30 via-[#254A3A]/50 to-[#254A3A]/30" />
+          <div className="px-5 pt-4 pb-5">
+            <p className="text-[10.5px] font-semibold uppercase tracking-[0.13em] text-[#254A3A]/55 mb-1">
+              {isAr ? "مرونة" : "Flexibility"}
+            </p>
+            <p className="text-[14px] font-semibold text-[#254A3A]">
+              {isAr ? "إلغاء بإشعار 7 أيام" : "Cancel in 7 days"}
+            </p>
+            <div className="mt-2.5 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#254A3A]/50" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#254A3A]/30" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#254A3A]/15" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* ── Right: Policy + features ── */}
+      <div className="order-1 lg:order-2 flex flex-col gap-3 min-w-0">
+
+        {/* Policy items */}
+        {(isAr
+          ? [
+              { t: "الدفع الشهري مقدمًا لحجز مكانك.", i: "1" },
+              { t: "يتم تأكيد الحجز بعد استلام الدفع فقط.", i: "2" },
+              { t: "قد تُضاف رسوم المعاملات/الدفع حسب طريقة الدفع.", i: "3" },
+            ]
+          : [
+              { t: "Monthly advance payment is required to secure your place.", i: "1" },
+              { t: "Your seat is confirmed only after payment is received.", i: "2" },
+              { t: "Transaction / processing fees may apply depending on payment method.", i: "3" },
+            ]
+        ).map((x) => (
+          <div
+            key={x.i}
+            className="flex items-start gap-3 bg-white border border-[#B49B44]/18 rounded-xl px-4 py-3"
+          >
+            <span className="mt-0.5 shrink-0 inline-flex h-[26px] w-[26px] items-center justify-center rounded-full bg-[#254A3A] text-[#F2D58C] text-[12px] font-bold">
+              {x.i}
+            </span>
+            <p className="text-[13.5px] text-[#3D3D30] leading-relaxed">{x.t}</p>
+          </div>
+        ))}
+
+        {/* Mini feature row */}
+        <div className="grid grid-cols-2 gap-3 mt-1">
+          {[
+            {
+              icon: <IconBanknote size={16} />,
+              green: false,
+              label: isAr ? "الفوترة" : "Billing",
+              body: isAr ? "شهرياً مقدمًا بالدولار" : "Monthly in advance, USD",
+            },
+            {
+              icon: <IconRefresh size={16} />,
+              green: true,
+              label: isAr ? "مرونة" : "Flexibility",
+              body: isAr ? "إلغاء بإشعار 7 أيام" : "Cancel with 7 days notice",
+            },
+            {
+              icon: <IconTag size={16} />,
+              green: false,
+              label: isAr ? "عرض الإطلاق" : "Launch offer",
+              body: isAr ? "خصم 30% — أول 3 شهور" : "30% off — first 3 months",
+            },
+            {
+              icon: <IconShieldCheck size={16} />,
+              green: true,
+              label: isAr ? "مدفوعات آمنة" : "Secure",
+              body: isAr ? "مشفّرة وبياناتك محمية" : "Encrypted & protected",
+            },
+          ].map((f, i) => (
+            <div
+              key={i}
+              className="flex items-start gap-2.5 bg-white border border-[#B49B44]/18 rounded-xl px-3.5 py-3"
+            >
+              <span
+                className={[
+                  "mt-0.5 shrink-0",
+                  f.green ? "text-[#254A3A]" : "text-[#B49B44]",
+                ].join(" ")}
+              >
+                {f.icon}
+              </span>
+              <div className="min-w-0">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#9A9282]">
+                  {f.label}
+                </p>
+                <p className="text-[12px] text-[#3D3D30] leading-snug mt-0.5">{f.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+
+    {/* ── Money-Back Banner ── */}
+    <div
+      className={[
+        "pfu pfu-d2 flex flex-wrap items-center gap-4 bg-[#F0EBD8] border border-[#B49B44]/35 rounded-2xl px-5 py-4 mb-7",
+        heroReady ? "pfu-on" : "",
+      ].join(" ")}
+    >
+      <div className="shrink-0 w-12 h-12 rounded-[14px] bg-white border border-[#B49B44]/30 flex items-center justify-center text-[#B49B44]">
+        <IconShieldCheck size={22} />
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B49B44] mb-1">
+          {isAr ? "ضمان استرداد" : "Money-back guarantee"}
+        </p>
+        <p className="text-[14px] text-[#3D3D30] leading-snug">
+          {isAr ? (
+            <>استرداد <strong className="text-[#1A1A14] font-semibold">100%</strong> بعد أول جلسة لو مش مناسب لك.</>
+          ) : (
+            <><strong className="text-[#1A1A14] font-semibold">100% refund</strong> after your first session if it&apos;s not a fit.</>
+          )}
+        </p>
+      </div>
+      <span className="text-[11px] font-bold uppercase tracking-wide bg-[rgba(180,155,68,0.15)] text-[#8A7430] border border-[#B49B44]/30 px-3 py-1.5 rounded-full whitespace-nowrap">
+        {isAr ? "بدون مخاطرة" : "Zero risk"}
+      </span>
+    </div>
+
+    {/* ── CTA Strip ── */}
+    <div
+      className={[
+        "pfu pfu-d3 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white border border-[#B49B44]/20 rounded-2xl px-5 py-4",
+        heroReady ? "pfu-on" : "",
+      ].join(" ")}
+    >
+      <p className="text-[14px] text-[#3D3D30] leading-snug text-center sm:text-start">
+        {isAr ? "جاهز تبدأ؟" : "Ready to start?"}{" "}
+        <strong className="text-[#1A1A14] font-semibold">
+          {isAr ? "أول جلسة قابلة للاسترداد بالكامل." : "Your first session is fully refundable."}
+        </strong>
+      </p>
+      <div className="flex items-center gap-2.5 flex-wrap justify-center">
+        <Link
+          href="/book"
+          className="shrink-0 inline-flex items-center gap-2 bg-[#254A3A] hover:bg-[#1e3d2f] text-[#F0E8CC] text-[13px] font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-[0_6px_20px_rgba(37,74,58,0.22)] hover:-translate-y-0.5 whitespace-nowrap"
+        >
+          {isAr ? "احجز تجربة مجانية" : "Book free trial"}
+          <IconArrowRight />
+        </Link>
+
+        <a
+          href={whatsappHref}
+          target="_blank"
+          rel="noreferrer"
+          className="shrink-0 inline-flex items-center gap-2 bg-[#F7F5F0] text-[#1A1A14] text-[13px] font-semibold px-4 py-2.5 rounded-xl border border-[#B49B44]/35 transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap"
+        >
+          <span className="text-[#4CAF50]">
+            <IconBrandWhatsapp />
+          </span>
+          {isAr ? "اسأل على واتساب" : "Ask on WhatsApp"}
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
       {/* ══════════════════════════════════════════════
           SECTION 2 — Tabbed Pricing
       ══════════════════════════════════════════════ */}

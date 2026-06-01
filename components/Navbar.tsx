@@ -298,19 +298,20 @@ function MobileAccordion({
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="w-full flex items-center justify-between py-3 text-sm font-semibold text-[#3a3a3a] hover:text-[#B8860B] transition-colors tracking-wide"
+          className="flex w-full items-center justify-between gap-3 py-3 text-start text-sm font-semibold text-[#3a3a3a] transition-colors hover:text-[#B8860B] tracking-wide"
+          aria-expanded={open}
         >
           {item.label}
           <ChevronDown
             size={15}
-            className={`text-[#B8860B] transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+            className={`shrink-0 text-[#B8860B] transition-transform duration-200 ${open ? "rotate-180" : ""}`}
           />
         </button>
-        <div
-          className={`overflow-hidden transition-all duration-300 ${open ? "max-h-[85vh] opacity-100 pb-3" : "max-h-0 opacity-0"}`}
-        >
-          <CoursesMobileMega onPickLink={onNavigate} />
-        </div>
+        {open ? (
+          <div className="pb-4">
+            <CoursesMobileMega onPickLink={onNavigate} />
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -386,7 +387,14 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  const allMobileLinks: (NavItem | SimpleLink)[] = [...primaryNav, ...moreNav];
+  useEffect(() => {
+    if (!menuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [menuOpen]);
 
   return (
     <nav
@@ -488,9 +496,11 @@ export default function Navbar() {
           <div className="flex items-center gap-2 flex-shrink-0">
             <LanguageToggle compact />
             <button
-              className="flex flex-col gap-1.5 p-1 flex-shrink-0"
+              type="button"
+              className="flex flex-col gap-1.5 p-2 flex-shrink-0 -me-1"
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label={t("nav.toggleMenu")}
+              aria-label={menuOpen ? t("nav.closeMenu") : t("nav.toggleMenu")}
+              aria-expanded={menuOpen}
             >
               <span className={`block w-6 h-0.5 bg-[#1C3A2E] transition-all duration-300 origin-center ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
               <span className={`block w-6 h-0.5 bg-[#1C3A2E] transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
@@ -500,26 +510,53 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ── Mobile Menu ── */}
+      {/* ── Mobile Menu (fixed panel + scroll) ── */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? "max-h-[min(90vh,920px)] opacity-100" : "max-h-0 opacity-0"}`}
+        className={`md:hidden fixed inset-x-0 top-[70px] z-40 transition-[visibility,opacity] duration-300 ${
+          menuOpen ? "visible opacity-100" : "invisible pointer-events-none opacity-0"
+        }`}
+        aria-hidden={!menuOpen}
       >
-        <div className="bg-[#F5F0E8] border-t border-[#D4A017]/30 px-4 sm:px-6 py-4 flex flex-col max-h-[85vh] overflow-y-auto gap-0.5">
-          {allMobileLinks.map((item) => (
-            <MobileAccordion
-              key={"mega" in item && item.mega ? "courses-mega" : item.href}
-              item={item as NavItem}
-              onNavigate={() => setMenuOpen(false)}
-            />
-          ))}
-          <Link
-            href="/book-trial"
-            onClick={() => setMenuOpen(false)}
-            className="mt-4 bg-[#1C3A2E] text-[#F5F0E8] text-sm font-semibold px-5 py-3 rounded-full text-center hover:bg-[#2D5A3D] transition-colors tracking-wide flex items-center justify-center gap-2"
-          >
-            {t("nav.bookTrial")}{" "}
-            <span className="text-[#D4A017] inline-block rtl:rotate-180">→</span>
-          </Link>
+        <button
+          type="button"
+          tabIndex={menuOpen ? 0 : -1}
+          className="absolute inset-0 bg-[#1a3328]/30 backdrop-blur-[2px]"
+          aria-label={t("nav.closeMenu")}
+          onClick={() => setMenuOpen(false)}
+        />
+        <div
+          className="relative max-h-[calc(100dvh-70px)] overflow-y-auto overscroll-contain border-t border-[#D4A017]/30 bg-[#F5F0E8] px-4 py-4 pb-8 shadow-[0_16px_40px_rgba(28,58,46,0.12)] sm:px-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("nav.mobileMenu")}
+        >
+          <div className="flex flex-col gap-0.5">
+            {primaryNav.map((item) => (
+              <MobileAccordion
+                key={"mega" in item && item.mega ? "courses-mega" : item.href}
+                item={item}
+                onNavigate={() => setMenuOpen(false)}
+              />
+            ))}
+            <p className="mt-3 mb-1 border-t border-[#D4A017]/20 pt-3 font-sans text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7a6f4a] nav-more-label">
+              {t("nav.more")}
+            </p>
+            {moreNav.map((item) => (
+              <MobileAccordion
+                key={item.href}
+                item={item}
+                onNavigate={() => setMenuOpen(false)}
+              />
+            ))}
+            <Link
+              href="/book-trial"
+              onClick={() => setMenuOpen(false)}
+              className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[#1C3A2E] px-5 py-3.5 text-center text-sm font-semibold tracking-wide text-[#F5F0E8] transition-colors hover:bg-[#2D5A3D]"
+            >
+              {t("nav.bookTrial")}
+              <span className="inline-block text-[#D4A017] rtl:rotate-180">→</span>
+            </Link>
+          </div>
         </div>
       </div>
     </nav>

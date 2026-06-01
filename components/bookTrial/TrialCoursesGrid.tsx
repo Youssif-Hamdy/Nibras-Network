@@ -154,7 +154,7 @@ export function TrialCoursesGrid({
       <div className="flex min-h-[38px] flex-wrap items-center gap-2">
         {selectedList.length === 0 ? (
           <span className="text-[13px] italic text-[#a0b0a5]">
-            No courses selected yet…
+            {locale === "ar" ? "لم تُختر دورات بعد…" : "No courses selected yet…"}
           </span>
         ) : (
           selectedList.map(({ href, label, icon }) => {
@@ -172,7 +172,8 @@ export function TrialCoursesGrid({
       </div>
 
       {/* ── Tabs ── */}
-      <div className="flex border-b-2 border-[#dce8df]">
+      <div className="-mx-1 overflow-x-auto overscroll-x-contain px-1 [scrollbar-width:thin]">
+        <div className="flex min-w-max border-b-2 border-[#dce8df]" role="tablist">
         {TRIAL_SUBJECTS.map((subj) => {
           const Icon = ICONS[subj.icon] ?? BookOpen;
           const acc = ACCENT[subj.icon] ?? ACCENT[DEFAULT_ICON];
@@ -185,7 +186,7 @@ export function TrialCoursesGrid({
               type="button"
               onClick={() => handleTabClick(subj.title)}
               className={[
-                "flex items-center gap-1.5 px-4 py-2.5 text-[13px] font-medium transition-all duration-150 -mb-[2px]",
+                "flex shrink-0 items-center gap-1.5 px-3 py-2.5 text-[12px] font-medium transition-all duration-150 -mb-[2px] sm:px-4 sm:text-[13px]",
                 isActive
                   ? acc.tabActive
                   : "border-b-[3px] border-transparent text-[#6b8070] hover:text-[#2a4a35]",
@@ -194,7 +195,7 @@ export function TrialCoursesGrid({
               role="tab"
             >
               <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden />
-              <span>{megaSubjectTitle(locale, subj.title)}</span>
+              <span className="whitespace-nowrap">{megaSubjectTitle(locale, subj.title)}</span>
               <span
                 className={[
                   "rounded-full px-1.5 py-0.5 text-[11px] font-bold",
@@ -208,6 +209,7 @@ export function TrialCoursesGrid({
             </button>
           );
         })}
+        </div>
       </div>
 
       {/* ── Course pills for active tab ── */}

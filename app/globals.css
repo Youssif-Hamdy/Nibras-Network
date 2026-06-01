@@ -23,6 +23,11 @@ html[lang="ar"] body {
   letter-spacing: normal;
 }
 
+.nav-ar-locale .nav-more-label {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
 /* Firefox */
 html,
 body,

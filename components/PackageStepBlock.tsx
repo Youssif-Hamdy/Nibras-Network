@@ -71,7 +71,7 @@ export function PackageStepBlock({
       </div>
       <p className="mb-4 text-[12px] text-[#7a9485]">{copy.packagesChooseCategory}</p>
 
-      <div className="mb-4 grid grid-cols-3 gap-2">
+      <div className="mb-4 grid grid-cols-1 gap-2 min-[380px]:grid-cols-3">
         {(
           [
             { cat: "p" as const, label: copy.packagesPrivate },
@@ -84,7 +84,7 @@ export function PackageStepBlock({
             type="button"
             onClick={() => onSelectCategory(cat)}
             className={[
-              "rounded-xl border px-2 py-2.5 text-[11px] font-semibold leading-tight transition-all sm:text-[12px]",
+              "rounded-xl border px-3 py-3 text-[12px] font-semibold leading-tight transition-all min-[380px]:px-2 min-[380px]:py-2.5 min-[380px]:text-[11px] sm:text-[12px]",
               packageCategory === cat
                 ? "border-[#1C3A2E] bg-[#1C3A2E] text-white shadow-sm"
                 : "border-[#d8e5db] bg-white text-[#3a5040] hover:border-[#4a7a5a] hover:bg-[#f4faf5]",
@@ -130,7 +130,7 @@ export function PackageStepBlock({
                 {familyRow.hours} {isAr ? "ساعات / شهر" : "hours / month"}
               </span>
             </div>
-            <ul className="grid gap-2 sm:grid-cols-3">
+            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-3">
               {(["m2", "m3", "m4"] as const).map((tier) => {
                 const id = `f:${familyRowIdx}:${tier}`;
                 const cell = familyRow[tier];

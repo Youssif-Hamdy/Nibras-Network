@@ -63,7 +63,8 @@ const selectBase = [
   "appearance-none cursor-pointer",
   "bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2218%22%20height%3D%2218%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%231C3A2E%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%2F%3E%3C%2Fsvg%3E')]",
   "bg-no-repeat bg-[right_0.85rem_center]",
-  "pr-10",
+  "pe-10 ps-4",
+  "[dir=rtl]:bg-[position:left_0.85rem_center]",
 ].join(" ");
 
 const inputBase = [
@@ -517,33 +518,35 @@ export default function BookTrialPageContent() {
 
   return (
     <div
-      className="relative flex-1 text-[#1a2f45]"
+      className="relative flex-1 overflow-x-hidden text-[#1a2f45]"
       style={{ background: "linear-gradient(160deg,#eef4ee 0%,#f5f7f2 50%,#eaf0ea 100%)" }}
       dir={isAr ? "rtl" : "ltr"}
       lang={locale}
     >
-      <div className="mx-auto max-w-3xl px-4 pt-[calc(70px+1.5rem)] pb-16 sm:px-6 md:pt-[calc(80px+2rem)] md:pb-24">
+      <div className="mx-auto w-full max-w-3xl px-4 pt-[calc(70px+1.25rem)] pb-16 sm:px-6 md:pt-[calc(80px+2rem)] md:pb-24">
 
         {/* Header */}
-        <header className="mb-10 text-center">
-          <h1 className="font-serif text-3xl font-bold text-[#0e2a1e] sm:text-4xl">{copy.pageTitle}</h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-[#4a6355] sm:text-base leading-relaxed">
+        <header className="mb-8 text-center sm:mb-10">
+          <h1 className={`text-2xl font-bold text-[#0e2a1e] sm:text-3xl md:text-4xl ${isAr ? "font-sans" : "font-serif"}`}>
+            {copy.pageTitle}
+          </h1>
+          <p className="mx-auto mt-3 max-w-xl text-[13px] text-[#4a6355] sm:text-base leading-relaxed px-1">
             {copy.pageSubtitle}
           </p>
         </header>
 
         {/* Form card */}
-        <div className="rounded-2xl border border-[#cad9cc] bg-white shadow-[0_12px_48px_rgba(28,58,46,0.10)] overflow-hidden">
+        <div className="overflow-hidden rounded-2xl border border-[#cad9cc] bg-white shadow-[0_12px_48px_rgba(28,58,46,0.10)]">
 
           {/* Privacy banner */}
-          <div className="flex items-center justify-center gap-2 bg-[#1C3A2E] px-4 py-3">
-            <svg className="h-4 w-4 text-[#8fcfa4] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <div className="flex items-start justify-center gap-2 bg-[#1C3A2E] px-4 py-3 text-center sm:items-center">
+            <svg className="mt-0.5 h-4 w-4 shrink-0 text-[#8fcfa4] sm:mt-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
-            <p className="text-sm font-medium text-[#c8e8d0]">{copy.privacyBanner}</p>
+            <p className="text-[13px] font-medium leading-snug text-[#c8e8d0] sm:text-sm">{copy.privacyBanner}</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-7 p-6 sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-6 p-4 sm:space-y-7 sm:p-8">
 
             {/* Status */}
             {formSuccess && (
@@ -715,9 +718,9 @@ export default function BookTrialPageContent() {
             {/* Courses (standard packages only) */}
             {!isFamilyPkg ? (
               <SectionCard>
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
+                <div className="mb-5 flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-2">
                   <h2 className="text-sm font-bold text-[#0e2a1e]">{copy.coursesSection}{req}</h2>
-                  <p className="text-[12px] text-[#7a9485]">{copy.coursesHint}</p>
+                  <p className="text-[12px] leading-relaxed text-[#7a9485]">{copy.coursesHint}</p>
                 </div>
                 <TrialCoursesGrid locale={locale} selectedHrefs={courses} onToggle={toggleCourse} />
               </SectionCard>
@@ -825,10 +828,19 @@ export default function BookTrialPageContent() {
             </div>
 
             <div className="pt-1">
-              <button type="submit" disabled={isSubmitting}
-                className="group inline-flex items-center gap-2 rounded-xl bg-[#1C3A2E] px-8 py-3 text-sm font-semibold text-white shadow-md shadow-[#1C3A2E]/20 transition-all duration-150 hover:bg-[#163028] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#1C3A2E] px-8 py-3.5 text-sm font-semibold text-white shadow-md shadow-[#1C3A2E]/20 transition-all duration-150 hover:bg-[#163028] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:inline-flex sm:w-auto"
+              >
                 {isSubmitting ? copy.submitting : copy.submit}
-                <svg className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <svg
+                  className={`h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5 ${isAr ? "rotate-180 group-hover:-translate-x-0.5" : ""}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                 </svg>
               </button>

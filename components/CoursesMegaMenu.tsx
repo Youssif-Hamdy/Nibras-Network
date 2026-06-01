@@ -376,6 +376,7 @@ export function CoursesMegaPanel({
 
 export function CoursesMobileMega({ onPickLink }: { onPickLink?: () => void }) {
   const { locale, t } = useI18n();
+  const isAr = locale === "ar";
   const [openTab, setOpenTab] = useState<Tab | null>("subject");
 
   const tabs = useMemo(
@@ -390,47 +391,59 @@ export function CoursesMobileMega({ onPickLink }: { onPickLink?: () => void }) {
   );
 
   return (
-    <div className="rounded-xl border border-[#c5ddd2] bg-[#f4faf7] p-2 mt-2">
+    <div className="mt-1 rounded-xl border border-[#c5ddd2] bg-[#f4faf7] p-2">
       <ul className="space-y-1">
         {tabs.map((tab) => {
           const isOpen = openTab === tab.id;
           return (
-            <li key={tab.id} className="rounded-lg overflow-hidden border border-[#d0e5dc] bg-white">
+            <li key={tab.id} className="overflow-hidden rounded-lg border border-[#d0e5dc] bg-white">
               <button
                 type="button"
                 onClick={() => setOpenTab(isOpen ? null : tab.id)}
-                className="flex w-full items-center justify-between gap-2 px-3 py-3 text-[13px] font-semibold text-[#1C3A2E] hover:bg-[#eef8f4]"
+                className="flex w-full items-center justify-between gap-2 px-3 py-3 text-start text-[13px] font-semibold text-[#1C3A2E] hover:bg-[#eef8f4]"
+                aria-expanded={isOpen}
               >
                 {tab.label}
                 <ChevronRight
                   size={15}
-                  className={`text-[#5a7a6e] transition-transform ${isOpen ? "rotate-90" : ""}`}
+                  className={`shrink-0 text-[#5a7a6e] transition-transform ${
+                    isOpen ? (isAr ? "-rotate-90" : "rotate-90") : isAr ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
-              <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
-                }`}
-              >
+              {isOpen ? (
                 <div className="border-t border-[#eef4f0] bg-[#eef8f4] p-3">
+                  <div className="max-h-[min(50vh,360px)] overflow-y-auto overscroll-contain pe-0.5">
 
                   {tab.id === "subject" && (
-                    <ul className="space-y-0.5">
-                      {MEGA_BY_SUBJECT.flatMap((col) =>
-                        col.links.map((l) => (
-                          <li key={l.href}>
-                            <Link
-                              href={l.href}
-                              onClick={() => onPickLink?.()}
-                              className="block px-2 py-2 text-[12px] font-medium text-[#2d4a40] hover:bg-white/90 hover:text-[#B8860B] rounded"
-                            >
-                              {megaHrefLabel(locale, l.href, l.label)}
-                            </Link>
-                          </li>
-                        ))
-                      )}
-                    </ul>
+                    <div className="space-y-4">
+                      {MEGA_BY_SUBJECT.map((col) => (
+                        <div key={col.title}>
+                          <p
+                            className={`mb-1.5 flex items-center gap-1.5 px-1 text-[11px] font-bold text-[#1C3A2E] ${
+                              isAr ? "" : "uppercase tracking-wide"
+                            }`}
+                          >
+                            <Icon name={col.icon} size={13} className="text-[#1c7a45]" />
+                            {megaSubjectTitle(locale, col.title)}
+                          </p>
+                          <ul className="space-y-0.5">
+                            {col.links.map((l) => (
+                              <li key={l.href}>
+                                <Link
+                                  href={l.href}
+                                  onClick={() => onPickLink?.()}
+                                  className="block rounded px-2 py-2 text-[12px] font-medium text-[#2d4a40] hover:bg-white/90 hover:text-[#B8860B]"
+                                >
+                                  {megaHrefLabel(locale, l.href, l.label)}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
                   )}
 
                   {tab.id === "level" && (
@@ -499,8 +512,9 @@ export function CoursesMobileMega({ onPickLink }: { onPickLink?: () => void }) {
                     </ul>
                   )}
 
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </li>
           );
         })}
