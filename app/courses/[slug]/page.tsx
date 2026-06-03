@@ -4,20 +4,17 @@ import Navbar from "@/components/Navbar";
 import QuranCoursePageContent from "@/components/QuranCoursePageContent";
 import SiteFooter from "@/components/SiteFooter";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
-import {
-  getQuranCourse,
-  QURAN_PROGRAM_SLUGS,
-} from "@/lib/courses/quran";
+import { COURSE_PROGRAM_SLUGS, getCourse } from "@/lib/courses/catalog";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return QURAN_PROGRAM_SLUGS.map((slug) => ({ slug }));
+  return COURSE_PROGRAM_SLUGS.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const course = getQuranCourse(slug);
+  const course = getCourse(slug);
   if (!course) return { title: "Course | Nibras Network" };
   return {
     title: `${course.seoTitles[0]}`,
@@ -32,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function QuranCoursePage({ params }: Props) {
   const { slug } = await params;
-  if (!getQuranCourse(slug)) notFound();
+  if (!getCourse(slug)) notFound();
 
   return (
     <main className="relative flex min-h-screen flex-col">

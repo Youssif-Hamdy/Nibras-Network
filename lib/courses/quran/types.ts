@@ -17,6 +17,11 @@ export type SuccessStory = {
   meta: string[];
 };
 
+export type CourseFaq = {
+  question: string;
+  answer: string;
+};
+
 export type QuranCourse = {
   slug: string;
   title: string;
@@ -47,6 +52,7 @@ export type QuranCourse = {
   };
   progression: string[];
   stories: SuccessStory[];
+  faqs?: CourseFaq[];
   includes: string[];
   offer: {
     lines: string[];

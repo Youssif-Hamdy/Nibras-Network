@@ -19,6 +19,8 @@ export type SubjectColumn = {
   title: string;
   icon: string; // lucide-react icon name
   count?: number;
+  /** Main landing page for this subject column (e.g. Kids Programs hub) */
+  hubHref?: string;
   links: { label: string; href: string }[];
 };
 
@@ -53,7 +55,7 @@ export const MEGA_BY_SUBJECT: SubjectColumn[] = [
   {
     title: "Islamic Studies",
     icon: "Landmark",
-    count: 7,
+    count: 6,
     links: [
       { label: "Islamic General (Comprehensive)",   href: "/courses/islamic-general"      },
       { label: "Aqeedah (Islamic Creed)",           href: "/courses/aqeedah"              },
@@ -61,30 +63,36 @@ export const MEGA_BY_SUBJECT: SubjectColumn[] = [
       { label: "Hadith Studies",                    href: "/courses/hadith-studies"       },
       { label: "Seerah (Prophet's Biography)",      href: "/courses/seerah"               },
       { label: "Tafsir (Quran Interpretation)",     href: "/courses/tafsir-islamic"       },
-      { label: "New Muslims Track (FREE 3 months)", href: "/courses/new-muslims-track"    },
     ],
   },
   {
     title: "Kids Programs",
     icon: "Baby",
-    count: 4,
+    hubHref: "/courses/kids-programs",
+    count: 6,
     links: [
-      { label: "Fun Quran (Ages 5-8)",              href: "/courses/fun-quran"            },
-      { label: "Junior Quran (Ages 9-12)",          href: "/courses/junior-quran"         },
-      { label: "Teen Islamic Studies (Ages 13-17)", href: "/courses/teen-islamic-studies" },
-      { label: "Kids Hifz Program (Ages 6-12)",     href: "/courses/kids-hifz"            },
+      { label: "By Age",           href: "/courses/kids-programs#by-age"   },
+      { label: "Quran Learning",   href: "/courses/kids-programs#quran"    },
+      { label: "Arabic Language",  href: "/courses/kids-programs#arabic"   },
+      { label: "Islamic Studies",  href: "/courses/kids-programs#islamic"  },
+      { label: "Learning Goals",   href: "/courses/kids-programs#goals"    },
+      { label: "Parent Zone",      href: "/courses/kids-programs#parent"   },
     ],
   },
   {
     title: "Special Programs",
     icon: "Briefcase",
-    count: 5,
+    count: 9,
     links: [
-      { label: "Family Packages (Save 30%)",        href: "/courses/family-packages"      },
-      { label: "Special Needs Support",             href: "/courses/special-needs-support"},
-      { label: "Ijazah Pathway (Advanced)",         href: "/courses/ijazah-pathway"       },
-      { label: "Corporate Training",                href: "/courses/corporate-training"   },
-      { label: "Teacher Certification",             href: "/courses/teacher-certification"},
+      { label: "New Muslims Track",                 href: "/courses/new-muslims-track"      },
+      { label: "Family Packages (Save 20–30%)",     href: "/courses/family-packages"        },
+      { label: "Special Needs Support",             href: "/courses/special-needs-support"  },
+      { label: "Intensive Programs",                href: "/courses/intensive-programs"     },
+      { label: "Exam & Certification Preparation",  href: "/courses/exam-preparation"     },
+      { label: "Parent-Guided Programs",            href: "/courses/parent-guided-programs" },
+      { label: "Ijazah Pathway",                    href: "/courses/ijazah-pathway"         },
+      { label: "Teacher Certification",             href: "/courses/teacher-certification"  },
+      { label: "Corporate Training",                href: "/courses/corporate-training"     },
     ],
   },
 ];

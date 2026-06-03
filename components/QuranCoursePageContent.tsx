@@ -15,7 +15,10 @@ import {
 } from "lucide-react";
 import { useI18n } from "@/components/LocaleProvider";
 import { useReveal } from "@/hooks/useReveal";
-import { getQuranCourse } from "@/lib/courses/quran";
+import { getCourse } from "@/lib/courses/catalog";
+import { ARABIC_PROGRAM_SLUGS } from "@/lib/courses/arabic";
+import { ISLAMIC_PROGRAM_SLUGS } from "@/lib/courses/islamic";
+import { SPECIAL_PROGRAM_SLUGS } from "@/lib/courses/special";
 import { getQuranCourseUi } from "@/lib/i18n/quranCourseUi";
 
 function Reveal({
@@ -141,7 +144,7 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
   const isAr = locale === "ar";
   const hf = isAr ? "font-sans" : "font-serif";
   const ui = useMemo(() => getQuranCourseUi(locale), [locale]);
-  const course = useMemo(() => getQuranCourse(slug, locale), [slug, locale]);
+  const course = useMemo(() => getCourse(slug, locale), [slug, locale]);
 
   useEffect(() => {
     if (!course) return;
@@ -151,12 +154,29 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
   if (!course) return null;
 
   const accent = course.accent;
+  const isArabicProgram = ARABIC_PROGRAM_SLUGS.includes(slug);
+  const isIslamicProgram = ISLAMIC_PROGRAM_SLUGS.includes(slug);
+  const isSpecialProgram = SPECIAL_PROGRAM_SLUGS.includes(slug);
+  const programKicker = isArabicProgram
+    ? isAr
+      ? "برامج اللغة العربية"
+      : "Arabic Language Programs"
+    : isIslamicProgram
+      ? isAr
+        ? "برامج الدراسات الإسلامية"
+        : "Islamic Studies Programs"
+      : isSpecialProgram
+        ? isAr
+          ? "البرامج الخاصة"
+          : "Special Programs"
+        : ui.programsKicker;
 
   const navSections = [
     { id: "overview", label: ui.navOverview },
     { id: "curriculum", label: ui.navCurriculum },
     { id: "methods", label: ui.navMethods },
     { id: "stories", label: ui.navStories },
+    ...(course.faqs?.length ? [{ id: "faqs", label: isAr ? "الأسئلة الشائعة" : "FAQs" }] : []),
     { id: "enroll", label: ui.navEnroll },
   ];
 
@@ -203,7 +223,7 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
                   }`}
                 >
                   <BookOpen className="h-3.5 w-3.5" style={{ color: accent }} aria-hidden />
-                  {ui.programsKicker}
+                  {programKicker}
                 </p>
                 <h1
                   className={`mb-4 text-[1.75rem] font-semibold leading-[1.12] tracking-tight text-[#1a3328] sm:text-4xl md:text-[2.5rem] ${hf}`}
@@ -583,6 +603,32 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
             </ul>
           </Reveal>
         </section>
+
+        {/* FAQs */}
+        {course.faqs?.length ? (
+          <section id="faqs" className="py-10 md:py-14">
+            <Reveal>
+              <SectionHeading
+                id="faqs-heading"
+                kicker={isAr ? "إجابات واضحة قبل التسجيل" : "Clear answers before enrollment"}
+                title={isAr ? "الأسئلة الشائعة" : "Frequently Asked Questions"}
+                isAr={isAr}
+              />
+            </Reveal>
+            <div className="mt-8 space-y-3">
+              {course.faqs.map((faq, i) => (
+                <Reveal key={faq.question} delayMs={i * 45}>
+                  <details className="group rounded-2xl border border-[#e8e4dc] bg-white/90 p-5 open:border-[#d4a017]/35">
+                    <summary className="cursor-pointer list-none text-[14px] font-semibold text-[#1a3328] sm:text-[15px]">
+                      {faq.question}
+                    </summary>
+                    <p className="mt-3 text-[14px] leading-relaxed text-[#4d5f56] sm:text-[15px]">{faq.answer}</p>
+                  </details>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {/* Enroll / Pricing */}
         <section id="enroll" className="py-10 md:py-14">

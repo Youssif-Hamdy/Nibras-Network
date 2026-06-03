@@ -1,7 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type RefObject,
+} from "react";
 import {
   MEGA_BY_SUBJECT,
   MEGA_BY_LEVEL,
@@ -71,49 +79,130 @@ function QuickToolsStrip({ afterNavigate }: { afterNavigate?: () => void }) {
   );
 }
 
+// ─── By Subject colour themes (per icon) ───────────────────────────────────────
+
+const SUBJECT_THEME: Record<
+  string,
+  { accent: string; bg: string; hover: string; border: string }
+> = {
+  BookOpen: {
+    accent: "#1C3A2E",
+    bg: "#eaf6ee",
+    hover: "#d6ede0",
+    border: "#1C3A2E33",
+  },
+  PenLine: {
+    accent: "#1a4a6b",
+    bg: "#eaf1f8",
+    hover: "#d4e4f0",
+    border: "#1a4a6b33",
+  },
+  Landmark: {
+    accent: "#7a3d10",
+    bg: "#faf0e8",
+    hover: "#f0e0d0",
+    border: "#7a3d1033",
+  },
+  Baby: {
+    accent: "#C25B7A",
+    bg: "#FDF0F6",
+    hover: "#f5dce8",
+    border: "#C25B7A33",
+  },
+  Briefcase: {
+    accent: "#0D9488",
+    bg: "#E6F7F5",
+    hover: "#cceee9",
+    border: "#0D948833",
+  },
+};
+
+const DEFAULT_SUBJECT_THEME = SUBJECT_THEME.BookOpen;
+
+function subjectTheme(icon: string) {
+  return SUBJECT_THEME[icon] ?? DEFAULT_SUBJECT_THEME;
+}
+
 // ─── Tab 1: By Subject ────────────────────────────────────────────────────────
 
 function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
   const { locale } = useI18n();
   return (
-    <div className="grid grid-cols-5 gap-5">
-      {MEGA_BY_SUBJECT.map((col) => (
-        <div key={col.title} className="flex flex-col gap-1.5">
-          <div className="flex items-center gap-1.5 pb-2 border-b-2 border-[#e8f5ee]">
-            <Icon name={col.icon} size={14} className="text-[#1C7A45] flex-shrink-0" />
-            <span
-              className={`text-[11px] font-bold text-[#1C3A2E] tracking-[0.05em] leading-tight ${
-                locale === "en" ? "uppercase" : ""
-              }`}
-            >
-              {megaSubjectTitle(locale, col.title)}
-            </span>
-            {col.count && (
-              <span className="ms-auto text-[10px] font-bold bg-[#e8f5ee] text-[#1c7a45] rounded-full px-1.5">
-                {col.count}
+    <div className="grid grid-cols-5 gap-3">
+      {MEGA_BY_SUBJECT.map((col) => {
+        const theme = subjectTheme(col.icon);
+        const titleCls = `text-[10.5px] font-bold tracking-[0.04em] leading-tight transition-colors ${
+          locale === "en" ? "uppercase" : ""
+        }`;
+
+        return (
+          <div
+            key={col.title}
+            className="flex min-w-0 flex-col rounded-xl border p-2.5"
+            style={
+              {
+                backgroundColor: theme.bg,
+                borderColor: theme.border,
+                borderTopWidth: 3,
+                borderTopColor: theme.accent,
+                "--subject-accent": theme.accent,
+                "--subject-hover": theme.hover,
+              } as CSSProperties
+            }
+          >
+            <div className="mb-2 flex items-start gap-1.5">
+              <span
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/70 shadow-sm"
+                style={{ color: theme.accent }}
+              >
+                <Icon name={col.icon} size={14} />
               </span>
-            )}
-          </div>
-          <ul className="space-y-0.5">
-            {col.links.map((l) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  onClick={() => afterNavigate?.()}
-                  className="flex items-center gap-1.5 px-1.5 py-1.5 rounded-md text-[12px] text-[#374151] hover:bg-[#f0faf4] hover:text-[#1C3A2E] transition-colors leading-tight"
+              <div className="min-w-0 flex-1 pt-0.5">
+                {col.hubHref ? (
+                  <Link
+                    href={col.hubHref}
+                    onClick={() => afterNavigate?.()}
+                    className={`${titleCls} hover:opacity-80`}
+                    style={{ color: theme.accent }}
+                  >
+                    {megaSubjectTitle(locale, col.title)}
+                  </Link>
+                ) : (
+                  <span className={titleCls} style={{ color: theme.accent }}>
+                    {megaSubjectTitle(locale, col.title)}
+                  </span>
+                )}
+              </div>
+              {col.count != null && (
+                <span
+                  className="shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-bold text-white"
+                  style={{ backgroundColor: theme.accent }}
                 >
-                  <span className="flex-1">{megaHrefLabel(locale, l.href, l.label)}</span>
-                  {"badge" in l && (l as { badge?: string }).badge && (
-                    <span className="text-[9px] font-bold bg-[#fef3c7] text-[#92400e] rounded px-1.5 py-0.5 whitespace-nowrap flex-shrink-0">
-                      {(l as { badge?: string }).badge}
-                    </span>
-                  )}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+                  {col.count}
+                </span>
+              )}
+            </div>
+            <ul className="flex flex-1 flex-col gap-0.5">
+              {col.links.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    onClick={() => afterNavigate?.()}
+                    className="flex items-center gap-1 rounded-md px-1.5 py-1 text-[11px] leading-snug text-[#374151] transition-colors hover:bg-[var(--subject-hover)] hover:text-[var(--subject-accent)]"
+                  >
+                    <span className="flex-1">{megaHrefLabel(locale, l.href, l.label)}</span>
+                    {"badge" in l && (l as { badge?: string }).badge && (
+                      <span className="shrink-0 whitespace-nowrap rounded px-1 py-0.5 text-[9px] font-bold bg-[#fef3c7] text-[#92400e]">
+                        {(l as { badge?: string }).badge}
+                      </span>
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -417,32 +506,71 @@ export function CoursesMobileMega({ onPickLink }: { onPickLink?: () => void }) {
                   <div className="max-h-[min(50vh,360px)] overflow-y-auto overscroll-contain pe-0.5">
 
                   {tab.id === "subject" && (
-                    <div className="space-y-4">
-                      {MEGA_BY_SUBJECT.map((col) => (
-                        <div key={col.title}>
-                          <p
-                            className={`mb-1.5 flex items-center gap-1.5 px-1 text-[11px] font-bold text-[#1C3A2E] ${
-                              isAr ? "" : "uppercase tracking-wide"
-                            }`}
+                    <div className="space-y-3">
+                      {MEGA_BY_SUBJECT.map((col) => {
+                        const theme = subjectTheme(col.icon);
+                        const titleCls = `text-[11px] font-bold ${
+                          isAr ? "" : "uppercase tracking-wide"
+                        }`;
+                        return (
+                          <div
+                            key={col.title}
+                            className="rounded-xl border p-2.5"
+                            style={{
+                              backgroundColor: theme.bg,
+                              borderColor: theme.border,
+                              borderTopWidth: 3,
+                              borderTopColor: theme.accent,
+                              "--subject-accent": theme.accent,
+                              "--subject-hover": theme.hover,
+                            } as CSSProperties}
                           >
-                            <Icon name={col.icon} size={13} className="text-[#1c7a45]" />
-                            {megaSubjectTitle(locale, col.title)}
-                          </p>
-                          <ul className="space-y-0.5">
-                            {col.links.map((l) => (
-                              <li key={l.href}>
+                            <div className="mb-2 flex items-center gap-1.5">
+                              <span
+                                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/70"
+                                style={{ color: theme.accent }}
+                              >
+                                <Icon name={col.icon} size={12} />
+                              </span>
+                              {col.hubHref ? (
                                 <Link
-                                  href={l.href}
+                                  href={col.hubHref}
                                   onClick={() => onPickLink?.()}
-                                  className="block rounded px-2 py-2 text-[12px] font-medium text-[#2d4a40] hover:bg-white/90 hover:text-[#B8860B]"
+                                  className={`${titleCls} flex-1 hover:opacity-80`}
+                                  style={{ color: theme.accent }}
                                 >
-                                  {megaHrefLabel(locale, l.href, l.label)}
+                                  {megaSubjectTitle(locale, col.title)}
                                 </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
+                              ) : (
+                                <p className={`${titleCls} flex-1`} style={{ color: theme.accent }}>
+                                  {megaSubjectTitle(locale, col.title)}
+                                </p>
+                              )}
+                              {col.count != null && (
+                                <span
+                                  className="rounded-full px-1.5 py-0.5 text-[9px] font-bold text-white"
+                                  style={{ backgroundColor: theme.accent }}
+                                >
+                                  {col.count}
+                                </span>
+                              )}
+                            </div>
+                            <ul className="space-y-0.5">
+                              {col.links.map((l) => (
+                                <li key={l.href}>
+                                  <Link
+                                    href={l.href}
+                                    onClick={() => onPickLink?.()}
+                                    className="block rounded-md px-2 py-1.5 text-[12px] font-medium text-[#2d4a40] transition-colors hover:bg-[var(--subject-hover)] hover:text-[var(--subject-accent)]"
+                                  >
+                                    {megaHrefLabel(locale, l.href, l.label)}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
 

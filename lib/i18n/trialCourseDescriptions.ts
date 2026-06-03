@@ -84,6 +84,38 @@ export const TRIAL_COURSE_DESCRIPTIONS: Record<string, CourseDesc> = {
     en: "FREE 3-month guided path for new Muslims — Islam basics, prayer, and your next learning steps.",
     ar: "مسار مجاني 3 أشهر للمسلمين الجدد — أساسيات الإسلام والصلاة وخطواتك التالية في التعلّم.",
   },
+  "/courses/family-packages": {
+    en: "Family bundles from $8/hour — save 20–30% when 2+ members learn together with individual tracks.",
+    ar: "باقات عائلية من 8$/ساعة — وفر 20–30٪ عند تعلّم فردين فأكثر بمسارات فردية.",
+  },
+  "/courses/special-needs-support": {
+    en: "One-to-one adaptive Quran and Arabic learning with consultation and gentle pacing.",
+    ar: "تعلّم قرآن وعربية فردي تكيّفي مع استشارة ووتيرة لطيفة.",
+  },
+  "/courses/intensive-programs": {
+    en: "Fast-track Quran, Tajweed, or Hifz — 3–5 sessions weekly with structured accountability.",
+    ar: "مسار معجّل للقرآن أو التجويد أو الحفظ — 3–5 حصص أسبوعياً مع مساءلة منظّمة.",
+  },
+  "/courses/exam-preparation": {
+    en: "Placement, targeted revision, and mock tests for certification readiness.",
+    ar: "تحديد مستوى ومراجعة موجّهة واختبارات تجريبية للاستعداد للشهادة.",
+  },
+  "/courses/parent-guided-programs": {
+    en: "Teacher-led lessons plus parent reinforcement tools, checklists, and weekly reports.",
+    ar: "دروس معلّم + أدوات تعزيز للوالدين وقوائم وتقارير أسبوعية.",
+  },
+  "/courses/ijazah-pathway": {
+    en: "Advanced scholarly recitation path — precision review and full verification under teacher approval.",
+    ar: "مسار تلاوة علمي متقدّم — مراجعة دقيقة وتحقق كامل بموافقة المعلّم.",
+  },
+  "/courses/teacher-certification": {
+    en: "Professional Quran and Arabic teacher training — coursework, supervised practice, certification.",
+    ar: "تأهيل معلّمي قرآن وعربية — مقررات وممارسة بإشراف وشهادة مهنية.",
+  },
+  "/courses/corporate-training": {
+    en: "Custom institutional Arabic and Islamic training — live, cohort, or hybrid delivery.",
+    ar: "تدريب عربي وإسلامي مؤسسي مخصّص — مباشر أو مجموعات أو هجين.",
+  },
 };
 
 export function trialCourseDescription(href: string, locale: Locale): string | null {
