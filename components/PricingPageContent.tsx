@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type ReactNode, type SVGProps } from "react";
+import { useCallback, useEffect, useState, type ReactNode, type SVGProps } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import { useI18n } from "@/components/LocaleProvider";
 import { PRIVATE_PKGS, GROUP_PKGS, FAM_ROWS } from "@/lib/pricing/packageTiers";
@@ -754,6 +754,238 @@ function PricingTabs({
   );
 }
 
+/* ─── Section 1 — Auto card slider (left column) ─────────────────── */
+const HERO_SLIDE_COUNT = 3;
+const HERO_SLIDE_MS = 4800;
+
+function HeroPaymentCardSlider({ isAr }: { isAr: boolean }) {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const next = useCallback(() => {
+    setIndex((i) => (i + 1) % HERO_SLIDE_COUNT);
+  }, []);
+
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(next, HERO_SLIDE_MS);
+    return () => window.clearInterval(id);
+  }, [paused, next]);
+
+  const dotsLabel = isAr ? "انتقل إلى البطاقة" : "Go to card";
+  const slideShell =
+    "s1-card s1-slide-card flex h-full min-h-[288px] w-full flex-col overflow-hidden rounded-[18px] border bg-white";
+  const slideBody = "flex flex-1 flex-col px-4 pt-5 pb-6 sm:px-7";
+  const slideIcon =
+    "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-[#F2D58C]";
+  const slideDivider = "mb-4 h-px bg-gradient-to-r from-transparent via-[#B49B44]/20 to-transparent";
+
+  return (
+    <div
+      className="s1-slider mx-auto w-full max-w-[388px] lg:max-w-[420px]"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
+      <div
+        className="s1-slider-viewport relative overflow-hidden rounded-[18px]"
+        aria-roledescription="carousel"
+        aria-label={isAr ? "بطاقات الدفع والضمان" : "Payment & guarantee cards"}
+      >
+        <div
+          className="s1-slider-track flex h-full items-stretch will-change-transform"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+          dir="ltr"
+        >
+          {/* Slide 1 — Money-back / main */}
+          <div className="flex min-h-[288px] min-w-full shrink-0 px-0.5">
+            <div
+              className={`${slideShell} s1-main-card border-[#B49B44]/32`}
+              style={{
+                boxShadow:
+                  "0 20px 54px rgba(180,155,68,0.13), 0 4px 16px rgba(26,26,20,0.08), 0 1px 4px rgba(26,26,20,0.04)",
+              }}
+            >
+              <div className="h-[3px] w-full bg-gradient-to-r from-[#254A3A]/50 via-[#B49B44]/60 to-[#254A3A]/50" />
+              <div className={slideBody} dir={isAr ? "rtl" : "ltr"}>
+                <div className="mb-4 flex items-center gap-3">
+                  <div
+                    className={slideIcon}
+                    style={{
+                      background: "linear-gradient(135deg, #254A3A 0%, #1e3d2f 100%)",
+                      boxShadow: "0 4px 12px rgba(37,74,58,0.25)",
+                    }}
+                  >
+                    <IconShieldCheck size={18} />
+                  </div>
+                  <div>
+                    <p className="text-[10.5px] font-semibold uppercase tracking-[0.15em] text-[#9A9282]">
+                      {isAr ? "ضمان استرداد" : "Money-back"}
+                    </p>
+                    <p className="text-[14px] font-semibold leading-tight text-[#1A1A14]">
+                      {isAr ? "100% بعد أول جلسة" : "100% after first session"}
+                    </p>
+                  </div>
+                </div>
+                <div className={slideDivider} />
+                <div className="mb-4 flex flex-1 flex-col justify-center gap-2.5 sm:flex-row sm:items-center sm:justify-between">
+                  <span className="text-[13px] text-[#6F6F5C]">
+                    {isAr ? "طرق الدفع" : "Payment methods"}
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      { k: "visa", label: "Visa", el: <IconVisa size={28} /> },
+                      { k: "mc", label: "Mastercard", el: <IconMastercard size={28} /> },
+                      { k: "pp", label: "PayPal", el: <IconPayPal size={28} /> },
+                    ].map((b) => (
+                      <span
+                        key={b.k}
+                        className="flex h-8 w-[52px] items-center justify-center rounded-md border border-[#B49B44]/22 bg-[#FAFAF6] transition-colors hover:border-[#B49B44]/45"
+                        title={b.label}
+                      >
+                        <span className="sr-only">{b.label}</span>
+                        {b.el}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-auto flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#254A3A]/14 bg-[#eef4f0] px-3 py-1 text-[11px] font-semibold text-[#254A3A]">
+                    <IconShieldCheck size={10} />
+                    {isAr ? "مدفوعات مشفّرة" : "Encrypted"}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#B49B44]/22 bg-[#FFFBEF] px-3 py-1 text-[11px] font-semibold text-[#8A7430]">
+                    {isAr ? "بدون مخاطرة" : "Zero risk"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Slide 2 — Launch offer */}
+          <div className="flex min-h-[288px] min-w-full shrink-0 px-0.5">
+            <div
+              className={`${slideShell} border-[#B49B44]/28`}
+              style={{
+                boxShadow: "0 20px 54px rgba(180,155,68,0.13), 0 4px 16px rgba(26,26,20,0.08)",
+              }}
+            >
+              <div className="h-[3px] w-full bg-gradient-to-r from-[#B49B44]/40 via-[#F2D58C]/60 to-[#B49B44]/40" />
+              <div className={slideBody} dir={isAr ? "rtl" : "ltr"}>
+                <div className="mb-4 flex items-center gap-3">
+                  <div
+                    className={`${slideIcon} text-[#8A7430]`}
+                    style={{
+                      background: "linear-gradient(135deg, #FFF4D6 0%, #F2D58C 100%)",
+                      boxShadow: "0 4px 12px rgba(180,155,68,0.22)",
+                    }}
+                  >
+                    <IconSparkles size={18} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10.5px] font-semibold uppercase tracking-[0.15em] text-[#9A9282]">
+                      {isAr ? "عرض الإطلاق" : "Launch offer"}
+                    </p>
+                    <p className="text-[14px] font-semibold leading-tight text-[#1A1A14]">
+                      {isAr ? "خصم 30% — أول 3 شهور" : "30% off — first 3 months"}
+                    </p>
+                  </div>
+                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[#B49B44]/25 bg-[#FFF4D6] px-2.5 py-1 text-[10px] font-bold tracking-wide text-[#8A7430]">
+                    {isAr ? "30%" : "30% OFF"}
+                  </span>
+                </div>
+                <div className={slideDivider} />
+                <div className="flex flex-1 flex-col items-center justify-center py-1 text-center">
+                  <span className="font-serif text-[44px] font-normal leading-none text-[#B49B44] sm:text-[52px]">
+                    30%
+                  </span>
+                  <p className="mt-2 text-[13px] text-[#6F6F5C]">
+                    {isAr ? "سعر مخفّض للبداية" : "Discounted starter rate"}
+                  </p>
+                </div>
+                <p className="mt-auto text-center text-[12px] leading-snug text-[#3D3D30] opacity-80">
+                  {isAr
+                    ? "تشوف السعر المخفّض الآن — وبعدها السعر العادي."
+                    : "See the discounted rate now — then standard price after."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Slide 3 — Flexibility */}
+          <div className="flex min-h-[288px] min-w-full shrink-0 px-0.5">
+            <div
+              className={`${slideShell} border-[#254A3A]/14`}
+              style={{
+                background: "linear-gradient(180deg, #ffffff 0%, #f3f8f5 100%)",
+                boxShadow: "0 20px 54px rgba(37,74,58,0.10), 0 4px 16px rgba(37,74,58,0.06)",
+              }}
+            >
+              <div className="h-[3px] w-full bg-gradient-to-r from-[#254A3A]/30 via-[#254A3A]/50 to-[#254A3A]/30" />
+              <div className={slideBody} dir={isAr ? "rtl" : "ltr"}>
+                <div className="mb-4 flex items-center gap-3">
+                  <div
+                    className={`${slideIcon} text-[#F2D58C]`}
+                    style={{
+                      background: "linear-gradient(135deg, #254A3A 0%, #1e3d2f 100%)",
+                      boxShadow: "0 4px 12px rgba(37,74,58,0.25)",
+                    }}
+                  >
+                    <IconRefresh size={18} />
+                  </div>
+                  <div>
+                    <p className="text-[10.5px] font-semibold uppercase tracking-[0.15em] text-[#254A3A]/55">
+                      {isAr ? "مرونة" : "Flexibility"}
+                    </p>
+                    <p className="text-[14px] font-semibold leading-tight text-[#254A3A]">
+                      {isAr ? "إلغاء بإشعار 7 أيام" : "Cancel in 7 days"}
+                    </p>
+                  </div>
+                </div>
+                <div className={slideDivider} />
+                <div className="flex flex-1 flex-col justify-center">
+                  <p className="text-[13px] leading-relaxed text-[#3D5248]">
+                    {isAr
+                      ? "غيّر أو ألغِ اشتراكك بسهولة — بدون التزام طويل."
+                      : "Change or cancel easily — no long-term lock-in."}
+                  </p>
+                </div>
+                <div className="mt-auto flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#254A3A]/50" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#254A3A]/30" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#254A3A]/15" />
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#254A3A]/14 bg-[#eef4f0] px-3 py-1 text-[11px] font-semibold text-[#254A3A]">
+                    {isAr ? "بدون التزام" : "No lock-in"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center justify-center gap-2" role="tablist" aria-label={dotsLabel}>
+        {Array.from({ length: HERO_SLIDE_COUNT }, (_, i) => (
+          <button
+            key={i}
+            type="button"
+            role="tab"
+            aria-selected={index === i}
+            aria-label={`${dotsLabel} ${i + 1}`}
+            onClick={() => setIndex(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === i ? "w-8 bg-[#B49B44]" : "w-2 bg-[#1C3A2E]/20 hover:bg-[#B49B44]/45"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ─── Types (kept for INCLUDED_ITEMS below) ──────────────────────── */
 const INCLUDED_ITEMS: { icon: ReactNode; key: string }[] = [
   { icon: <IconClock />,    key: "pricing.included.flexSchedule" },
@@ -865,23 +1097,28 @@ export default function PricingPageContent() {
           backdrop-filter: blur(8px);
         }
 
-        /* Section 1 floating card system (stable 3-card stack) */
-        .s1-stack {
+        /* Section 1 auto card slider */
+        .s1-slider {
           position: relative;
-          perspective: 900px;
         }
-
+        .s1-slider-viewport {
+          height: 288px;
+        }
+        .s1-slider-track {
+          height: 100%;
+          transition: transform 700ms cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        .s1-slide-card {
+          height: 100%;
+        }
         .s1-card {
-          position: absolute;
-          backface-visibility: hidden;
-          transform-style: preserve-3d;
-          will-change: transform;
-          transition: border-color 220ms ease, box-shadow 220ms ease;
+          position: relative;
+          transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
         }
         .s1-card:hover {
           border-color: rgba(180,155,68,0.55) !important;
+          transform: translateY(-2px);
         }
-
         .s1-card::before {
           content: "";
           position: absolute;
@@ -902,7 +1139,6 @@ export default function PricingPageContent() {
         .s1-card:hover::before {
           background-position: -50% center;
         }
-
         .s1-main-card::after {
           content: "";
           position: absolute;
@@ -919,91 +1155,10 @@ export default function PricingPageContent() {
           45%       { box-shadow: 0 0 22px 4px rgba(180,155,68,0.18); }
         }
 
-        @keyframes floatA {
-          0%   { transform: rotate(2deg) translate3d(0px, 0px, 0) scale(1); }
-          30%  { transform: rotate(1.2deg) translate3d(2px, -10px, 0) scale(1.008); }
-          60%  { transform: rotate(2.5deg) translate3d(-1px, -14px, 0) scale(1.004); }
-          100% { transform: rotate(2deg) translate3d(0px, 0px, 0) scale(1); }
-        }
-        @keyframes floatB {
-          0%   { transform: rotate(-7deg) translate3d(var(--bx), var(--by), 0) scale(0.97); }
-          35%  { transform: rotate(-5.8deg) translate3d(calc(var(--bx) + 3px), calc(var(--by) - 13px), 0) scale(0.975); }
-          65%  { transform: rotate(-7.5deg) translate3d(calc(var(--bx) - 1px), calc(var(--by) - 9px), 0) scale(0.967); }
-          100% { transform: rotate(-7deg) translate3d(var(--bx), var(--by), 0) scale(0.97); }
-        }
-        @keyframes floatC {
-          0%   { transform: rotate(6deg) translate3d(var(--cx), var(--cy), 0) scale(0.95); }
-          40%  { transform: rotate(7.2deg) translate3d(calc(var(--cx) + 2px), calc(var(--cy) - 11px), 0) scale(0.957); }
-          70%  { transform: rotate(5.5deg) translate3d(calc(var(--cx) - 1px), calc(var(--cy) - 16px), 0) scale(0.952); }
-          100% { transform: rotate(6deg) translate3d(var(--cx), var(--cy), 0) scale(0.95); }
-        }
-
-        .s1-card-b {
-          --bx: clamp(-175px, -13vw, -115px);
-          --by: clamp(38px, 5vw, 72px);
-          animation: floatB 5.2s cubic-bezier(.45,.05,.55,.95) infinite;
-          animation-delay: 0.15s;
-        }
-        .s1-card-c {
-          --cx: clamp(115px, 11vw, 162px);
-          --cy: clamp(95px, 9.5vw, 158px);
-          animation: floatC 5.8s cubic-bezier(.45,.05,.55,.95) infinite;
-          animation-delay: 0.28s;
-        }
-        .s1-card-a {
-          animation: floatA 4.2s cubic-bezier(.45,.05,.55,.95) infinite;
-        }
-        @media (min-width: 1024px) {
-          .s1-card-b { --bx: clamp(-165px, -10.5vw, -120px); }
-          .s1-card-c { --cx: clamp(105px, 9vw, 148px); }
-        }
-
-        /* Mobile / tablet: stack cards vertically — no absolute overlap or horizontal overflow */
-        @media (max-width: 1023px) {
-          .s1-stack {
-            height: auto !important;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.85rem;
-            width: 100%;
-            max-width: 22rem;
-            margin-inline: auto;
-            padding-inline: 0.25rem;
-          }
-          .s1-card {
-            position: relative !important;
-            inset: auto !important;
-            transform: none !important;
-            animation: none !important;
-            width: 100% !important;
-            max-width: 100%;
-          }
-          .s1-card-b,
-          .s1-card-c {
-            --bx: 0;
-            --by: 0;
-            --cx: 0;
-            --cy: 0;
-          }
-          .s1-main-card::after {
-            animation: none !important;
-          }
-        }
-
-        /* RTL: mirror the horizontal offsets so cards don't overlap the right column */
-        [dir="rtl"] .s1-stack .s1-card-b { --bx: clamp(115px, 13vw, 175px); }
-        [dir="rtl"] .s1-stack .s1-card-c { --cx: clamp(-162px, -11vw, -115px); }
-        @media (min-width: 1024px) {
-          [dir="rtl"] .s1-stack .s1-card-b { --bx: clamp(120px, 10.5vw, 165px); }
-          [dir="rtl"] .s1-stack .s1-card-c { --cx: clamp(-148px, -9vw, -105px); }
-        }
-
         @media (prefers-reduced-motion: reduce) {
           .pfu-on { animation: none !important; opacity: 1 !important; transform: none !important; }
           .launch-pill { animation: none !important; }
-          .s1-card-a, .s1-card-b, .s1-card-c { animation: none !important; transform: none !important; }
+          .s1-slider-track { transition: none !important; }
           .s1-main-card::after { animation: none !important; }
         }
       `}</style>
@@ -1071,131 +1226,9 @@ export default function PricingPageContent() {
         heroReady ? "pfu-on" : "",
       ].join(" ")}
     >
-      {/* ── Left: Card stack ── */}
-      <div className="s1-stack order-2 lg:order-1 mx-auto flex w-full max-w-[22rem] select-none lg:h-[510px] lg:max-w-[520px] lg:items-center lg:justify-center">
-
-        {/* Card B — Launch offer (back-left) */}
-        <div
-          className="s1-card s1-card-b z-10 w-full max-w-[352px] rounded-2xl border border-[#B49B44]/28 bg-white overflow-hidden"
-          style={{
-            boxShadow: "0 8px 32px rgba(180,155,68,0.10), 0 2px 8px rgba(26,26,20,0.06)",
-          }}
-        >
-          <div className="h-[3px] w-full bg-gradient-to-r from-[#B49B44]/40 via-[#F2D58C]/60 to-[#B49B44]/40" />
-          <div className="px-4 sm:px-6 pt-4 pb-5">
-            <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 mb-2.5">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[#9A9282]">
-              {isAr ? "عرض الإطلاق" : "Launch offer"}
-            </p>
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF4D6] border border-[#B49B44]/25 text-[10px] font-bold tracking-wide text-[#8A7430] px-2.5 py-1">
-              <IconSparkles size={11} />
-              {isAr ? "خصم 30%" : "30% OFF"}
-            </span>
-            </div>
-            <div className="flex flex-wrap items-baseline gap-1.5 mb-2">
-              <span className="text-[36px] sm:text-[48px] font-serif font-normal text-[#B49B44] leading-none">30%</span>
-              <span className="text-[13px] text-[#6F6F5C]">
-              {isAr ? "خصم — أول 3 شهور" : "off — first 3 months"}
-            </span>
-            </div>
-            <p className="text-[12px] text-[#3D3D30] leading-snug opacity-80">
-              {isAr
-                ? "تشوف السعر المخفّض الآن — وبعدها السعر العادي."
-                : "See the discounted rate now — then standard price after."}
-            </p>
-          </div>
-        </div>
-
-        {/* Card A — Main / front */}
-        <div
-          className="s1-card s1-card-a s1-main-card z-20 order-first w-full max-w-[388px] rounded-[18px] border border-[#B49B44]/32 bg-white overflow-hidden"
-          style={{
-            boxShadow:
-              "0 20px 54px rgba(180,155,68,0.13), 0 4px 16px rgba(26,26,20,0.08), 0 1px 4px rgba(26,26,20,0.04)",
-          }}
-        >
-          <div className="h-[3px] w-full bg-gradient-to-r from-[#254A3A]/50 via-[#B49B44]/60 to-[#254A3A]/50" />
-          <div className="px-4 sm:px-7 pt-5 pb-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center text-[#F2D58C]"
-                style={{
-                  background: "linear-gradient(135deg, #254A3A 0%, #1e3d2f 100%)",
-                  boxShadow: "0 4px 12px rgba(37,74,58,0.25)",
-                }}
-              >
-                <IconShieldCheck size={18} />
-              </div>
-              <div>
-                <p className="text-[10.5px] font-semibold uppercase tracking-[0.15em] text-[#9A9282]">
-                  {isAr ? "ضمان استرداد" : "Money-back"}
-                </p>
-                <p className="text-[14px] font-semibold text-[#1A1A14] leading-tight">
-                  {isAr ? "100% بعد أول جلسة" : "100% after first session"}
-                </p>
-              </div>
-            </div>
-
-            <div className="h-px bg-gradient-to-r from-transparent via-[#B49B44]/20 to-transparent mb-4" />
-
-            <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between mb-4">
-              <span className="text-[13px] text-[#6F6F5C]">
-                {isAr ? "طرق الدفع" : "Payment methods"}
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  { k: "visa", label: "Visa", el: <IconVisa size={28} /> },
-                  { k: "mc", label: "Mastercard", el: <IconMastercard size={28} /> },
-                  { k: "pp", label: "PayPal", el: <IconPayPal size={28} /> },
-                ].map((b) => (
-                  <span
-                    key={b.k}
-                    className="h-8 w-[52px] rounded-md border border-[#B49B44]/22 bg-[#FAFAF6] flex items-center justify-center transition-colors hover:border-[#B49B44]/45"
-                    title={b.label}
-                  >
-                    <span className="sr-only">{b.label}</span>
-                    {b.el}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#254A3A] bg-[#eef4f0] border border-[#254A3A]/14 rounded-full px-3 py-1">
-                <IconShieldCheck size={10} />
-                {isAr ? "مدفوعات مشفّرة" : "Encrypted"}
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#8A7430] bg-[#FFFBEF] border border-[#B49B44]/22 rounded-full px-3 py-1">
-                {isAr ? "بدون مخاطرة" : "Zero risk"}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Card C — Flexibility (bottom-right) */}
-        <div
-          className="s1-card s1-card-c z-10 w-full max-w-[296px] rounded-xl border border-[#254A3A]/14 overflow-hidden"
-          style={{
-            background: "linear-gradient(135deg, #eef4f0 0%, #e4ede8 100%)",
-            boxShadow: "0 8px 24px rgba(37,74,58,0.10), 0 2px 6px rgba(37,74,58,0.06)",
-          }}
-        >
-          <div className="h-[2px] w-full bg-gradient-to-r from-[#254A3A]/30 via-[#254A3A]/50 to-[#254A3A]/30" />
-          <div className="px-5 pt-4 pb-5">
-            <p className="text-[10.5px] font-semibold uppercase tracking-[0.13em] text-[#254A3A]/55 mb-1">
-              {isAr ? "مرونة" : "Flexibility"}
-            </p>
-            <p className="text-[14px] font-semibold text-[#254A3A]">
-              {isAr ? "إلغاء بإشعار 7 أيام" : "Cancel in 7 days"}
-            </p>
-            <div className="mt-2.5 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#254A3A]/50" />
-              <span className="w-1.5 h-1.5 rounded-full bg-[#254A3A]/30" />
-              <span className="w-1.5 h-1.5 rounded-full bg-[#254A3A]/15" />
-            </div>
-          </div>
-        </div>
-
+      {/* ── Left: Auto card slider ── */}
+      <div className="order-2 lg:order-1 flex w-full items-center justify-center select-none">
+        <HeroPaymentCardSlider isAr={isAr} />
       </div>
 
       {/* ── Right: Policy + features ── */}

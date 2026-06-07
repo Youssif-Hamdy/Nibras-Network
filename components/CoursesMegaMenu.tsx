@@ -20,11 +20,11 @@ import {
 import {
   megaGoalLabel,
   megaHrefLabel,
-  megaLevelCopy,
   megaPathwayCopy,
   megaQuickLabel,
   megaSubjectTitle,
 } from "@/lib/i18n/mega-labels";
+import { getCourseLevelContent, type CourseLevelSlug } from "@/lib/courses/levels";
 import { useI18n } from "@/components/LocaleProvider";
 import {
   BookOpen, PenLine, Landmark, Baby, Briefcase,
@@ -209,34 +209,81 @@ function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
 
 // ─── Tab 2: By Level ──────────────────────────────────────────────────────────
 
-const LEVEL_DESC: Record<string, string> = {
-  BEGINNER:     "Start your journey from scratch",
-  INTERMEDIATE: "Build on your existing foundation",
-  ADVANCED:     "Deepen and refine your knowledge",
-  EXPERT:       "Master-level & certification tracks",
+const LEVEL_SLUG_FROM_LABEL: Record<string, CourseLevelSlug> = {
+  BEGINNER: "beginner",
+  INTERMEDIATE: "intermediate",
+  ADVANCED: "advanced",
+  EXPERT: "expert",
 };
 
 function TabLevel({ afterNavigate }: { afterNavigate?: () => void }) {
   const { locale } = useI18n();
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 items-stretch gap-3 xl:grid-cols-4">
       {MEGA_BY_LEVEL.map((item) => {
-        const { label, desc } = megaLevelCopy(
-          locale,
-          item.label,
-          item.label,
-          LEVEL_DESC[item.label] ?? "",
-        );
+        const slug = LEVEL_SLUG_FROM_LABEL[item.label];
+        const level = getCourseLevelContent(locale, slug);
+        const btnTextColor = level.slug === "expert" ? "#1a3328" : "#ffffff";
+
         return (
           <Link
             key={item.href}
             href={item.href}
             onClick={() => afterNavigate?.()}
-            className="flex flex-col items-center gap-3 p-6 rounded-xl border-[1.5px] border-[#e5e7eb] text-center hover:border-[#1c7a45] hover:bg-[#f0faf4] transition-all"
+            className="group flex h-full min-h-[228px] flex-col rounded-xl border p-4 transition-all hover:shadow-[0_8px_24px_-12px_rgba(28,58,46,0.25)] sm:min-h-[248px] sm:p-5"
+            style={{
+              backgroundColor: level.accentLight,
+              borderColor: `${level.accent}40`,
+              borderTopWidth: 3,
+              borderTopColor: level.accent,
+            }}
           >
-            <Icon name={item.icon} size={28} className="text-[#1c7a45]" />
-            <span className="text-[13px] font-bold text-[#1C3A2E] tracking-wide">{label}</span>
-            <span className="text-[11.5px] text-[#6b7280] leading-snug">{desc}</span>
+            <div className="flex items-center gap-2.5">
+              <span
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/85 shadow-sm"
+                style={{ color: level.accent }}
+              >
+                <Icon name={item.icon} size={20} />
+              </span>
+              <span
+                className="text-[12.5px] font-bold tracking-wide sm:text-[13px]"
+                style={{ color: level.accent }}
+              >
+                {level.hero.title}
+              </span>
+            </div>
+
+            <span className="mt-2 text-[11px] leading-snug text-[#5a7068] sm:text-[11.5px]">
+              {level.cardDesc}
+            </span>
+
+            <ul className="mt-2.5 flex flex-1 flex-col justify-start space-y-1.5">
+              {level.cardOutcomes.map((outcome) => (
+                <li
+                  key={outcome}
+                  className="flex items-start gap-1.5 text-[10.5px] leading-snug text-[#3d5249] sm:text-[11px]"
+                >
+                  <span
+                    className="mt-1.5 h-1 w-1 shrink-0 rounded-full"
+                    style={{ backgroundColor: level.accent }}
+                    aria-hidden
+                  />
+                  <span className="min-w-0 flex-1">{outcome}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div
+              className="mt-auto border-t pt-3.5"
+              style={{ borderColor: `${level.accent}25` }}
+            >
+              <span
+                className="inline-flex w-full items-center justify-center rounded-lg px-3 py-2.5 text-[10.5px] font-bold shadow-sm transition-all group-hover:brightness-[0.92] sm:text-[11px]"
+                style={{ backgroundColor: level.accent, color: btnTextColor }}
+              >
+                {level.cta}
+              </span>
+            </div>
           </Link>
         );
       })}
@@ -575,23 +622,35 @@ export function CoursesMobileMega({ onPickLink }: { onPickLink?: () => void }) {
                   )}
 
                   {tab.id === "level" && (
-                    <ul className="space-y-0.5">
+                    <ul className="space-y-1">
                       {MEGA_BY_LEVEL.map((item) => {
-                        const { label } = megaLevelCopy(
-                          locale,
-                          item.label,
-                          item.label,
-                          LEVEL_DESC[item.label] ?? "",
-                        );
+                        const slug = LEVEL_SLUG_FROM_LABEL[item.label];
+                        const level = getCourseLevelContent(locale, slug);
                         return (
                           <li key={item.href}>
                             <Link
                               href={item.href}
                               onClick={() => onPickLink?.()}
-                              className="flex items-center gap-2 px-2 py-2 text-[12px] font-medium text-[#2d4a40] hover:bg-white/90 hover:text-[#B8860B] rounded"
+                              className="flex items-start gap-2.5 rounded-lg px-2 py-2.5 transition-colors hover:bg-white/90"
+                              style={{ borderInlineStart: `3px solid ${level.accent}` }}
                             >
-                              <Icon name={item.icon} size={14} className="text-[#1c7a45]" />
-                              {label}
+                              <span
+                                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
+                                style={{ backgroundColor: level.accentLight, color: level.accent }}
+                              >
+                                <Icon name={item.icon} size={14} />
+                              </span>
+                              <div className="min-w-0 flex-1">
+                                <span
+                                  className="block text-[12.5px] font-bold"
+                                  style={{ color: level.accent }}
+                                >
+                                  {level.hero.title}
+                                </span>
+                                <span className="mt-0.5 block text-[11px] leading-snug text-[#6b7280]">
+                                  {level.cardDesc}
+                                </span>
+                              </div>
                             </Link>
                           </li>
                         );

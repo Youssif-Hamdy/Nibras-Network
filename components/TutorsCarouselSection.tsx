@@ -4,46 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import { useI18n } from "@/components/LocaleProvider";
-
-type Tutor = {
-  name: string;
-  bioKey: string;
-  initial: string;
-  tint: string;
-};
-
-const tutors: Tutor[] = [
-  {
-    name: "Ustadha Maha Zaky",
-    bioKey: "tutors.bio1",
-    initial: "M",
-    tint: "from-[#2D5A3D] to-[#1C3A2E]",
-  },
-  {
-    name: "Ustadh Yusuf Karim",
-    bioKey: "tutors.bio2",
-    initial: "Y",
-    tint: "from-[#1C3A2E] to-[#142920]",
-  },
-  {
-    name: "Ustadha Layla Hossam",
-    bioKey: "tutors.bio3",
-    initial: "L",
-    tint: "from-[#B8860B] to-[#1C3A2E]",
-  },
-  {
-    name: "Ustadh Omar Siddiq",
-    bioKey: "tutors.bio4",
-    initial: "O",
-    tint: "from-[#366348] to-[#1C3A2E]",
-  },
-  {
-    name: "Ustadha Hanan Mostafa",
-    bioKey: "tutors.bio5",
-    initial: "H",
-    tint: "from-[#234832] to-[#1C3A2E]",
-  },
-];
+import { getTutorsPage } from "@/lib/tutors";
 
 function useItemsPerView() {
   const [perView, setPerView] = useState(1);
@@ -65,17 +26,19 @@ function useItemsPerView() {
 
 export default function TutorsCarouselSection() {
   const { ref, visible } = useReveal<HTMLElement>();
-  const { t: tr } = useI18n();
+  const { locale, t: tr } = useI18n();
   const perView = useItemsPerView();
   const [index, setIndex] = useState(0);
 
+  const tutors = useMemo(() => getTutorsPage(locale).tutors.slice(0, 5), [locale]);
+
   const pages = useMemo(() => {
-    const out: Tutor[][] = [];
+    const out: (typeof tutors)[] = [];
     for (let i = 0; i < tutors.length; i += perView) {
       out.push(tutors.slice(i, i + perView));
     }
     return out;
-  }, [perView]);
+  }, [perView, tutors]);
 
   const maxIndex = Math.max(0, pages.length - 1);
 
@@ -148,7 +111,7 @@ export default function TutorsCarouselSection() {
                 >
                   {group.map((tutor) => (
                     <article
-                      key={tutor.name}
+                      key={tutor.id}
                       className="flex-1 min-w-0 flex flex-col rounded-3xl border border-[#E8E0D0] bg-white p-6 shadow-sm hover:shadow-xl hover:shadow-[#B8860B]/10 hover:border-[#B8860B]/35 transition-all duration-300 hover:-translate-y-1"
                     >
                       <div className="flex justify-center mb-5">
@@ -159,11 +122,12 @@ export default function TutorsCarouselSection() {
                           {tutor.initial}
                         </div>
                       </div>
-                      <h3 className="text-center font-bold text-[#1C3A2E] tracking-wide text-sm md:text-base uppercase mb-3">
+                      <h3 className={`text-center font-bold text-[#1C3A2E] text-sm md:text-base mb-1 ${locale === "ar" ? "" : "uppercase tracking-wide"}`}>
                         {tutor.name}
                       </h3>
-                      <p className="text-center text-[#5c6e66] text-sm leading-relaxed flex-1 mb-5">
-                        {tr(tutor.bioKey)}
+                      <p className="text-center text-xs font-medium text-[#B8860B] mb-3">{tutor.role}</p>
+                      <p className={`text-center text-[#5c6e66] text-sm flex-1 mb-5 ${locale === "ar" ? "leading-[1.85]" : "leading-relaxed"}`}>
+                        {tutor.bio}
                       </p>
                       <Link
                         href="/tutors"
