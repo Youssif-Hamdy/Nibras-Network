@@ -111,7 +111,7 @@ export default function HeroSection() {
               </div>
 
               <Link
-                href="/services"
+                href="/about"
                 className="inline-flex items-center gap-2.5 bg-[#B8860B] text-white text-sm font-semibold px-9 py-3.5 rounded-full hover:bg-[#D4A017] hover:scale-[1.05] transition-all duration-200 ring-2 ring-[#D4A017]/30 tracking-wide"
                 style={{ animation: "pulseGlow 2.5s ease-in-out infinite" }}
               >

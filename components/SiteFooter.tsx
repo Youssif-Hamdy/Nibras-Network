@@ -14,10 +14,10 @@ export default function SiteFooter() {
   ];
 
   const courses = [
-    { labelKey: "footer.course1", href: "/courses/hifz" },
+    { labelKey: "footer.course1", href: "/courses/quran-memorization" },
     { labelKey: "footer.course2", href: "/courses/tajweed" },
-    { labelKey: "footer.course3", href: "/courses/arabic" },
-    { labelKey: "footer.course4", href: "/courses/islamic" },
+    { labelKey: "footer.course3", href: "/courses/arabic-for-beginners" },
+    { labelKey: "footer.course4", href: "/courses/islamic-general" },
   ];
 
   return (
@@ -75,10 +75,10 @@ export default function SiteFooter() {
           <ul className="space-y-3 text-sm text-[#dce8df]">
             <li>
               <a
-                href="mailto:info@nibras.network"
+                href="mailto:nibrasnetwork55@gmail.com"
                 className="hover:text-[#F2D58C] transition-colors"
               >
-                info@nibras.network
+                nibrasnetwork55@gmail.com
               </a>
             </li>
             <li>

@@ -389,38 +389,129 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
               isAr={isAr}
             />
           </Reveal>
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
-            {course.methods.map((method, i) => (
-              <Reveal key={method.title} delayMs={i * 70}>
-                <article className="flex h-full flex-col rounded-3xl border border-[#e8e4dc] bg-white/90 p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
-                  <div className="mb-4 flex items-start justify-between gap-2">
-                    <h3 className={`text-lg font-semibold text-[#1a3328] ${hf}`}>{method.title}</h3>
-                    {method.badge && (
-                      <span
-                        className="shrink-0 rounded-full px-2.5 py-1 font-sans text-[10px] font-semibold text-white"
-                        style={{ backgroundColor: accent }}
-                      >
-                        {method.badge}
-                      </span>
-                    )}
+          {course.methods.length === 1 ? (
+            (() => {
+              const method = course.methods[0];
+              const methodTitleLower = method.title.toLowerCase();
+              const methodIcon = methodTitleLower.includes("literacy") || methodTitleLower.includes("quran") || methodTitleLower.includes("read")
+                ? <BookOpen className="h-6 w-6" />
+                : methodTitleLower.includes("speaking") || methodTitleLower.includes("session") || methodTitleLower.includes("conversational")
+                  ? <Users className="h-6 w-6" />
+                  : <GraduationCap className="h-6 w-6" />;
+
+              return (
+                <Reveal delayMs={70}>
+                  <div className="mt-8 overflow-hidden rounded-3xl border border-[#e8e4dc] bg-white shadow-sm transition-all hover:shadow-xl">
+                    <div className="grid gap-0 lg:grid-cols-12">
+                      {/* Left Column: Methodology Flow */}
+                      <div className="p-6 sm:p-10 lg:col-span-7 flex flex-col justify-between">
+                        <div>
+                          <div className="mb-6 flex flex-wrap items-center gap-3">
+                            <div
+                              className="flex h-12 w-12 items-center justify-center rounded-2xl text-white shadow-md transition-transform duration-300 hover:scale-105"
+                              style={{ backgroundColor: accent }}
+                            >
+                              {methodIcon}
+                            </div>
+                            {method.badge && (
+                              <span
+                                className="rounded-full px-3 py-1 font-sans text-[11px] font-semibold text-white uppercase tracking-wider"
+                                style={{ backgroundColor: accent }}
+                              >
+                                {method.badge}
+                              </span>
+                            )}
+                          </div>
+
+                          <h3 className={`text-xl font-bold tracking-tight text-[#1a3328] sm:text-2xl mb-8 ${hf}`}>
+                            {method.title}
+                          </h3>
+
+                          <div className="space-y-4">
+                            <p className="font-sans text-[10px] font-bold uppercase tracking-wider text-[#7a6f4a] sm:text-[11px]">
+                              {isAr ? "خطوات التعلّم" : "Learning Flow"}
+                            </p>
+                            <ol className="relative border-s border-[#e8e4dc] ms-3.5 space-y-6 pb-2">
+                              {method.flow.map((step, idx) => (
+                                <li key={idx} className="ms-6 relative">
+                                  <span
+                                    className="absolute -start-[37px] top-0.5 flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold text-white shadow-sm transition-transform duration-300 hover:scale-110"
+                                    style={{ backgroundColor: accent }}
+                                    aria-hidden
+                                  >
+                                    {idx + 1}
+                                  </span>
+                                  <p className="text-[14px] leading-relaxed text-[#3d5249] sm:text-[15px] font-medium">
+                                    {step}
+                                  </p>
+                                </li>
+                              ))}
+                            </ol>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right Column: Why it works */}
+                      <div className="p-6 sm:p-10 lg:col-span-5 bg-[#faf9f6] border-t lg:border-t-0 lg:border-s border-[#e8e4dc] flex flex-col justify-center">
+                        <div>
+                          <h4 className="mb-4 font-sans text-[10px] font-bold uppercase tracking-wider text-[#7a6f4a] sm:text-[11px]">
+                            {method.whyTitle}
+                          </h4>
+                          <ul className="space-y-4">
+                            {method.whyPoints.map((point, idx) => (
+                              <li key={idx} className="flex items-start gap-3">
+                                <CheckCircle2
+                                  className="h-5 w-5 mt-0.5 shrink-0"
+                                  style={{ color: accent }}
+                                  aria-hidden
+                                />
+                                <p className="text-[13px] leading-relaxed text-[#4d5f56] sm:text-[14px]">
+                                  {point}
+                                </p>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <FlowSteps steps={method.flow} accent={accent} />
-                  <div className="mt-6 border-t border-[#eee8dc] pt-5">
-                    <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-wide text-[#6b7a72]">
-                      {method.whyTitle}
-                    </p>
-                    <ul className="space-y-1.5">
-                      {method.whyPoints.map((p) => (
-                        <li key={p} className="text-[13px] leading-relaxed text-[#3d5249]">
-                          {p}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+                </Reveal>
+              );
+            })()
+          ) : (
+            <div className="mt-8 grid gap-6 lg:grid-cols-3">
+              {course.methods.map((method, i) => (
+                <Reveal key={method.title} delayMs={i * 70}>
+                  <article className="flex h-full flex-col rounded-3xl border border-[#e8e4dc] bg-white/90 p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+                    <div className="mb-4 flex items-start justify-between gap-2">
+                      <h3 className={`text-lg font-semibold text-[#1a3328] ${hf}`}>{method.title}</h3>
+                      {method.badge && (
+                        <span
+                          className="shrink-0 rounded-full px-2.5 py-1 font-sans text-[10px] font-semibold text-white"
+                          style={{ backgroundColor: accent }}
+                        >
+                          {method.badge}
+                        </span>
+                      )}
+                    </div>
+                    <FlowSteps steps={method.flow} accent={accent} />
+                    <div className="mt-6 border-t border-[#eee8dc] pt-5">
+                      <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-wide text-[#6b7a72]">
+                        {method.whyTitle}
+                      </p>
+                      <ul className="space-y-1.5">
+                        {method.whyPoints.map((p) => (
+                          <li key={p} className="text-[13px] leading-relaxed text-[#3d5249]">
+                            {p}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Techniques */}

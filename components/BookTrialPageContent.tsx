@@ -12,6 +12,7 @@ import {
   type FamilyMemberProfile,
 } from "@/components/FamilyMemberModal";
 import { TrialCoursesGrid } from "@/components/bookTrial/TrialCoursesGrid";
+import { TimeMultiSelect } from "@/components/bookTrial/TimeMultiSelect";
 import {
   DAY_IDS,
   type DayId,
@@ -756,25 +757,20 @@ export default function BookTrialPageContent() {
                 </div>
               </div>
 
-              {/* Times â€” single select */}
+              {/* Times – multi-select dropdown */}
               <div>
                 <p className={labelCls}>
                   {copy.preferredTimes}{req}
                 </p>
                 <p className="mb-2.5 text-[12px] text-[#7a9485]">
-                  {copy.preferredTimesMultiHint}
+                  {isAr ? "جميع الأوقات المتاحة" : "All available times"}
                 </p>
-                <div className="flex max-h-48 flex-wrap gap-1.5 overflow-y-auto overscroll-contain rounded-xl border border-[#e2ede5] bg-[#f9fbf9] p-2.5 [scrollbar-width:thin]">
-                  {eveningTimeSlots.map((slot) => (
-                    <SchedulePill
-                      key={slot.id}
-                      active={selectedTimes.has(slot.id)}
-                      onClick={() => toggleTimeSlot(slot.id)}
-                    >
-                      {slot.label}
-                    </SchedulePill>
-                  ))}
-                </div>
+                <TimeMultiSelect
+                  slots={eveningTimeSlots}
+                  selectedIds={selectedTimes}
+                  onToggle={toggleTimeSlot}
+                  isAr={isAr}
+                />
               </div>
             </SectionCard>
             )}

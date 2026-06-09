@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import type { BookTrialCopy } from "@/lib/i18n/bookTrialContent";
 import {
   DAY_IDS,
@@ -8,6 +9,7 @@ import {
   SchedulePill,
   trialSelectBase,
 } from "@/components/bookTrial/scheduleFields";
+import { TimeMultiSelect } from "@/components/bookTrial/TimeMultiSelect";
 
 const labelCls = "block text-[13px] font-semibold text-[#2a3f30] mb-0.5 tracking-wide";
 const inputBase = [
@@ -48,6 +50,7 @@ export function MemberScheduleFields({
     sun: copy.daySun,
   };
   const eveningTimeSlots = buildEveningTimeSlots(isAr);
+  const timesSet = useMemo(() => new Set(values.preferredTimes), [values.preferredTimes]);
 
   function toggleTime(id: string) {
     const next = new Set(values.preferredTimes);
@@ -88,18 +91,15 @@ export function MemberScheduleFields({
           {copy.preferredTimes}
           {req}
         </p>
-        <p className="mb-2 text-[11px] text-[#7a9485]">{copy.preferredTimesMultiHint}</p>
-        <div className="flex max-h-40 flex-wrap gap-1.5 overflow-y-auto overscroll-contain rounded-xl border border-[#e2ede5] bg-white p-2 [scrollbar-width:thin]">
-          {eveningTimeSlots.map((slot) => (
-            <SchedulePill
-              key={slot.id}
-              active={values.preferredTimes.includes(slot.id)}
-              onClick={() => toggleTime(slot.id)}
-            >
-              {slot.label}
-            </SchedulePill>
-          ))}
-        </div>
+        <p className="mb-2 text-[11px] text-[#7a9485]">
+          {isAr ? "جميع الأوقات المتاحة" : "All available times"}
+        </p>
+        <TimeMultiSelect
+          slots={eveningTimeSlots}
+          selectedIds={timesSet}
+          onToggle={toggleTime}
+          isAr={isAr}
+        />
       </div>
 
       <div>

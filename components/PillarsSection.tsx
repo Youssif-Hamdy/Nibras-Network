@@ -72,11 +72,11 @@ export default function PillarsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:items-stretch">
           {pillars.map((p, i) => (
             <div
               key={i}
-              className="group relative bg-white rounded-3xl p-8 border border-[#E8E0D0] hover:border-[#B8860B]/30 hover:shadow-xl hover:shadow-[#B8860B]/8 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
+              className="group relative flex h-full min-h-[320px] flex-col overflow-hidden rounded-3xl border border-[#E8E0D0] bg-white p-8 transition-all duration-300 hover:-translate-y-1.5 hover:border-[#B8860B]/30 hover:shadow-xl hover:shadow-[#B8860B]/8"
             >
               <div className="absolute top-0 end-0 w-32 h-32 bg-[#B8860B]/5 rounded-full -translate-y-1/2 translate-x-1/2 rtl:-translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -87,7 +87,7 @@ export default function PillarsSection() {
                 {p.icon}
               </div>
 
-              <span className="inline-block text-[10px] tracking-widest uppercase font-semibold text-[#B8860B] bg-[#B8860B]/10 px-3 py-1 rounded-full mb-3">
+              <span className="inline-block text-[10px] tracking-widest uppercase font-semibold text-[#B8860B] bg-[#B8860B]/10 px-3 py-1 rounded-full mb-3 w-fit">
                 {t(p.tagKey)}
               </span>
 
@@ -95,13 +95,13 @@ export default function PillarsSection() {
                 {t(p.titleKey)}
               </h3>
 
-              <p className="text-[#6a6a6a] text-sm leading-relaxed mb-6">
+              <p className="flex-1 text-[#6a6a6a] text-sm leading-relaxed">
                 {t(p.descKey)}
               </p>
 
               <Link
-                href="/services"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-[#1C3A2E] group-hover:text-[#B8860B] transition-colors duration-200"
+                href="/about"
+                className="mt-6 inline-flex items-center gap-1.5 border-t border-[#E8E0D0] pt-5 text-sm font-semibold text-[#1C3A2E] transition-colors duration-200 group-hover:text-[#B8860B]"
               >
                 {t("pillars.explore")}
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-200 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" aria-hidden>

@@ -3,7 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import CoursesIntroSection from "@/components/CoursesIntroSection";
 import WhyUsSection from "@/components/WhyUsSection";
 import StatsSection from "@/components/StatsSection";
-import TutorsCarouselSection from "@/components/TutorsCarouselSection";
+import KidsSection from "@/components/KidsSection";
 import PillarsSection from "@/components/PillarsSection";
 import SiteFooter from "@/components/SiteFooter";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -16,7 +16,7 @@ export default function HomePage() {
       <CoursesIntroSection />
       <WhyUsSection />
       <StatsSection />
-      <TutorsCarouselSection />
+      <KidsSection />
       <PillarsSection />
       <SiteFooter />
       <WhatsAppFloat />

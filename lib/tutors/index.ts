@@ -1,1 +1,1 @@
-export { getTutorsPage, TUTOR_MEDIA, type TutorsPageCopy, type TutorProfile, type TutorHighlight } from "./content";
+export { getTutorsPage, TUTOR_MEDIA, type TutorsPageCopy, type TutorProfile, type TutorHighlight, type FeatureSection } from "./content";
