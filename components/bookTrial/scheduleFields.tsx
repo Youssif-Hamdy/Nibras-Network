@@ -3,6 +3,81 @@
 export const DAY_IDS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as const;
 export type DayId = (typeof DAY_IDS)[number];
 
+export const WEEKDAY_IDS: DayId[] = ["mon", "tue", "wed", "thu", "fri"];
+export const WEEKEND_IDS: DayId[] = ["sat", "sun"];
+
+export function formatDayLabels(
+  ids: Iterable<DayId>,
+  dayLabel: Record<DayId, string>,
+): string {
+  return [...ids].map((d) => dayLabel[d] ?? d).join(", ");
+}
+
+export function PreferredDaysPicker({
+  dayLabel,
+  selectedDays,
+  onChange,
+  weekdaysLabel,
+  weekendsLabel,
+  hint,
+}: {
+  dayLabel: Record<DayId, string>;
+  selectedDays: Set<DayId>;
+  onChange: (next: Set<DayId>) => void;
+  weekdaysLabel: string;
+  weekendsLabel: string;
+  hint: string;
+}) {
+  function toggleDay(id: DayId) {
+    const next = new Set(selectedDays);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    onChange(next);
+  }
+
+  function applyGroup(ids: DayId[]) {
+    const allSelected = ids.every((id) => selectedDays.has(id));
+    const next = new Set(selectedDays);
+    if (allSelected) {
+      ids.forEach((id) => next.delete(id));
+    } else {
+      ids.forEach((id) => next.add(id));
+    }
+    onChange(next);
+  }
+
+  const weekdaysActive = WEEKDAY_IDS.every((id) => selectedDays.has(id));
+  const weekendsActive = WEEKEND_IDS.every((id) => selectedDays.has(id));
+
+  return (
+    <div className="space-y-3">
+      <p className="text-[12px] leading-relaxed text-[#7a9485]">{hint}</p>
+
+      <div className="flex flex-wrap gap-2">
+        <SchedulePill active={weekdaysActive} onClick={() => applyGroup(WEEKDAY_IDS)}>
+          {weekdaysLabel}
+        </SchedulePill>
+        <SchedulePill active={weekendsActive} onClick={() => applyGroup(WEEKEND_IDS)}>
+          {weekendsLabel}
+        </SchedulePill>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 min-[420px]:flex min-[420px]:flex-wrap">
+        {DAY_IDS.map((d) => (
+          <SchedulePill
+            key={d}
+            active={selectedDays.has(d)}
+            onClick={() => toggleDay(d)}
+            className="w-full min-[420px]:w-auto"
+          >
+            {dayLabel[d]}
+          </SchedulePill>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /** 5:00 PM – 11:00 PM, every 30 minutes */
 export function buildEveningTimeSlots(isAr: boolean): { id: string; label: string }[] {
   const slots: { id: string; label: string }[] = [];
@@ -39,21 +114,24 @@ export function SchedulePill({
   active,
   onClick,
   children,
+  className = "",
 }: {
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       className={[
-        "inline-flex items-center gap-1.5 rounded-xl border px-3 py-2 text-[12px] font-medium sm:px-4 sm:text-[13px]",
-        "transition-all duration-150 select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C3A2E]/40",
+        "inline-flex items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-[12px] font-medium sm:px-4 sm:text-[13px]",
+        "transition-all duration-150 select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C3A2E]/40 active:scale-[0.98]",
         active
-          ? "border-[#1C3A2E] bg-[#1C3A2E] text-white shadow-md shadow-[#1C3A2E]/20 scale-[1.02]"
+          ? "border-[#1C3A2E] bg-[#1C3A2E] text-white shadow-md shadow-[#1C3A2E]/20"
           : "border-[#d1dbd4] bg-white text-[#3a5040] hover:border-[#4a7a5a] hover:bg-[#f2f8f4] hover:shadow-sm",
+        className,
       ].join(" ")}
     >
       {active && (

@@ -3,10 +3,9 @@
 import { useMemo } from "react";
 import type { BookTrialCopy } from "@/lib/i18n/bookTrialContent";
 import {
-  DAY_IDS,
   type DayId,
   buildEveningTimeSlots,
-  SchedulePill,
+  PreferredDaysPicker,
   trialSelectBase,
 } from "@/components/bookTrial/scheduleFields";
 import { TimeMultiSelect } from "@/components/bookTrial/TimeMultiSelect";
@@ -20,7 +19,7 @@ const inputBase = [
 ].join(" ");
 
 export type MemberScheduleValues = {
-  preferredDay: DayId | "";
+  preferredDays: DayId[];
   preferredTimes: string[];
   studentAge: string;
   studentGender: string;
@@ -51,6 +50,7 @@ export function MemberScheduleFields({
   };
   const eveningTimeSlots = buildEveningTimeSlots(isAr);
   const timesSet = useMemo(() => new Set(values.preferredTimes), [values.preferredTimes]);
+  const daysSet = useMemo(() => new Set(values.preferredDays), [values.preferredDays]);
 
   function toggleTime(id: string) {
     const next = new Set(values.preferredTimes);
@@ -70,20 +70,14 @@ export function MemberScheduleFields({
           {copy.preferredDays}
           {req}
         </p>
-        <p className="mb-2 text-[11px] text-[#7a9485]">
-          {isAr ? "اختر يوماً واحداً" : "Pick one day"}
-        </p>
-        <div className="flex flex-wrap gap-1.5">
-          {DAY_IDS.map((d) => (
-            <SchedulePill
-              key={d}
-              active={values.preferredDay === d}
-              onClick={() => onChange({ preferredDay: d })}
-            >
-              {dayLabel[d]}
-            </SchedulePill>
-          ))}
-        </div>
+        <PreferredDaysPicker
+          dayLabel={dayLabel}
+          selectedDays={daysSet}
+          onChange={(next) => onChange({ preferredDays: [...next] })}
+          weekdaysLabel={copy.dayWeekdays}
+          weekendsLabel={copy.dayWeekends}
+          hint={copy.preferredDaysMultiHint}
+        />
       </div>
 
       <div>

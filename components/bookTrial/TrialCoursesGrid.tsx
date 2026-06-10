@@ -108,7 +108,8 @@ const CoursePill = memo(function CoursePill({
       onClick={onToggle}
       aria-pressed={checked}
       className={[
-        "rounded-full border-[1.5px] px-3.5 py-1.5 text-[13px] font-medium leading-snug transition-all duration-150",
+        "w-full min-[480px]:w-auto rounded-full border-[1.5px] px-3.5 py-2.5 text-left text-[13px] font-medium leading-snug transition-all duration-150",
+        "active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C3A2E]/30",
         checked ? pillActiveCls : `bg-transparent hover:opacity-80 ${pillCls}`,
       ].join(" ")}
     >
@@ -165,7 +166,7 @@ export function TrialCoursesGrid({
   return (
     <div className={compact ? "space-y-3" : "space-y-4"}>
       {/* ── Chips row ── */}
-      <div className="flex min-h-[38px] flex-wrap items-center gap-2">
+      <div className="flex min-h-[38px] flex-wrap items-center gap-2 rounded-xl border border-[#e2ede5] bg-white/70 p-2.5 sm:p-3">
         {selectedList.length === 0 ? (
           <span className="text-[13px] italic text-[#a0b0a5]">
             {locale === "ar" ? "لم تُختر دورات بعد…" : "No courses selected yet…"}
@@ -186,8 +187,11 @@ export function TrialCoursesGrid({
       </div>
 
       {/* ── Tabs ── */}
-      <div className="-mx-1 px-1">
-        <div className="flex flex-wrap border-b-2 border-[#dce8df]" role="tablist">
+      <div className="-mx-1 overflow-hidden px-1">
+        <div
+          className="flex flex-nowrap gap-0 overflow-x-auto overscroll-x-contain border-b-2 border-[#dce8df] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          role="tablist"
+        >
         {TRIAL_SUBJECTS.map((subj) => {
           const Icon = ICONS[subj.icon] ?? BookOpen;
           const acc = ACCENT[subj.icon] ?? ACCENT[DEFAULT_ICON];
@@ -209,7 +213,9 @@ export function TrialCoursesGrid({
               role="tab"
             >
               <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden />
-              <span className="whitespace-nowrap">{megaSubjectTitle(locale, subj.title)}</span>
+              <span className="max-w-[7.5rem] truncate sm:max-w-none sm:whitespace-nowrap">
+                {megaSubjectTitle(locale, subj.title)}
+              </span>
               <span
                 className={[
                   "rounded-full px-1.5 py-0.5 text-[11px] font-bold",
@@ -228,7 +234,7 @@ export function TrialCoursesGrid({
 
       {/* ── Course pills for active tab ── */}
       {activeSubject && (
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-1 gap-2 min-[480px]:grid-cols-2 sm:flex sm:flex-wrap">
           {activeSubject.links.map((link) => {
             const acc = ACCENT[activeSubject.icon] ?? ACCENT[DEFAULT_ICON];
             return (

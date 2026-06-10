@@ -103,6 +103,9 @@ export type BookTrialCopy = {
   dayFri: string;
   daySat: string;
   daySun: string;
+  dayWeekdays: string;
+  dayWeekends: string;
+  preferredDaysMultiHint: string;
   timeMorning: string;
   timeAfternoon: string;
   timeEvening: string;
@@ -211,6 +214,9 @@ const en: BookTrialCopy = {
   dayFri: "Friday",
   daySat: "Saturday",
   daySun: "Sunday",
+  dayWeekdays: "Weekdays",
+  dayWeekends: "Weekends",
+  preferredDaysMultiHint: "Pick one or more days",
   timeMorning: "Morning (approx. 8:00–12:00)",
   timeAfternoon: "Afternoon (approx. 12:00–17:00)",
   timeEvening: "Evening (approx. 17:00–21:00)",
@@ -319,6 +325,9 @@ const ar: BookTrialCopy = {
   dayFri: "الجمعة",
   daySat: "السبت",
   daySun: "الأحد",
+  dayWeekdays: "أيام الأسبوع",
+  dayWeekends: "عطلة نهاية الأسبوع",
+  preferredDaysMultiHint: "اختر يوماً واحداً أو أكثر",
   timeMorning: "صباحاً (تقريباً 8:00–12:00)",
   timeAfternoon: "بعد الظهر (تقريباً 12:00–17:00)",
   timeEvening: "مساءً (تقريباً 17:00–21:00)",

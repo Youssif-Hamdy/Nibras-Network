@@ -15,12 +15,12 @@ import {
 import { TrialCoursesGrid } from "@/components/bookTrial/TrialCoursesGrid";
 import { TimeMultiSelect } from "@/components/bookTrial/TimeMultiSelect";
 import {
-  DAY_IDS,
   type DayId,
   buildEveningTimeSlots,
+  formatDayLabels,
   formatTimeSlots,
   genderForApi,
-  SchedulePill,
+  PreferredDaysPicker,
 } from "@/components/bookTrial/scheduleFields";
 import { buildTimezoneOptions, formatTimezoneDisplay } from "@/lib/timezoneDisplay";
 import { PackageStepBlock } from "@/components/PackageStepBlock";
@@ -225,9 +225,9 @@ function buildWhatsAppMessage(opts: {
         ? formatTimezoneDisplay(m.timezone, opts.isAr ? "ar" : "en")
         : "—";
       const day =
-        m.preferredDay && memberDayLabels[m.preferredDay as DayId]
-          ? memberDayLabels[m.preferredDay as DayId]
-          : m.preferredDay || "—";
+        m.preferredDays.length > 0
+          ? formatDayLabels(m.preferredDays, memberDayLabels)
+          : "—";
       lines.push(
         "",
         `${opts.copy.familyMemberCard} ${i + 1}: ${m.name}`,
@@ -307,7 +307,7 @@ export default function BookTrialPageContent() {
   const [familyRowIndex, setFamilyRowIndex] = useState(0);
 
   const [packageCategory, setPackageCategory] = useState<PackageCategory | "">("");
-  const [selectedDay, setSelectedDay] = useState<DayId | "">("");
+  const [selectedDays, setSelectedDays] = useState<Set<DayId>>(() => new Set());
   const [selectedTimes, setSelectedTimes] = useState<Set<string>>(() => new Set());
 
   const [studentAge,    setStudentAge]    = useState("");
@@ -393,6 +393,10 @@ export default function BookTrialPageContent() {
     });
   }
 
+  function setPreferredDays(next: Set<DayId>) {
+    setSelectedDays(next);
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
@@ -435,7 +439,7 @@ export default function BookTrialPageContent() {
       return;
     }
     if (!isFamilyPkg) {
-      if (!selectedDay) { toast.error(copy.validationDays); return; }
+      if (selectedDays.size === 0) { toast.error(copy.validationDays); return; }
       if (selectedTimes.size === 0) { toast.error(copy.validationTimes); return; }
     }
 
@@ -462,7 +466,8 @@ export default function BookTrialPageContent() {
           timezoneDisplay: formatTimezoneDisplay(m.timezone, isAr ? "ar" : "en"),
           courses: [...m.courses],
           courseLabels: courseLabelsFromHrefs(m.courses, locale),
-          preferredDay: m.preferredDay,
+          preferredDays: [...m.preferredDays],
+          preferredDay: formatDayLabels(m.preferredDays, dayLabel),
           selectedTimes: [...m.preferredTimes],
           selectedTime: formatTimeSlots(m.preferredTimes, isAr),
           studentAge: m.studentAge.trim(),
@@ -482,7 +487,8 @@ export default function BookTrialPageContent() {
       ...(isFamilyPkg
         ? {}
         : {
-            selectedDay,
+            selectedDays: [...selectedDays],
+            selectedDay: formatDayLabels(selectedDays, dayLabel),
             selectedTimes: [...selectedTimes],
             selectedTime: formatTimeSlots(selectedTimes, isAr),
           }),
@@ -506,7 +512,7 @@ export default function BookTrialPageContent() {
         courseLabels: isFamilyPkg ? [] : courseLabelsFromHrefs(courses, locale),
         familyMembers: isFamilyPkg ? familyMembers : undefined,
         packageLabel: formatPackageLabel(selectedPkg, isAr, copy),
-        dayLabel: isFamilyPkg ? "" : (dayLabel[selectedDay as DayId] ?? selectedDay),
+        dayLabel: isFamilyPkg ? "" : formatDayLabels(selectedDays, dayLabel),
         timeSlot: isFamilyPkg ? "" : formatTimeSlots(selectedTimes, isAr),
         studentAge: isFamilyPkg ? "" : studentAge.trim(),
         studentGender: isFamilyPkg ? "" : genderForApi(studentGender, copy),
@@ -732,7 +738,7 @@ export default function BookTrialPageContent() {
 
             {/* Courses (standard packages only) */}
             {!isFamilyPkg ? (
-              <SectionCard>
+              <SectionCard className="overflow-hidden">
                 <div className="mb-5 flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-2">
                   <h2 className="text-sm font-bold text-[#0e2a1e]">{copy.coursesSection}{req}</h2>
                   <p className="text-[12px] leading-relaxed text-[#7a9485]">{copy.coursesHint}</p>
@@ -755,20 +761,14 @@ export default function BookTrialPageContent() {
                 <p className={labelCls}>
                   {copy.preferredDays}{req}
                 </p>
-                <p className="mb-2.5 text-[12px] text-[#7a9485]">
-                  {isAr ? "اختر يوماً واحداً" : "Pick one day"}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {DAY_IDS.map(d => (
-                    <SchedulePill
-                      key={d}
-                      active={selectedDay === d}
-                      onClick={() => setSelectedDay(d)}
-                    >
-                      {dayLabel[d]}
-                    </SchedulePill>
-                  ))}
-                </div>
+                <PreferredDaysPicker
+                  dayLabel={dayLabel}
+                  selectedDays={selectedDays}
+                  onChange={setPreferredDays}
+                  weekdaysLabel={copy.dayWeekdays}
+                  weekendsLabel={copy.dayWeekends}
+                  hint={copy.preferredDaysMultiHint}
+                />
               </div>
 
               {/* Times – multi-select dropdown */}

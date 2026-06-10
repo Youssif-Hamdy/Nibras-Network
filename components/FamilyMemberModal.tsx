@@ -32,7 +32,7 @@ export type FamilyMemberProfile = {
 
   courses: string[];
 
-  preferredDay: DayId | "";
+  preferredDays: DayId[];
 
   preferredTimes: string[];
 
@@ -58,7 +58,7 @@ export function emptyFamilyMember(): FamilyMemberProfile {
 
     courses: [],
 
-    preferredDay: "",
+    preferredDays: [],
 
     preferredTimes: [],
 
@@ -86,7 +86,7 @@ export function isFamilyMemberComplete(m: FamilyMemberProfile): boolean {
 
       m.courses.length > 0 &&
 
-      m.preferredDay &&
+      m.preferredDays.length > 0 &&
 
       m.preferredTimes.length > 0 &&
 
@@ -196,7 +196,7 @@ export function FamilyMemberModal({
 
       courses: [...initialDraft.courses],
 
-      preferredDay: initialDraft.preferredDay,
+      preferredDays: [...initialDraft.preferredDays],
 
       preferredTimes: [...initialDraft.preferredTimes],
 
@@ -294,7 +294,7 @@ export function FamilyMemberModal({
 
       courses: [...draft.courses],
 
-      preferredDay: draft.preferredDay,
+      preferredDays: [...draft.preferredDays],
 
       preferredTimes: [...draft.preferredTimes],
 
@@ -512,7 +512,7 @@ export function FamilyMemberModal({
 
             values={{
 
-              preferredDay: draft.preferredDay,
+              preferredDays: draft.preferredDays,
 
               preferredTimes: draft.preferredTimes,
 

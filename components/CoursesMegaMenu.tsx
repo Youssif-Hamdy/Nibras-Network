@@ -123,6 +123,9 @@ function subjectTheme(icon: string) {
   return SUBJECT_THEME[icon] ?? DEFAULT_SUBJECT_THEME;
 }
 
+const SUBJECT_LINK_CLS =
+  "group flex items-center gap-1.5 rounded-lg border border-white/70 bg-white/75 px-2 py-1.5 text-[11px] font-medium leading-snug text-[#374151] shadow-sm transition-all hover:border-[var(--subject-accent)]/30 hover:bg-white hover:text-[var(--subject-accent)] hover:shadow-md active:scale-[0.98]";
+
 // ─── Tab 1: By Subject ────────────────────────────────────────────────────────
 
 function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
@@ -182,15 +185,19 @@ function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
                 </span>
               )}
             </div>
-            <ul className="flex flex-1 flex-col gap-0.5">
+            <ul className="flex flex-1 flex-col gap-1">
               {col.links.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}
                     onClick={() => afterNavigate?.()}
-                    className="flex items-center gap-1 rounded-md px-1.5 py-1 text-[11px] leading-snug text-[#374151] transition-colors hover:bg-[var(--subject-hover)] hover:text-[var(--subject-accent)]"
+                    className={SUBJECT_LINK_CLS}
                   >
-                    <span className="flex-1">{megaHrefLabel(locale, l.href, l.label)}</span>
+                    <span className="min-w-0 flex-1">{megaHrefLabel(locale, l.href, l.label)}</span>
+                    <ChevronRight
+                      size={12}
+                      className="shrink-0 text-[#9ca3af] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--subject-accent)] rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
+                    />
                     {"badge" in l && (l as { badge?: string }).badge && (
                       <span className="shrink-0 whitespace-nowrap rounded px-1 py-0.5 text-[9px] font-bold bg-[#fef3c7] text-[#92400e]">
                         {(l as { badge?: string }).badge}
@@ -602,15 +609,19 @@ export function CoursesMobileMega({ onPickLink }: { onPickLink?: () => void }) {
                                 </span>
                               )}
                             </div>
-                            <ul className="space-y-0.5">
+                            <ul className="space-y-1">
                               {col.links.map((l) => (
                                 <li key={l.href}>
                                   <Link
                                     href={l.href}
                                     onClick={() => onPickLink?.()}
-                                    className="block rounded-md px-2 py-1.5 text-[12px] font-medium text-[#2d4a40] transition-colors hover:bg-[var(--subject-hover)] hover:text-[var(--subject-accent)]"
+                                    className={`${SUBJECT_LINK_CLS} px-2.5 py-2 text-[12px]`}
                                   >
-                                    {megaHrefLabel(locale, l.href, l.label)}
+                                    <span className="min-w-0 flex-1">{megaHrefLabel(locale, l.href, l.label)}</span>
+                                    <ChevronRight
+                                      size={13}
+                                      className="shrink-0 text-[#9ca3af] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--subject-accent)] rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
+                                    />
                                   </Link>
                                 </li>
                               ))}
