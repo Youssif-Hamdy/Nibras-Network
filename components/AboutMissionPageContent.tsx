@@ -179,7 +179,7 @@ export default function AboutMissionPageContent() {
   const dir = isAr ? "rtl" : "ltr";
 
   return (
-    <div className="bg-[#F7F5F0]" dir={dir}>
+    <div className="overflow-x-hidden bg-[#F7F5F0]" dir={dir}>
       <style jsx>{`
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(24px); }
@@ -257,7 +257,7 @@ export default function AboutMissionPageContent() {
         <div className="absolute inset-0 -z-10 [background:radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_40%,rgba(13,41,32,.55)_100%)]" />
 
         {/* Content */}
-        <div className="relative flex min-h-[100svh] flex-col items-center justify-between px-6 pb-10 pt-28 text-center">
+        <div className="relative flex min-h-[100svh] flex-col items-center justify-between px-4 pb-8 pt-[calc(70px+1.5rem)] text-center sm:px-6 sm:pb-10 sm:pt-28">
 
           <div className="fade-1 self-center">
             <span className="hero-pill shimmer">
@@ -268,7 +268,7 @@ export default function AboutMissionPageContent() {
           <div className="mx-auto max-w-3xl flex flex-col items-center gap-5 py-12">
            
 
-            <h1 className="fade-2 font-serif text-5xl font-bold leading-[1.15] text-[#F7F1E3] sm:text-6xl md:text-7xl drop-shadow-sm">
+            <h1 className="fade-2 font-serif text-3xl font-bold leading-[1.2] text-[#F7F1E3] min-[400px]:text-4xl sm:text-6xl md:text-7xl drop-shadow-sm">
               {isAr ? "رسالتنا" : "Our Mission"}
               <br />
               <span className="text-[#E3C98F]">{isAr ? "ورؤيتنا" : "& Vision"}</span>
@@ -298,7 +298,7 @@ export default function AboutMissionPageContent() {
             </div>
           </div>
 
-          <div className="fade-4 flex flex-wrap justify-center gap-3 self-end">
+          <div className="fade-4 flex w-full max-w-md flex-wrap justify-center gap-2 self-end sm:max-w-none sm:gap-3">
             {[
               { value: isAr ? "١٠٠٪" : "100%", label: isAr ? "معلمون مؤهلون" : "Qualified teachers" },
               { value: isAr ? "٢٤/٧" : "24/7", label: isAr ? "تعلّم مرن"      : "Flexible learning"  },
@@ -317,7 +317,7 @@ export default function AboutMissionPageContent() {
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
 
         {/* MISSION */}
-        <section className="mb-12 rounded-3xl border border-[#E5D9C1] bg-white p-7 shadow-[0_8px_30px_rgba(28,58,46,.08)] md:p-10">
+        <section className="mb-12 rounded-3xl border border-[#E5D9C1] bg-white p-5 shadow-[0_8px_30px_rgba(28,58,46,.08)] sm:p-7 md:p-10">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#C79B3B]/35 bg-[#FFF8EA] px-4 py-2 text-[11px] font-semibold uppercase tracking-[.13em] text-[#A2761D]">
             <MissionVisionIcon type="mission" />
             {isAr ? "رسالتنا" : "OUR MISSION"}
@@ -364,7 +364,7 @@ export default function AboutMissionPageContent() {
         </section>
 
         {/* VISION */}
-        <section className="rounded-3xl border border-[#E5D9C1] bg-white p-7 shadow-[0_8px_30px_rgba(28,58,46,.08)] md:p-10">
+        <section className="rounded-3xl border border-[#E5D9C1] bg-white p-5 shadow-[0_8px_30px_rgba(28,58,46,.08)] sm:p-7 md:p-10">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#C79B3B]/35 bg-[#FFF8EA] px-4 py-2 text-[11px] font-semibold uppercase tracking-[.13em] text-[#A2761D]">
             <MissionVisionIcon type="vision" />
             {isAr ? "رؤيتنا" : "OUR VISION"}

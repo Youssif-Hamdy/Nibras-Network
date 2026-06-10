@@ -183,7 +183,7 @@ const ctaBullets = [
 ═══════════════════════════════════════════════════ */
 export default function AboutWhyUsPageContent() {
   return (
-    <div className="bg-[#F7F5F0]" dir="ltr">
+    <div className="overflow-x-hidden bg-[#F7F5F0]" dir="ltr">
       <style jsx>{`
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(22px); }
@@ -260,7 +260,7 @@ export default function AboutWhyUsPageContent() {
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#0D2920]/35 via-[#0D2920]/22 to-[#0D2920]/78" />
         <div className="absolute inset-0 -z-10 [background:radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_40%,rgba(13,41,32,.55)_100%)]" />
 
-        <div className="relative flex min-h-[100svh] flex-col items-center justify-between px-6 pb-10 pt-28 text-center">
+        <div className="relative flex min-h-[100svh] flex-col items-center justify-between px-4 pb-8 pt-[calc(70px+1.5rem)] text-center sm:px-6 sm:pb-10 sm:pt-28">
           <div className="fade-in self-center">
             <span className="hero-pill shimmer inline-flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-[#E3C98F]" aria-hidden />
@@ -269,7 +269,7 @@ export default function AboutWhyUsPageContent() {
           </div>
 
           <div className="mx-auto max-w-3xl flex flex-col items-center gap-5 py-10">
-            <h1 className="fade-in delay-1 font-serif text-4xl font-bold leading-[1.12] text-[#F7F1E3] sm:text-5xl md:text-6xl drop-shadow-sm">
+            <h1 className="fade-in delay-1 font-serif text-[1.65rem] font-bold leading-[1.2] text-[#F7F1E3] min-[400px]:text-3xl sm:text-5xl md:text-6xl drop-shadow-sm">
               Why Choose Nibras Network?
             </h1>
             <GoldDivider />
@@ -357,18 +357,18 @@ export default function AboutWhyUsPageContent() {
                 <article key={reason.n}
                   className="reason-card rounded-3xl border border-[#E5D9C1] bg-white overflow-hidden"
                   style={{ animationDelay: `${idx * 40}ms` }}>
-                  <div className="flex items-stretch">
+                  <div className="flex flex-col sm:flex-row sm:items-stretch">
                     {/* Left accent panel */}
-                    <div className="flex w-[88px] shrink-0 flex-col items-center justify-center gap-3 bg-[#1F463B] py-7 px-3 text-center">
-                      <span className="font-serif text-3xl font-bold text-[#C79B3B]">{reason.n}</span>
-                      <div className="h-px w-8 bg-[#C79B3B]/40" />
+                    <div className="flex w-full shrink-0 flex-row items-center justify-center gap-4 bg-[#1F463B] px-4 py-4 text-center sm:w-[88px] sm:flex-col sm:gap-3 sm:px-3 sm:py-7">
+                      <span className="font-serif text-2xl font-bold text-[#C79B3B] sm:text-3xl">{reason.n}</span>
+                      <div className="hidden h-px w-8 bg-[#C79B3B]/40 sm:block" />
                       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
                         <Icon className="float-soft h-5 w-5 text-[#E3C98F]" strokeWidth={1.6} aria-hidden />
                       </div>
                     </div>
 
                     {/* Right content */}
-                    <div className="flex-1 min-w-0 p-6 md:p-8">
+                    <div className="min-w-0 flex-1 p-5 sm:p-6 md:p-8">
                       <h2 className="font-serif text-[18px] font-bold text-[#17342C] mb-4 md:text-xl">
                         {reason.title}
                       </h2>
@@ -435,7 +435,7 @@ export default function AboutWhyUsPageContent() {
             {voices.map((v) => (
               <blockquote key={v.nameLine}
                 className="relative overflow-hidden rounded-3xl border border-[#E5D9C1] bg-white p-6 shadow-sm md:p-7">
-                <span className="absolute -top-2 -right-2 font-serif text-[120px] font-bold leading-none text-[#F0EDE4] select-none pointer-events-none" aria-hidden>
+                <span className="pointer-events-none absolute -top-2 -right-2 select-none font-serif text-[72px] font-bold leading-none text-[#F0EDE4] sm:text-[120px]" aria-hidden>
                   &ldquo;
                 </span>
                 <MessageSquareQuote className="relative mb-3 h-7 w-7 text-[#C79B3B]/70" aria-hidden />
@@ -544,7 +544,7 @@ export default function AboutWhyUsPageContent() {
         </section>
 
         {/* ══════════════ CTA ══════════════ */}
-        <section className="rounded-3xl border-2 border-[#C79B3B]/40 bg-[#1F463B] px-7 py-12 text-center shadow-[0_16px_48px_rgba(28,58,46,.2)] md:px-12">
+        <section className="rounded-3xl border-2 border-[#C79B3B]/40 bg-[#1F463B] px-5 py-10 text-center shadow-[0_16px_48px_rgba(28,58,46,.2)] sm:px-7 sm:py-12 md:px-12">
           <Sparkles className="mx-auto mb-4 h-10 w-10 text-[#E3C98F]" aria-hidden />
           <h2 className="mb-6 font-serif text-2xl font-bold text-[#F7F1E3] md:text-3xl">
             READY TO EXPERIENCE THE DIFFERENCE?

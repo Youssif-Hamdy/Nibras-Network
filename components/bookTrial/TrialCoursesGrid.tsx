@@ -1,13 +1,13 @@
 "use client";
 
 import { memo, useCallback, useMemo, useState } from "react";
-import { BookOpen, PenLine, Landmark, type LucideIcon } from "lucide-react";
+import { BookOpen, PenLine, Landmark, Baby, Briefcase, type LucideIcon } from "lucide-react";
 import { MEGA_BY_SUBJECT } from "@/components/coursesMegaData";
 import { megaHrefLabel, megaSubjectTitle } from "@/lib/i18n/mega-labels";
 import type { Locale } from "@/lib/i18n/types";
 
-const TRIAL_SUBJECTS = MEGA_BY_SUBJECT.slice(0, 3);
-const ICONS: Record<string, LucideIcon> = { BookOpen, PenLine, Landmark };
+const TRIAL_SUBJECTS = MEGA_BY_SUBJECT;
+const ICONS: Record<string, LucideIcon> = { BookOpen, PenLine, Landmark, Baby, Briefcase };
 
 // ─── colour config per subject icon ───────────────────────────────────────────
 const ACCENT: Record<
@@ -40,6 +40,20 @@ const ACCENT: Record<
     pill:       "border-[#7a3d10] text-[#7a3d10]",
     pillActive: "bg-[#7a3d10] text-white border-[#7a3d10]",
     chip:       "bg-[#faf0e8] border-[#7a3d10] text-[#4a2008]",
+  },
+  Baby: {
+    tab:        "text-[#5B21B6] border-[#5B21B6]",
+    tabActive:  "text-[#5B21B6] border-b-[3px] border-[#5B21B6]",
+    pill:       "border-[#5B21B6] text-[#5B21B6]",
+    pillActive: "bg-[#5B21B6] text-white border-[#5B21B6]",
+    chip:       "bg-[#F5F3FF] border-[#5B21B6] text-[#2E1065]",
+  },
+  Briefcase: {
+    tab:        "text-[#BE185D] border-[#BE185D]",
+    tabActive:  "text-[#BE185D] border-b-[3px] border-[#BE185D]",
+    pill:       "border-[#BE185D] text-[#BE185D]",
+    pillActive: "bg-[#BE185D] text-white border-[#BE185D]",
+    chip:       "bg-[#FFF1F2] border-[#BE185D] text-[#4C0519]",
   },
 };
 const DEFAULT_ICON = "BookOpen";
@@ -172,8 +186,8 @@ export function TrialCoursesGrid({
       </div>
 
       {/* ── Tabs ── */}
-      <div className="-mx-1 overflow-x-auto overscroll-x-contain px-1 [scrollbar-width:thin]">
-        <div className="flex min-w-max border-b-2 border-[#dce8df]" role="tablist">
+      <div className="-mx-1 px-1">
+        <div className="flex flex-wrap border-b-2 border-[#dce8df]" role="tablist">
         {TRIAL_SUBJECTS.map((subj) => {
           const Icon = ICONS[subj.icon] ?? BookOpen;
           const acc = ACCENT[subj.icon] ?? ACCENT[DEFAULT_ICON];

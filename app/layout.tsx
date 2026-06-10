@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
+import { AppToaster } from "@/components/AppToaster";
 import { LocaleProvider } from "@/components/LocaleProvider";
 
 const geistSans = Geist({
@@ -38,6 +39,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <LocaleProvider>{children}</LocaleProvider>
+        <AppToaster />
       </body>
     </html>
   );

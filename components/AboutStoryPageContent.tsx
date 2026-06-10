@@ -115,7 +115,7 @@ export default function AboutStoryPageContent() {
   const isAr = locale === "ar";
 
   return (
-    <div className="bg-[#F7F5F0]" dir={isAr ? "rtl" : "ltr"}>
+    <div className="overflow-x-hidden bg-[#F7F5F0]" dir={isAr ? "rtl" : "ltr"}>
       <style jsx>{`
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(28px); }
@@ -178,7 +178,7 @@ export default function AboutStoryPageContent() {
       `}</style>
 
       {/* ══════════════ HERO ══════════════ */}
-      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pb-24 pt-24 text-center">
+      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-4 pb-20 pt-[calc(70px+2rem)] text-center sm:px-6 sm:pb-24 sm:pt-24 md:pt-28">
         {/* bg image */}
         <Image
           src="/images/hero_about.png"
@@ -190,7 +190,7 @@ export default function AboutStoryPageContent() {
         {/* overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#17342C]/58 via-[#1F463B]/52 to-[#17342C]/64" />
         {/* top glow */}
-        <div className="pointer-events-none absolute -top-20 left-1/2 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-[#C79B3B]/16 blur-3xl" />
+        <div className="pointer-events-none absolute -top-20 left-1/2 h-72 w-full max-w-[40rem] -translate-x-1/2 rounded-full bg-[#C79B3B]/16 blur-3xl" />
 
         <div className="relative z-10 flex flex-col items-center">
           {/* badge */}
@@ -209,7 +209,7 @@ export default function AboutStoryPageContent() {
           </div>
 
           {/* headline */}
-          <h1 className="a2 mb-5 max-w-2xl font-serif text-4xl font-bold leading-[1.2] text-[#F7F1E3] sm:text-5xl md:text-[3.4rem]">
+          <h1 className="a2 mb-5 max-w-2xl font-serif text-[1.75rem] font-bold leading-[1.25] text-[#F7F1E3] min-[400px]:text-3xl sm:text-5xl md:text-[3.4rem]">
             {isAr ? "بداية بسيطة" : "A Simple Beginning"}<br />
             {isAr ? <>بحلم <span className="text-[#C79B3B]">كبير</span></> : <>with a <span className="text-[#C79B3B]">Big Dream</span></>}
           </h1>
@@ -221,7 +221,7 @@ export default function AboutStoryPageContent() {
           </p>
 
           {/* stats */}
-          <div className="a4 flex flex-wrap justify-center gap-12 border-t border-[#C79B3B]/20 pt-10">
+          <div className="a4 flex flex-wrap justify-center gap-6 border-t border-[#C79B3B]/20 pt-8 sm:gap-12 sm:pt-10">
             {[
               { num: "2025", label: isAr ? "سنة التأسيس" : "Founded" },
               { num: "8+", label: isAr ? "دول" : "Countries" },
@@ -257,7 +257,7 @@ export default function AboutStoryPageContent() {
             <div className="grid lg:grid-cols-[420px_1fr]">
 
               {/* illustration panel */}
-              <div className="relative flex min-h-[320px] flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#21463A] to-[#2F6251] p-10 lg:min-h-[500px]">
+              <div className="relative flex min-h-[240px] flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#21463A] to-[#2F6251] p-6 sm:min-h-[320px] sm:p-10 lg:min-h-[500px]">
                 {/* decorative circles */}
                 <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full border border-[#C79B3B]/10" />
                 <div className="pointer-events-none absolute -bottom-10 -left-10 h-40 w-40 rounded-full border border-[#C79B3B]/8" />
@@ -298,7 +298,7 @@ export default function AboutStoryPageContent() {
               </div>
 
               {/* text panel */}
-              <div className="flex flex-col justify-center p-8 md:p-10">
+              <div className="flex flex-col justify-center p-5 sm:p-8 md:p-10">
                 <p className="mb-1 text-[10px] font-semibold uppercase tracking-[.18em] text-[#B8892A]">{isAr ? "الأصل" : "Origin"}</p>
                 <h2 className="mb-5 text-2xl font-bold text-[#1C3A2E]">{isAr ? "البداية" : "The Beginning"}</h2>
                 <p className="mb-5 text-[15px] leading-[1.8] text-[#4A6858]">
@@ -336,7 +336,7 @@ export default function AboutStoryPageContent() {
         {/* ══ 2. WHY NIBRAS — text left + animated 2×2 grid right ══ */}
         <section>
           <div className="hover-card overflow-hidden rounded-3xl border border-[#E5D9C1] bg-white shadow-[0_6px_24px_rgba(28,58,46,.07)]">
-            <div className="grid items-start gap-0 md:grid-cols-2" dir="ltr">
+            <div className="grid items-start gap-0 md:grid-cols-2" dir={isAr ? "rtl" : "ltr"}>
 
               {/* text left */}
               <div className="flex flex-col justify-start bg-gradient-to-b from-white to-[#FCFAF5] p-5 md:p-6 lg:p-7" dir={isAr ? "rtl" : "ltr"}>
@@ -383,11 +383,11 @@ export default function AboutStoryPageContent() {
 
               {/* animated 2×2 symbolism grid */}
               <div className="border-t border-[#E5D9C1] bg-[#FFFEFB] p-2.5 md:border-s md:border-t-0 md:p-3" dir={isAr ? "rtl" : "ltr"}>
-                <div className="grid grid-cols-2 gap-2 content-start">
+                <div className="grid grid-cols-1 gap-2 content-start min-[400px]:grid-cols-2">
                 {symbolismItems.map(({ icon, color, border, title, desc }, i) => (
                   <div
                     key={title.en}
-                    className="vis-card flex h-[108px] flex-col rounded-lg border border-[#E5D9C1] p-2.5"
+                    className="vis-card flex min-h-[100px] flex-col rounded-lg border border-[#E5D9C1] p-3 sm:min-h-[108px] sm:p-2.5"
                     style={{ background: color, animationDelay: `${i * 0.13}s` }}
                   >
                     <span className="icon-pop mb-1 inline-flex text-[#2F6251]">
@@ -412,7 +412,7 @@ export default function AboutStoryPageContent() {
 
         {/* ══ 3. GROWTH — horizontal timeline ══ */}
         <section>
-          <div className="hover-card rounded-3xl border border-[#E5D9C1] bg-white p-8 shadow-[0_6px_24px_rgba(28,58,46,.07)] md:p-10">
+          <div className="hover-card rounded-3xl border border-[#E5D9C1] bg-white p-5 shadow-[0_6px_24px_rgba(28,58,46,.07)] sm:p-8 md:p-10">
             <p className="mb-1 text-[10px] font-semibold uppercase tracking-[.18em] text-[#B8892A]">{isAr ? "الرحلة" : "Journey"}</p>
             <h2 className="mb-10 text-2xl font-bold text-[#1C3A2E]">{isAr ? "نموّنا" : "Our Growth"}</h2>
 
@@ -444,7 +444,7 @@ export default function AboutStoryPageContent() {
 
         {/* ══ 4. VISION — quote + 2×2 cards ══ */}
         <section>
-          <div className="hover-card rounded-3xl border border-[#E5D9C1] bg-white p-8 shadow-[0_6px_24px_rgba(28,58,46,.07)] md:p-10">
+          <div className="hover-card rounded-3xl border border-[#E5D9C1] bg-white p-5 shadow-[0_6px_24px_rgba(28,58,46,.07)] sm:p-8 md:p-10">
 
             {/* header row */}
             <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_280px]">
@@ -493,7 +493,7 @@ export default function AboutStoryPageContent() {
         </section>
 
         {/* ══ CTA ══ */}
-        <div className="mt-16 overflow-hidden rounded-3xl bg-[#2B5B4A] px-8 py-14 text-center">
+        <div className="relative mt-16 overflow-hidden rounded-3xl bg-[#2B5B4A] px-5 py-10 text-center sm:px-8 sm:py-14">
           <div className="pointer-events-none absolute -top-20 left-1/2 h-56 w-80 -translate-x-1/2 rounded-full bg-[#C79B3B]/12 blur-3xl" />
 
           <div className="float-icon pulse-ring mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#C79B3B]/35 bg-[#C79B3B]/12">

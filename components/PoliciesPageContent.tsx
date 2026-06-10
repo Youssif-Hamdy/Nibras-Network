@@ -86,45 +86,66 @@ function PolicyTable({
   isAr: boolean;
 }) {
   return (
-    <div
-      className="not-prose my-6 overflow-x-auto rounded-xl border border-[rgba(28,58,46,0.08)] bg-[#faf9f6] shadow-[0_1px_0_rgba(255,255,255,0.7)_inset,0_8px_28px_-12px_rgba(28,58,46,0.12)]"
-      dir={isAr ? "rtl" : "ltr"}
-    >
-      <table className="w-full min-w-[min(100%,480px)] border-collapse text-start text-[13px] leading-[1.55] text-[#1a3328] sm:min-w-[520px] sm:text-[14px]">
-        <thead>
-          <tr className="bg-[#eef2ee] text-[#1a3328]">
-            {headers.map((h) => (
-              <th
-                key={h}
-                className="border-b border-[rgba(28,58,46,0.08)] px-3 py-3 font-sans text-[11px] font-semibold uppercase tracking-wide text-[#4a6358] sm:px-4 sm:py-3.5 sm:text-xs"
-              >
-                {h}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, ri) => (
-            <tr
-              key={ri}
-              className={ri % 2 === 0 ? "bg-white" : "bg-[#f7f5f1]"}
-            >
-              {row.map((cell, ci) => (
-                <td
-                  key={ci}
-                  className="border-b border-[#e8e4dc] px-3 py-2.5 align-top text-[#3d5249] first:font-medium first:text-[#2a4036] sm:px-4 sm:py-3"
+    <div className="not-prose my-6" dir={isAr ? "rtl" : "ltr"}>
+      {/* Mobile: stacked cards — no horizontal scroll */}
+      <div className="space-y-3 sm:hidden">
+        {rows.map((row, ri) => (
+          <div
+            key={ri}
+            className="rounded-xl border border-[rgba(28,58,46,0.08)] bg-white p-4 shadow-[0_1px_0_rgba(255,255,255,0.7)_inset,0_6px_20px_-10px_rgba(28,58,46,0.12)]"
+          >
+            <p className="font-sans text-[11px] font-semibold uppercase tracking-wide text-[#4a6358]">
+              {row[0] ?? headers[0]}
+            </p>
+            <div className="mt-2 text-[14px] leading-[1.65] text-[#3d5249]">
+              {linkifySecondColumn && row[1] ? (
+                linkifyDetail(row[1])
+              ) : (
+                <span className="whitespace-pre-line break-words">{row[1] ?? row.slice(1).join(" — ")}</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tablet+ */}
+      <div className="hidden overflow-hidden rounded-xl border border-[rgba(28,58,46,0.08)] bg-[#faf9f6] shadow-[0_1px_0_rgba(255,255,255,0.7)_inset,0_8px_28px_-12px_rgba(28,58,46,0.12)] sm:block">
+        <table className="w-full border-collapse text-start text-[14px] leading-[1.55] text-[#1a3328]">
+          <thead>
+            <tr className="bg-[#eef2ee] text-[#1a3328]">
+              {headers.map((h) => (
+                <th
+                  key={h}
+                  className="border-b border-[rgba(28,58,46,0.08)] px-4 py-3.5 font-sans text-xs font-semibold uppercase tracking-wide text-[#4a6358]"
                 >
-                  {ci === 1 && linkifySecondColumn ? (
-                    linkifyDetail(cell)
-                  ) : (
-                    <span className="whitespace-pre-line">{cell}</span>
-                  )}
-                </td>
+                  {h}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((row, ri) => (
+              <tr
+                key={ri}
+                className={ri % 2 === 0 ? "bg-white" : "bg-[#f7f5f1]"}
+              >
+                {row.map((cell, ci) => (
+                  <td
+                    key={ci}
+                    className="border-b border-[#e8e4dc] px-4 py-3 align-top text-[#3d5249] first:font-medium first:text-[#2a4036]"
+                  >
+                    {ci === 1 && linkifySecondColumn ? (
+                      linkifyDetail(cell)
+                    ) : (
+                      <span className="whitespace-pre-line break-words">{cell}</span>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
@@ -221,7 +242,7 @@ function SectionCard({
   return (
     <Reveal delayMs={baseDelay}>
       <article
-        className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#e5dfd4] bg-white p-6 shadow-[0_2px_0_rgba(255,255,255,0.9)_inset,0_12px_40px_-28px_rgba(28,58,46,0.18)] transition-[box-shadow,border-color] duration-300 hover:border-[#d4cbb8] hover:shadow-[0_2px_0_rgba(255,255,255,0.95)_inset,0_16px_48px_-24px_rgba(28,58,46,0.22)] sm:p-7"
+        className="relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e5dfd4] bg-white p-5 shadow-[0_2px_0_rgba(255,255,255,0.9)_inset,0_12px_40px_-28px_rgba(28,58,46,0.18)] transition-[box-shadow,border-color] duration-300 hover:border-[#d4cbb8] hover:shadow-[0_2px_0_rgba(255,255,255,0.95)_inset,0_16px_48px_-24px_rgba(28,58,46,0.22)] sm:p-7"
         id={`policy-${section.id}`}
       >
         <div
@@ -256,9 +277,9 @@ export default function PoliciesPageContent() {
         aria-hidden
       />
 
-      <div className="relative mx-auto max-w-3xl px-4 pt-[calc(70px+1.5rem)] pb-20 sm:px-6 md:max-w-5xl md:pt-[calc(80px+2rem)] md:pb-28 lg:max-w-6xl xl:max-w-7xl">
+      <div className="relative mx-auto max-w-3xl px-4 pt-[calc(70px+1.25rem)] pb-16 sm:px-6 sm:pb-20 md:max-w-5xl md:pt-[calc(80px+2rem)] md:pb-28 lg:max-w-6xl xl:max-w-7xl">
         <Reveal>
-          <header className="relative overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-b from-white to-[#f7f4ee] p-7 shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_20px_50px_-34px_rgba(28,58,46,0.2)] sm:p-9 md:rounded-3xl">
+          <header className="relative overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-b from-white to-[#f7f4ee] p-5 shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_20px_50px_-34px_rgba(28,58,46,0.2)] sm:p-9 md:rounded-3xl">
             <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:items-start sm:gap-8 sm:text-start">
               <div
                 className="policies-hero-icon flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-2xl border border-[#e8e0d4] bg-[#f7f4ee] text-[#2d4f3f] shadow-inner sm:h-20 sm:w-20"
@@ -281,26 +302,14 @@ export default function PoliciesPageContent() {
           </header>
         </Reveal>
 
-        <div
-          className="mt-7 flex justify-center"
-          role="note"
-          aria-label={isAr ? "معلومات الصفحة" : "Page notice"}
-        >
-          <p className="max-w-xl rounded-full border border-[#e0d9ce] bg-white/70 px-5 py-2.5 text-center text-[12.5px] leading-snug text-[#5c6f66] shadow-sm sm:text-[13px]">
-            {isAr
-              ? "على الشاشات العريضة: عمودان للأقسام. الجداول تُمرَّر أفقيًا عند الضيق."
-              : "Wide screens: two columns for sections. Tables scroll horizontally when narrow."}
-          </p>
-        </div>
-
-        <div className="mt-9 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 md:items-start lg:gap-7">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-9 sm:gap-5 md:grid-cols-2 md:gap-6 md:items-start lg:gap-7">
           {copy.sections.map((section, index) => (
             <SectionCard key={section.id} section={section} index={index} isAr={isAr} />
           ))}
         </div>
 
         <Reveal delayMs={100}>
-          <footer className="relative mt-12 overflow-hidden rounded-2xl border border-[#2a4f3e]/20 bg-gradient-to-b from-[#1e3d30] to-[#162e25] p-8 text-[#f2ebe0] shadow-[0_24px_60px_-28px_rgba(0,0,0,0.35)] sm:mt-14 sm:rounded-3xl sm:p-10">
+          <footer className="relative mt-10 overflow-hidden rounded-2xl border border-[#2a4f3e]/20 bg-gradient-to-b from-[#1e3d30] to-[#162e25] p-6 text-[#f2ebe0] shadow-[0_24px_60px_-28px_rgba(0,0,0,0.35)] sm:mt-14 sm:rounded-3xl sm:p-10">
             <div
               className="pointer-events-none absolute -bottom-24 -start-10 h-64 w-64 rounded-full bg-[#d4b96a]/12 blur-3xl"
               aria-hidden

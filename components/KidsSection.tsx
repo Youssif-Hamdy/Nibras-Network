@@ -98,12 +98,13 @@ export default function KidsSection() {
                 <div className="relative w-48 h-48 md:w-56 md:h-56">
                   {/* Circular Image Container */}
                   <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#B8860B]/20 to-[#1C3A2E]/10 p-2">
-                    <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#B8860B]/30 group-hover:border-[#B8860B] transition-all duration-500">
+                    <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-[#B8860B]/30 group-hover:border-[#B8860B] transition-all duration-500">
                       <Image
                         src={currentKid.image}
                         alt={currentKid.alt}
                         fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        sizes="(max-width: 768px) 192px, 224px"
+                        className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                       />
                     </div>
                   </div>

@@ -382,7 +382,7 @@ export default function AboutValuesPageContent() {
   const pageDifferentiators = isAr ? differentiatorsAr : differentiators;
 
   return (
-    <div dir={isAr ? "rtl" : "ltr"} style={{ background: "#F4F1EB", color: "#1A2E25", fontFamily: "'Georgia', serif" }}>
+    <div className="overflow-x-hidden" dir={isAr ? "rtl" : "ltr"} style={{ background: "#F4F1EB", color: "#1A2E25", fontFamily: "'Georgia', serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap');
 
@@ -494,12 +494,56 @@ export default function AboutValuesPageContent() {
         .diff-card:hover {
           transform: translateX(6px);
         }
+
+        @media (max-width: 639px) {
+          .values-hero-card {
+            padding: 36px 20px !important;
+            border-radius: 20px !important;
+          }
+          .val-card {
+            grid-template-columns: 1fr !important;
+            direction: ltr !important;
+          }
+          .val-card-icon-col {
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            padding: 16px !important;
+            gap: 14px !important;
+            border-right: none !important;
+            border-left: none !important;
+            border-bottom: 1px solid rgba(200,185,155,.4) !important;
+          }
+          .val-card-icon-col .pixel-decor {
+            display: none !important;
+          }
+          .val-card-icon-col .vertical-label {
+            display: none !important;
+          }
+          .val-card-icon-col .icon-ring-wrap {
+            width: 64px !important;
+            height: 64px !important;
+          }
+          .val-card-icon-col .icon-ring-inner {
+            width: 52px !important;
+            height: 52px !important;
+          }
+          .val-card-content {
+            padding: 20px 16px 24px !important;
+          }
+          .val-practice-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .values-diff-section {
+            padding: 28px 20px !important;
+          }
+        }
       `}</style>
 
       <div className="page-root">
 
         {/* ── HERO ──────────────────────────────────────────── */}
-        <section style={{ padding: "80px 24px 64px", position: "relative", overflow: "hidden" }}>
+        <section style={{ padding: "calc(70px + 2rem) 16px 48px", position: "relative", overflow: "hidden" }} className="sm:!pt-20 sm:!px-6 sm:!pb-16">
           <div
             aria-hidden
             style={{
@@ -513,7 +557,7 @@ export default function AboutValuesPageContent() {
           />
 
           <div
-            className="hero-in d1"
+            className="hero-in d1 values-hero-card"
             style={{
               maxWidth: 860, margin: "0 auto",
               background: "linear-gradient(145deg, #173428 0%, #1C4238 50%, #204840 100%)",
@@ -627,6 +671,7 @@ export default function AboutValuesPageContent() {
                 >
                   {/* ── ICON COLUMN ── */}
                   <div
+                    className="val-card-icon-col"
                     style={{
                       background: v.accentLight,
                       display:"flex",
@@ -642,7 +687,7 @@ export default function AboutValuesPageContent() {
                     }}
                   >
                     {/* pixel decor */}
-                    <PixelDecor color={v.accentHex} side={flip ? "right" : "left"} />
+                    <div className="pixel-decor"><PixelDecor color={v.accentHex} side={flip ? "right" : "left"} /></div>
 
                     {/* number badge */}
                     <span
@@ -659,6 +704,7 @@ export default function AboutValuesPageContent() {
 
                     {/* icon ring */}
                     <div
+                      className="icon-ring-wrap"
                       style={{
                         position:"relative",
                         width:96, height:96,
@@ -680,7 +726,7 @@ export default function AboutValuesPageContent() {
                       </div>
 
                       <div
-                        className="icon-bg"
+                        className="icon-bg icon-ring-inner"
                         style={{
                           width:76, height:76,
                           borderRadius:18,
@@ -704,6 +750,7 @@ export default function AboutValuesPageContent() {
 
                     {/* vertical label */}
                     <span
+                      className="vertical-label"
                       style={{
                         writingMode:"vertical-rl",
                         textOrientation:"mixed",
@@ -720,7 +767,7 @@ export default function AboutValuesPageContent() {
                   </div>
 
                   {/* ── CONTENT COLUMN ── */}
-                  <div style={{ padding:"28px 28px 28px", direction: isAr ? "rtl" : "ltr", textAlign: isAr ? "right" : "left" }}>
+                  <div className="val-card-content" style={{ padding:"28px 28px 28px", direction: isAr ? "rtl" : "ltr", textAlign: isAr ? "right" : "left" }}>
                     {/* label */}
                     <p
                       style={{
@@ -761,7 +808,7 @@ export default function AboutValuesPageContent() {
                     </p>
 
                     {/* two columns: practice + why */}
-                    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
+                    <div className="val-practice-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
                       {/* in practice */}
                       <div
                         style={{
@@ -860,6 +907,7 @@ export default function AboutValuesPageContent() {
         {/* ── DIFFERENTIATORS ────────────────────────────────── */}
         <section style={{ maxWidth:960, margin:"0 auto", padding:"8px 20px 80px" }}>
           <div
+            className="values-diff-section"
             style={{
               background:"linear-gradient(150deg, #173428 0%, #1E4438 60%, #1A3C32 100%)",
               borderRadius:28,

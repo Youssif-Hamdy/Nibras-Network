@@ -3,62 +3,62 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export const COUNTRIES = [
-  { code: "EG", name: "Egypt", dialCode: "+20", flag: "🇪🇬" },
-  { code: "SA", name: "Saudi Arabia", dialCode: "+966", flag: "🇸🇦" },
-  { code: "AE", name: "UAE", dialCode: "+971", flag: "🇦🇪" },
-  { code: "KW", name: "Kuwait", dialCode: "+965", flag: "🇰🇼" },
-  { code: "QA", name: "Qatar", dialCode: "+974", flag: "🇶🇦" },
-  { code: "BH", name: "Bahrain", dialCode: "+973", flag: "🇧🇭" },
-  { code: "OM", name: "Oman", dialCode: "+968", flag: "🇴🇲" },
-  { code: "JO", name: "Jordan", dialCode: "+962", flag: "🇯🇴" },
-  { code: "LB", name: "Lebanon", dialCode: "+961", flag: "🇱🇧" },
-  { code: "IQ", name: "Iraq", dialCode: "+964", flag: "🇮🇶" },
-  { code: "SY", name: "Syria", dialCode: "+963", flag: "🇸🇾" },
-  { code: "PS", name: "Palestine", dialCode: "+970", flag: "🇵🇸" },
-  { code: "YE", name: "Yemen", dialCode: "+967", flag: "🇾🇪" },
-  { code: "LY", name: "Libya", dialCode: "+218", flag: "🇱🇾" },
-  { code: "TN", name: "Tunisia", dialCode: "+216", flag: "🇹🇳" },
-  { code: "DZ", name: "Algeria", dialCode: "+213", flag: "🇩🇿" },
-  { code: "MA", name: "Morocco", dialCode: "+212", flag: "🇲🇦" },
-  { code: "SD", name: "Sudan", dialCode: "+249", flag: "🇸🇩" },
-  { code: "SO", name: "Somalia", dialCode: "+252", flag: "🇸🇴" },
-  { code: "MR", name: "Mauritania", dialCode: "+222", flag: "🇲🇷" },
-  { code: "TR", name: "Turkey", dialCode: "+90", flag: "🇹🇷" },
-  { code: "US", name: "United States", dialCode: "+1", flag: "🇺🇸" },
-  { code: "GB", name: "United Kingdom", dialCode: "+44", flag: "🇬🇧" },
-  { code: "DE", name: "Germany", dialCode: "+49", flag: "🇩🇪" },
-  { code: "FR", name: "France", dialCode: "+33", flag: "🇫🇷" },
-  { code: "IT", name: "Italy", dialCode: "+39", flag: "🇮🇹" },
-  { code: "ES", name: "Spain", dialCode: "+34", flag: "🇪🇸" },
-  { code: "CA", name: "Canada", dialCode: "+1", flag: "🇨🇦" },
-  { code: "AU", name: "Australia", dialCode: "+61", flag: "🇦🇺" },
-  { code: "IN", name: "India", dialCode: "+91", flag: "🇮🇳" },
-  { code: "PK", name: "Pakistan", dialCode: "+92", flag: "🇵🇰" },
-  { code: "NG", name: "Nigeria", dialCode: "+234", flag: "🇳🇬" },
-  { code: "ZA", name: "South Africa", dialCode: "+27", flag: "🇿🇦" },
-  { code: "KE", name: "Kenya", dialCode: "+254", flag: "🇰🇪" },
-  { code: "ET", name: "Ethiopia", dialCode: "+251", flag: "🇪🇹" },
-  { code: "RU", name: "Russia", dialCode: "+7", flag: "🇷🇺" },
-  { code: "CN", name: "China", dialCode: "+86", flag: "🇨🇳" },
-  { code: "JP", name: "Japan", dialCode: "+81", flag: "🇯🇵" },
-  { code: "KR", name: "South Korea", dialCode: "+82", flag: "🇰🇷" },
-  { code: "ID", name: "Indonesia", dialCode: "+62", flag: "🇮🇩" },
-  { code: "MY", name: "Malaysia", dialCode: "+60", flag: "🇲🇾" },
-  { code: "SG", name: "Singapore", dialCode: "+65", flag: "🇸🇬" },
-  { code: "TH", name: "Thailand", dialCode: "+66", flag: "🇹🇭" },
-  { code: "PH", name: "Philippines", dialCode: "+63", flag: "🇵🇭" },
-  { code: "BR", name: "Brazil", dialCode: "+55", flag: "🇧🇷" },
-  { code: "MX", name: "Mexico", dialCode: "+52", flag: "🇲🇽" },
-  { code: "AR", name: "Argentina", dialCode: "+54", flag: "🇦🇷" },
-  { code: "NL", name: "Netherlands", dialCode: "+31", flag: "🇳🇱" },
-  { code: "SE", name: "Sweden", dialCode: "+46", flag: "🇸🇪" },
-  { code: "NO", name: "Norway", dialCode: "+47", flag: "🇳🇴" },
-  { code: "CH", name: "Switzerland", dialCode: "+41", flag: "🇨🇭" },
-  { code: "BE", name: "Belgium", dialCode: "+32", flag: "🇧🇪" },
-  { code: "PL", name: "Poland", dialCode: "+48", flag: "🇵🇱" },
-  { code: "GR", name: "Greece", dialCode: "+30", flag: "🇬🇷" },
-  { code: "PT", name: "Portugal", dialCode: "+351", flag: "🇵🇹" },
-  { code: "NZ", name: "New Zealand", dialCode: "+64", flag: "🇳🇿" },
+  { code: "EG", name: "Egypt", dialCode: "+20", flag: "🇪🇬", minDigits: 10, maxDigits: 10, pattern: /^1[0-9]{9,10}$/, example: "10XXXXXXXX" },
+  { code: "SA", name: "Saudi Arabia", dialCode: "+966", flag: "🇸🇦", minDigits: 9, maxDigits: 9, pattern: /^5[0-9]{8}$/, example: "5XXXXXXXX" },
+  { code: "AE", name: "UAE", dialCode: "+971", flag: "🇦🇪", minDigits: 9, maxDigits: 9, pattern: /^5[0-9]{8}$/, example: "50XXXXXXX" },
+  { code: "KW", name: "Kuwait", dialCode: "+965", flag: "🇰🇼", minDigits: 8, maxDigits: 8, pattern: /^[0-9]{8}$/, example: "XXXXXXXX" },
+  { code: "QA", name: "Qatar", dialCode: "+974", flag: "🇶🇦", minDigits: 8, maxDigits: 8, pattern: /^[3-7][0-9]{7}$/, example: "3XXXXXXX" },
+  { code: "BH", name: "Bahrain", dialCode: "+973", flag: "🇧🇭", minDigits: 8, maxDigits: 8, pattern: /^[3-9][0-9]{7}$/, example: "3XXXXXXX" },
+  { code: "OM", name: "Oman", dialCode: "+968", flag: "🇴🇲", minDigits: 8, maxDigits: 8, pattern: /^[0-9]{8}$/, example: "XXXXXXXX" },
+  { code: "JO", name: "Jordan", dialCode: "+962", flag: "🇯🇴", minDigits: 9, maxDigits: 9, pattern: /^7[0-9]{8}$/, example: "7XXXXXXXX" },
+  { code: "LB", name: "Lebanon", dialCode: "+961", flag: "🇱🇧", minDigits: 8, maxDigits: 8, pattern: /^[3-7][0-9]{7}$/, example: "3XXXXXXX" },
+  { code: "IQ", name: "Iraq", dialCode: "+964", flag: "🇮🇶", minDigits: 10, maxDigits: 10, pattern: /^7[0-9]{9}$/, example: "7XXXXXXXXX" },
+  { code: "SY", name: "Syria", dialCode: "+963", flag: "🇸🇾", minDigits: 9, maxDigits: 9, pattern: /^9[0-9]{8}$/, example: "9XXXXXXXX" },
+  { code: "PS", name: "Palestine", dialCode: "+970", flag: "🇵🇸", minDigits: 9, maxDigits: 9, pattern: /^5[0-9]{8}$/, example: "5XXXXXXXX" },
+  { code: "YE", name: "Yemen", dialCode: "+967", flag: "🇾🇪", minDigits: 9, maxDigits: 9, pattern: /^7[0-9]{8}$/, example: "7XXXXXXXX" },
+  { code: "LY", name: "Libya", dialCode: "+218", flag: "🇱🇾", minDigits: 9, maxDigits: 10, pattern: /^9[0-9]{8,9}$/, example: "9XXXXXXXX" },
+  { code: "TN", name: "Tunisia", dialCode: "+216", flag: "🇹🇳", minDigits: 8, maxDigits: 8, pattern: /^[2-9][0-9]{7}$/, example: "2XXXXXXX" },
+  { code: "DZ", name: "Algeria", dialCode: "+213", flag: "🇩🇿", minDigits: 9, maxDigits: 9, pattern: /^[5-7][0-9]{8}$/, example: "5XXXXXXXX" },
+  { code: "MA", name: "Morocco", dialCode: "+212", flag: "🇲🇦", minDigits: 9, maxDigits: 9, pattern: /^[6-7][0-9]{8}$/, example: "6XXXXXXXX" },
+  { code: "SD", name: "Sudan", dialCode: "+249", flag: "🇸🇩", minDigits: 9, maxDigits: 9, pattern: /^9[0-9]{8}$/, example: "9XXXXXXXX" },
+  { code: "SO", name: "Somalia", dialCode: "+252", flag: "🇸🇴", minDigits: 8, maxDigits: 9, pattern: /^[6-7][0-9]{7,8}$/, example: "6XXXXXXXX" },
+  { code: "MR", name: "Mauritania", dialCode: "+222", flag: "🇲🇷", minDigits: 8, maxDigits: 8, pattern: /^[0-9]{8}$/, example: "XXXXXXXX" },
+  { code: "TR", name: "Turkey", dialCode: "+90", flag: "🇹🇷", minDigits: 10, maxDigits: 10, pattern: /^5[0-9]{9}$/, example: "5XXXXXXXXX" },
+  { code: "US", name: "United States", dialCode: "+1", flag: "🇺🇸", minDigits: 10, maxDigits: 10, pattern: /^[2-9][0-9]{9}$/, example: "XXXXXXXXXX" },
+  { code: "GB", name: "United Kingdom", dialCode: "+44", flag: "🇬🇧", minDigits: 10, maxDigits: 10, pattern: /^7[0-9]{9}$/, example: "7XXXXXXXXX" },
+  { code: "DE", name: "Germany", dialCode: "+49", flag: "🇩🇪", minDigits: 10, maxDigits: 11, pattern: /^1[5-7][0-9]{8,9}$/, example: "15XXXXXXXX" },
+  { code: "FR", name: "France", dialCode: "+33", flag: "🇫🇷", minDigits: 9, maxDigits: 9, pattern: /^[6-7][0-9]{8}$/, example: "6XXXXXXXX" },
+  { code: "IT", name: "Italy", dialCode: "+39", flag: "🇮🇹", minDigits: 10, maxDigits: 10, pattern: /^3[0-9]{9}$/, example: "3XXXXXXXXX" },
+  { code: "ES", name: "Spain", dialCode: "+34", flag: "🇪🇸", minDigits: 9, maxDigits: 9, pattern: /^[6-7][0-9]{8}$/, example: "6XXXXXXXX" },
+  { code: "CA", name: "Canada", dialCode: "+1", flag: "🇨🇦", minDigits: 10, maxDigits: 10, pattern: /^[2-9][0-9]{9}$/, example: "XXXXXXXXXX" },
+  { code: "AU", name: "Australia", dialCode: "+61", flag: "🇦🇺", minDigits: 9, maxDigits: 10, pattern: /^4[0-9]{8,9}$/, example: "4XXXXXXXX" },
+  { code: "IN", name: "India", dialCode: "+91", flag: "🇮🇳", minDigits: 10, maxDigits: 10, pattern: /^[6-9][0-9]{9}$/, example: "XXXXXXXXXX" },
+  { code: "PK", name: "Pakistan", dialCode: "+92", flag: "🇵🇰", minDigits: 10, maxDigits: 10, pattern: /^3[0-9]{9}$/, example: "3XXXXXXXXX" },
+  { code: "NG", name: "Nigeria", dialCode: "+234", flag: "🇳🇬", minDigits: 10, maxDigits: 10, pattern: /^[7-9][0-9]{9}$/, example: "7XXXXXXXXX" },
+  { code: "ZA", name: "South Africa", dialCode: "+27", flag: "🇿🇦", minDigits: 9, maxDigits: 9, pattern: /^[6-8][0-9]{8}$/, example: "6XXXXXXXX" },
+  { code: "KE", name: "Kenya", dialCode: "+254", flag: "🇰🇪", minDigits: 9, maxDigits: 9, pattern: /^7[0-9]{8}$/, example: "7XXXXXXXX" },
+  { code: "ET", name: "Ethiopia", dialCode: "+251", flag: "🇪🇹", minDigits: 9, maxDigits: 9, pattern: /^9[0-9]{8}$/, example: "9XXXXXXXX" },
+  { code: "RU", name: "Russia", dialCode: "+7", flag: "🇷🇺", minDigits: 10, maxDigits: 10, pattern: /^9[0-9]{9}$/, example: "9XXXXXXXXX" },
+  { code: "CN", name: "China", dialCode: "+86", flag: "🇨🇳", minDigits: 11, maxDigits: 11, pattern: /^1[3-9][0-9]{9}$/, example: "1XXXXXXXXXX" },
+  { code: "JP", name: "Japan", dialCode: "+81", flag: "🇯🇵", minDigits: 10, maxDigits: 10, pattern: /^[7-9]0[0-9]{8}$/, example: "90XXXXXXXX" },
+  { code: "KR", name: "South Korea", dialCode: "+82", flag: "🇰🇷", minDigits: 10, maxDigits: 11, pattern: /^[0-9]{10,11}$/, example: "10XXXXXXXX" },
+  { code: "ID", name: "Indonesia", dialCode: "+62", flag: "🇮🇩", minDigits: 9, maxDigits: 12, pattern: /^8[0-9]{8,11}$/, example: "8XXXXXXXX" },
+  { code: "MY", name: "Malaysia", dialCode: "+60", flag: "🇲🇾", minDigits: 9, maxDigits: 10, pattern: /^1[0-9]{8,9}$/, example: "1XXXXXXXX" },
+  { code: "SG", name: "Singapore", dialCode: "+65", flag: "🇸🇬", minDigits: 8, maxDigits: 8, pattern: /^[0-9]{8}$/, example: "XXXXXXXX" },
+  { code: "TH", name: "Thailand", dialCode: "+66", flag: "🇹🇭", minDigits: 9, maxDigits: 9, pattern: /^[6-9][0-9]{8}$/, example: "8XXXXXXXX" },
+  { code: "PH", name: "Philippines", dialCode: "+63", flag: "🇵🇭", minDigits: 10, maxDigits: 10, pattern: /^9[0-9]{9}$/, example: "9XXXXXXXXX" },
+  { code: "BR", name: "Brazil", dialCode: "+55", flag: "🇧🇷", minDigits: 10, maxDigits: 11, pattern: /^[1-9][0-9]{9,10}$/, example: "11XXXXXXXXX" },
+  { code: "MX", name: "Mexico", dialCode: "+52", flag: "🇲🇽", minDigits: 10, maxDigits: 10, pattern: /^[1-9][0-9]{9}$/, example: "XXXXXXXXXX" },
+  { code: "AR", name: "Argentina", dialCode: "+54", flag: "🇦🇷", minDigits: 10, maxDigits: 10, pattern: /^9[0-9]{9}$/, example: "9XXXXXXXXX" },
+  { code: "NL", name: "Netherlands", dialCode: "+31", flag: "🇳🇱", minDigits: 9, maxDigits: 9, pattern: /^6[0-9]{8}$/, example: "6XXXXXXXX" },
+  { code: "SE", name: "Sweden", dialCode: "+46", flag: "🇸🇪", minDigits: 9, maxDigits: 9, pattern: /^7[0-9]{8}$/, example: "7XXXXXXXX" },
+  { code: "NO", name: "Norway", dialCode: "+47", flag: "🇳🇴", minDigits: 8, maxDigits: 8, pattern: /^[4-9][0-9]{7}$/, example: "4XXXXXXX" },
+  { code: "CH", name: "Switzerland", dialCode: "+41", flag: "🇨🇭", minDigits: 9, maxDigits: 9, pattern: /^7[0-9]{8}$/, example: "7XXXXXXXX" },
+  { code: "BE", name: "Belgium", dialCode: "+32", flag: "🇧🇪", minDigits: 9, maxDigits: 9, pattern: /^4[0-9]{8}$/, example: "4XXXXXXXX" },
+  { code: "PL", name: "Poland", dialCode: "+48", flag: "🇵🇱", minDigits: 9, maxDigits: 9, pattern: /^[4-8][0-9]{8}$/, example: "5XXXXXXXX" },
+  { code: "GR", name: "Greece", dialCode: "+30", flag: "🇬🇷", minDigits: 10, maxDigits: 10, pattern: /^6[0-9]{9}$/, example: "6XXXXXXXXX" },
+  { code: "PT", name: "Portugal", dialCode: "+351", flag: "🇵🇹", minDigits: 9, maxDigits: 9, pattern: /^9[0-9]{8}$/, example: "9XXXXXXXX" },
+  { code: "NZ", name: "New Zealand", dialCode: "+64", flag: "🇳🇿", minDigits: 9, maxDigits: 9, pattern: /^[2-9][0-9]{8}$/, example: "2XXXXXXXX" },
 ] as const;
 
 export type Country = (typeof COUNTRIES)[number];
@@ -80,15 +80,90 @@ export function PhoneCountryPicker({
     COUNTRIES.find((c) => c.code === "EG")!,
   );
   const [localNumber, setLocalNumber] = useState("");
+  const [error, setError] = useState<string>("");
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
+  // Parse initial value if provided (format: +2010XXXXXXXX)
   useEffect(() => {
-    const digits = localNumber.replace(/\D/g, "");
-    onChange(digits ? `${selectedCountry.dialCode}${digits}` : "");
-  }, [localNumber, selectedCountry]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (value) {
+      const matched = COUNTRIES.find((c) => value.startsWith(c.dialCode));
+      if (matched) {
+        setSelectedCountry(matched);
+        const numberPart = value.slice(matched.dialCode.length);
+        setLocalNumber(numberPart);
+        validatePhoneNumber(numberPart, matched);
+      } else {
+        setLocalNumber(value);
+      }
+    }
+  }, [value]);
+
+  const validatePhoneNumber = (number: string, country: Country): boolean => {
+    const trimmed = number.trim().replace(/\s/g, "");
+    if (!trimmed) {
+      setError("Phone number is required");
+      return false;
+    }
+
+    // Remove leading zeros
+    const cleanNumber = trimmed.replace(/^0+/, "");
+    
+    // Digits only
+    const digitsOnly = cleanNumber.replace(/\D/g, "");
+    
+    // Check length
+    if (digitsOnly.length < country.minDigits || digitsOnly.length > country.maxDigits) {
+      setError(
+        `${country.name}: Phone number should be ${country.minDigits}${country.maxDigits !== country.minDigits ? `-${country.maxDigits}` : ""} digits (excluding country code)`
+      );
+      return false;
+    }
+    
+    // Check pattern if defined
+    if (country.pattern && !country.pattern.test(digitsOnly)) {
+      const exampleText = country.example ? ` (e.g., ${country.example})` : "";
+      setError(`Invalid phone number format for ${country.name}${exampleText}`);
+      return false;
+    }
+
+    setError("");
+    return true;
+  };
+
+  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let newNumber = e.target.value.replace(/\s/g, "");
+    
+    // Only allow digits
+    newNumber = newNumber.replace(/\D/g, "");
+    
+    // Limit to max digits of selected country
+    if (newNumber.length > selectedCountry.maxDigits) return;
+    
+    setLocalNumber(newNumber);
+    
+    // Validate and update parent
+    const isValid = validatePhoneNumber(newNumber, selectedCountry);
+    if (isValid || !newNumber) {
+      onChange(`${selectedCountry.dialCode}${newNumber}`);
+    } else {
+      // Still update parent with invalid value so user can see error while typing
+      onChange(`${selectedCountry.dialCode}${newNumber}`);
+    }
+  };
+
+  const handleCountryChange = (country: Country) => {
+    setSelectedCountry(country);
+    // Re-validate with new country
+    const isValid = validatePhoneNumber(localNumber, country);
+    if (isValid || !localNumber) {
+      onChange(`${country.dialCode}${localNumber}`);
+    } else {
+      onChange(`${country.dialCode}${localNumber}`);
+    }
+  };
 
   useEffect(() => {
     function handler(e: MouseEvent) {
@@ -113,11 +188,11 @@ export function PhoneCountryPicker({
       )
     : COUNTRIES;
 
-  function selectCountry(c: Country) {
-    setSelectedCountry(c);
-    setOpen(false);
-    setSearch("");
-  }
+  const getPlaceholder = () => {
+    const { example, minDigits, maxDigits } = selectedCountry;
+    if (example) return `e.g., ${example}`;
+    return `${minDigits}${maxDigits !== minDigits ? `-${maxDigits}` : ""} digits`;
+  };
 
   return (
     <div>
@@ -127,12 +202,16 @@ export function PhoneCountryPicker({
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
-            className="flex h-full w-full min-w-0 items-center gap-2 rounded-xl border border-[#B8860B]/30 bg-[#faf8f3] px-3 py-3 text-[15px] transition-all duration-200 hover:bg-[#f5f0e4] focus:border-[#D4A017] focus:shadow-[0_0_0_3px_rgba(212,160,23,0.25)] focus:outline-none min-[420px]:min-w-[112px] min-[420px]:rounded-s-xl min-[420px]:rounded-e-none"
+            className={`flex h-full w-full min-w-0 items-center gap-2 rounded-xl border px-3 py-3 text-[15px] transition-all duration-200 hover:bg-[#f5f0e4] focus:border-[#D4A017] focus:shadow-[0_0_0_3px_rgba(212,160,23,0.25)] focus:outline-none min-[420px]:min-w-[112px] min-[420px]:rounded-s-xl min-[420px]:rounded-e-none ${
+              error ? "border-red-400 bg-red-50" : "border-[#B8860B]/30 bg-[#faf8f3]"
+            }`}
             aria-haspopup="listbox"
             aria-expanded={open}
           >
             <span className="inline-flex items-center justify-center text-[18px] leading-[1]">{selectedCountry.flag}</span>
-            <span className="font-semibold text-[#B8860B]">{selectedCountry.dialCode}</span>
+            <span className={`font-semibold ${error ? "text-red-600" : "text-[#B8860B]"}`}>
+              {selectedCountry.dialCode}
+            </span>
             <svg
               className={`ms-auto h-3.5 w-3.5 text-[#8a9e92] transition-transform duration-200 ${open ? "rotate-180" : ""}`}
               viewBox="0 0 24 24"
@@ -187,7 +266,11 @@ export function PhoneCountryPicker({
                       key={c.code}
                       role="option"
                       aria-selected={c.code === selectedCountry.code}
-                      onClick={() => selectCountry(c)}
+                      onClick={() => {
+                        handleCountryChange(c);
+                        setOpen(false);
+                        setSearch("");
+                      }}
                       className={`flex cursor-pointer items-center gap-3 px-3.5 py-2.5 text-[13px] transition-colors duration-100 hover:bg-[#f5f0e4] ${
                         c.code === selectedCountry.code
                           ? "bg-[#fdf7e9] font-semibold text-[#1C3A2E]"
@@ -212,14 +295,23 @@ export function PhoneCountryPicker({
           )}
         </div>
 
-        <input
-          type="tel"
-          value={localNumber}
-          onChange={(e) => setLocalNumber(e.target.value)}
-          autoComplete="tel"
-          placeholder="1XX XXX XXXX"
-          className="min-w-0 w-full flex-1 rounded-xl border border-[#B8860B]/30 bg-[#faf8f3] px-4 py-3 text-[15px] text-[#1C3A2E] outline-none transition-shadow duration-300 placeholder:text-[#b0bdb7] focus:border-[#D4A017] focus:shadow-[0_0_0_3px_rgba(212,160,23,0.25)] min-[420px]:rounded-s-none min-[420px]:rounded-e-xl min-[420px]:border-s-0"
-        />
+        <div className="relative flex-1">
+          <input
+            type="tel"
+            value={localNumber}
+            onChange={handleNumberChange}
+            autoComplete="tel"
+            placeholder={getPlaceholder()}
+            className={`w-full rounded-xl border px-4 py-3 text-[15px] text-[#1C3A2E] outline-none transition-all duration-300 placeholder:text-[#b0bdb7] focus:border-[#D4A017] focus:shadow-[0_0_0_3px_rgba(212,160,23,0.25)] min-[420px]:rounded-s-none min-[420px]:rounded-e-xl min-[420px]:border-s-0 ${
+              error ? "border-red-400 bg-red-50" : "border-[#B8860B]/30 bg-[#faf8f3]"
+            }`}
+          />
+          {error && (
+            <p className="mt-1.5 text-xs leading-snug text-red-500">
+              {error}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

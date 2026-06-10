@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState, useEffect, FormEvent } from "react";
+import { toast } from "sonner";
 import { useI18n } from "@/components/LocaleProvider";
 import { PhoneCountryPicker, COUNTRIES } from "@/components/PhoneCountryPicker";
 import { SearchableSelect } from "@/components/SearchableSelect";
@@ -147,6 +148,26 @@ function formatPackageLabel(
   return pkgId;
 }
 
+const NAME_STRING_RE = /^[\p{L}][\p{L}\s'-]*$/u;
+
+function validateNameString(name: string): boolean {
+  const trimmed = name.trim();
+  return trimmed.length >= 2 && NAME_STRING_RE.test(trimmed);
+}
+
+function sanitizeNameString(name: string): string {
+  return name.replace(/[^\p{L}\s'-]/gu, "");
+}
+
+function validateStudentAge(age: string): boolean {
+  if (!age.trim()) return false;
+  return /^\d+$/.test(age.trim());
+}
+
+function sanitizeStudentAge(age: string): string {
+  return age.replace(/[^\d]/g, "");
+}
+
 function openBookTrialWhatsApp(message: string) {
   const url = `https://wa.me/${BOOK_TRIAL_WHATSAPP}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank", "noopener,noreferrer");
@@ -176,6 +197,8 @@ function buildWhatsAppMessage(opts: {
   const title = opts.isAr ? "*طلب تجربة مجانية — نبراس*" : "*Free trial request — Nibras*";
   const lines: string[] = [title, ""];
 
+
+  
   lines.push(
     `${L.first} ${opts.firstName}`,
     `${L.last} ${opts.lastName}`,
@@ -291,8 +314,6 @@ export default function BookTrialPageContent() {
   const [studentGender, setStudentGender] = useState("");
   const [teacherGender, setTeacherGender] = useState("");
   const [message,       setMessage]       = useState("");
-  const [formError,     setFormError]     = useState<string | null>(null);
-  const [formSuccess,   setFormSuccess]   = useState(false);
   const [isSubmitting,  setIsSubmitting]  = useState(false);
   const [familyMembers, setFamilyMembers] = useState<FamilyMemberProfile[]>([]);
   const [memberModalIndex, setMemberModalIndex] = useState<number | null>(null);
@@ -374,19 +395,22 @@ export default function BookTrialPageContent() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setFormError(null);
-    setFormSuccess(false);
+
+    if (!selectedPkg.trim()) {
+      toast.error(copy.validationPackage);
+      return;
+    }
+    if (!validateNameString(firstName) || !validateNameString(lastName)) {
+      toast.error(copy.validationName);
+      return;
+    }
 
     const baseMissing = isFamilyPkg
-      ? !firstName.trim() ||
-        !lastName.trim() ||
-        !email.trim() ||
+      ? !email.trim() ||
         !whatsapp.trim() ||
         !countryCode ||
         !message.trim()
-      : !firstName.trim() ||
-        !lastName.trim() ||
-        !email.trim() ||
+      : !email.trim() ||
         !whatsapp.trim() ||
         !countryCode ||
         !timezone ||
@@ -395,21 +419,24 @@ export default function BookTrialPageContent() {
       !isFamilyPkg &&
       (!studentAge.trim() || !studentGender || !teacherGender);
     if (baseMissing || studentMissing) {
-      setFormError(copy.validationFill);
+      toast.error(copy.validationFill);
+      return;
+    }
+    if (!isFamilyPkg && !validateStudentAge(studentAge)) {
+      toast.error(copy.validationAge);
       return;
     }
     if (!isFamilyPkg && courses.size === 0) {
-      setFormError(copy.validationCourses);
+      toast.error(copy.validationCourses);
       return;
     }
     if (isFamilyPkg && !familyMembers.every(isFamilyMemberComplete)) {
-      setFormError(copy.validationFamilyMembers);
+      toast.error(copy.validationFamilyMembers);
       return;
     }
-    if (!selectedPkg.trim()) { setFormError(copy.validationPackage); return; }
     if (!isFamilyPkg) {
-      if (!selectedDay) { setFormError(copy.validationDays); return; }
-      if (selectedTimes.size === 0) { setFormError(copy.validationTimes); return; }
+      if (!selectedDay) { toast.error(copy.validationDays); return; }
+      if (selectedTimes.size === 0) { toast.error(copy.validationTimes); return; }
     }
 
     const trimmed = {
@@ -503,13 +530,13 @@ export default function BookTrialPageContent() {
           const m = data.message ?? data.error;
           if (typeof m === "string" && m.trim()) errText = m;
         } catch { /* ignore */ }
-        setFormError(errText);
+        toast.error(errText);
         return;
       }
 
-      setFormSuccess(true);
+      toast.success(copy.submitSuccess);
     } catch {
-      setFormError(copy.submitError);
+      toast.error(copy.submitError);
     } finally {
       setIsSubmitting(false);
     }
@@ -524,7 +551,7 @@ export default function BookTrialPageContent() {
       dir={isAr ? "rtl" : "ltr"}
       lang={locale}
     >
-      <div className="mx-auto w-full max-w-3xl px-4 pt-[calc(70px+1.25rem)] pb-16 sm:px-6 md:pt-[calc(80px+2rem)] md:pb-24">
+      <div className="mx-auto w-full max-w-5xl px-4 pt-[calc(70px+1.25rem)] pb-16 sm:px-6 md:pt-[calc(80px+2rem)] md:pb-24">
 
         {/* Header */}
         <header className="mb-8 text-center sm:mb-10">
@@ -548,25 +575,6 @@ export default function BookTrialPageContent() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6 p-4 sm:space-y-7 sm:p-8">
-
-            {/* Status */}
-            {formSuccess && (
-              <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
-                <svg className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p className="text-sm font-medium text-emerald-800">{copy.submitSuccess}</p>
-              </div>
-            )}
-
-            {formError && (
-              <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3">
-                <svg className="mt-0.5 h-4 w-4 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-                </svg>
-                <p className="text-sm font-medium text-red-700">{formError}</p>
-              </div>
-            )}
 
             <PackageStepBlock
               copy={copy}
@@ -607,7 +615,7 @@ export default function BookTrialPageContent() {
                       id="trial-fn-fam"
                       className={inputBase}
                       value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
+                      onChange={(e) => setFirstName(sanitizeNameString(e.target.value))}
                       autoComplete="given-name"
                       placeholder={isAr ? "الاسم الأول" : "First name"}
                     />
@@ -619,12 +627,15 @@ export default function BookTrialPageContent() {
                       id="trial-ln-fam"
                       className={inputBase}
                       value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
+                      onChange={(e) => setLastName(sanitizeNameString(e.target.value))}
                       autoComplete="family-name"
                       placeholder={isAr ? "اسم العائلة" : "Last name"}
                     />
                   </div>
                 </div>
+                {(firstName && !validateNameString(firstName)) || (lastName && !validateNameString(lastName)) ? (
+                  <p className="text-[11px] text-red-500">{copy.validationName}</p>
+                ) : null}
 
                 <div>
                   <label className={labelCls} htmlFor="trial-email-fam">{copy.email}{req}</label>
@@ -665,17 +676,20 @@ export default function BookTrialPageContent() {
                 <div>
                   <label className={labelCls} htmlFor="trial-fn">{copy.firstName}{req}</label>
                   <input id="trial-fn" className={inputBase} value={firstName}
-                    onChange={e => setFirstName(e.target.value)} autoComplete="given-name"
+                    onChange={e => setFirstName(sanitizeNameString(e.target.value))} autoComplete="given-name"
                     placeholder={isAr ? "الاسم الأول" : "First name"} />
                   <p className="mt-1.5 text-[11px] text-[#7a9485]">{copy.hintParentName}</p>
                 </div>
                 <div>
                   <label className={labelCls} htmlFor="trial-ln">{copy.lastName}{req}</label>
                   <input id="trial-ln" className={inputBase} value={lastName}
-                    onChange={e => setLastName(e.target.value)} autoComplete="family-name"
+                    onChange={e => setLastName(sanitizeNameString(e.target.value))} autoComplete="family-name"
                     placeholder={isAr ? "اسم العائلة" : "Last name"} />
                 </div>
               </div>
+              {(firstName && !validateNameString(firstName)) || (lastName && !validateNameString(lastName)) ? (
+                <p className="text-[11px] text-red-500">{copy.validationName}</p>
+              ) : null}
 
               <div>
                 <label className={labelCls} htmlFor="trial-email">{copy.email}{req}</label>
@@ -779,12 +793,24 @@ export default function BookTrialPageContent() {
             <div className="space-y-5">
               <SectionLegend label={isAr ? "معلومات الطالب" : "Student details"} />
 
-              <div>
+             <div>
                 <label className={labelCls} htmlFor="trial-age">{copy.studentAge}{req}</label>
-                <input id="trial-age" className={inputBase} value={studentAge}
-                  onChange={e => setStudentAge(e.target.value)}
-                  placeholder={isAr ? "مثال: 10 أو بالغ" : "e.g. 10 or Adult"} />
+                <input 
+                  id="trial-age" 
+                  className={inputBase} 
+                  value={studentAge}
+                  onChange={e => {
+                    const sanitized = sanitizeStudentAge(e.target.value);
+                    setStudentAge(sanitized);
+                  }}
+                  placeholder={isAr ? "مثال: 10 أو بالغ" : "e.g. 10 or Adult"}
+                  inputMode="numeric"
+                  pattern="\d*"
+                />
                 <p className="mt-1.5 text-[11px] text-[#7a9485]">{copy.studentAgeHint}</p>
+                {studentAge && !validateStudentAge(studentAge) && (
+                  <p className="mt-1 text-[11px] text-red-500">{copy.validationAge}</p>
+                )}
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">

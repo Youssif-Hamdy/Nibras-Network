@@ -344,7 +344,7 @@ export function FamilyMemberModal({
 
       />
 
-      <div className="relative flex max-h-[min(92vh,720px)] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl border border-[#cad9cc] bg-white shadow-[0_24px_80px_rgba(28,58,46,0.22)] sm:rounded-2xl">
+      <div className="relative flex max-h-[min(92vh,720px)] w-full max-w-3xl flex-col overflow-hidden rounded-t-2xl border border-[#cad9cc] bg-white shadow-[0_24px_80px_rgba(28,58,46,0.22)] sm:rounded-2xl">
 
         <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#e2ede5] bg-[#f9fbf9] px-4 py-3.5">
 
@@ -546,7 +546,7 @@ export function FamilyMemberModal({
 
               ref={coursesScrollRef}
 
-              className="max-h-[min(42vh,340px)] overflow-y-auto overscroll-contain rounded-xl border border-[#e2ede5] bg-[#f9fbf9] p-2 [overflow-anchor:none] [scrollbar-width:thin] [scrollbar-color:#4a7a5a55_#e8efe8]"
+              className="max-h-[min(50vh,400px)] overflow-y-auto overscroll-contain rounded-xl border border-[#e2ede5] bg-[#f9fbf9] p-2 [overflow-anchor:none] [scrollbar-width:thin] [scrollbar-color:#4a7a5a55_#e8efe8]"
 
               onScroll={(e) => {
 

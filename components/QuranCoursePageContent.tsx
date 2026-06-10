@@ -6,12 +6,16 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   ArrowRight,
   BookOpen,
+  CalendarDays,
   CheckCircle2,
   ChevronRight,
+  Gift,
   GraduationCap,
   Heart,
   Sparkles,
+  Tag,
   Users,
+  type LucideIcon,
 } from "lucide-react";
 import { useI18n } from "@/components/LocaleProvider";
 import { useReveal } from "@/hooks/useReveal";
@@ -20,6 +24,24 @@ import { ARABIC_PROGRAM_SLUGS } from "@/lib/courses/arabic";
 import { ISLAMIC_PROGRAM_SLUGS } from "@/lib/courses/islamic";
 import { SPECIAL_PROGRAM_SLUGS } from "@/lib/courses/special";
 import { getQuranCourseUi } from "@/lib/i18n/quranCourseUi";
+
+function stripOfferEmoji(text: string): string {
+  return text.replace(/^[\p{Emoji_Presentation}\p{Extended_Pictographic}\uFE0F\s]+/u, "").trim() || text;
+}
+
+function offerLineMeta(line: string): { Icon: LucideIcon; accent: string } {
+  const t = line.toLowerCase();
+  if (/launch|promotion|promo|عرض|خصم|off/i.test(t)) {
+    return { Icon: Sparkles, accent: "#c45c26" };
+  }
+  if (/price|hour|\$|£|€|ساعة|شهر/i.test(t)) {
+    return { Icon: Tag, accent: "#1d6b4a" };
+  }
+  if (/package|month|باقة/i.test(t)) {
+    return { Icon: Gift, accent: "#2156a0" };
+  }
+  return { Icon: CheckCircle2, accent: "#b8860b" };
+}
 
 function Reveal({
   children,
@@ -724,57 +746,104 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
         {/* Enroll / Pricing */}
         <section id="enroll" className="py-10 md:py-14">
           <Reveal>
-            <div className="overflow-hidden rounded-3xl border border-[#d4a017]/30 bg-gradient-to-br from-[#fdfaf4] via-white to-[#f0f4f1] p-6 shadow-lg sm:p-10">
+            <div className="relative overflow-hidden rounded-3xl border border-[#d4a017]/35 bg-gradient-to-br from-[#fff9ee] via-white to-[#eef4f0] p-5 shadow-[0_16px_48px_-24px_rgba(28,58,46,0.18)] sm:p-8 md:p-10">
+              <div
+                className="pointer-events-none absolute -end-16 -top-16 h-48 w-48 rounded-full bg-[#d4a017]/10 blur-3xl"
+                aria-hidden
+              />
               <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-                <div className="min-w-0 flex-1">
-                  <p className="mb-3 inline-flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.15em] text-[#7a6f4a]">
-                    <Users className="h-4 w-4 text-[#b8954a]" aria-hidden />
-                    {ui.offerKicker}
-                  </p>
-                  <div className="space-y-2 font-mono text-[13px] leading-relaxed text-[#1a3328] sm:text-[14px]">
-                    {course.offer.lines.map((line) => (
-                      <p key={line}>{line}</p>
-                    ))}
+                <div className="relative min-w-0 flex-1">
+                  <div className="mb-5 flex items-start gap-3 sm:gap-4">
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#d4a017]/35 bg-white shadow-sm sm:h-14 sm:w-14"
+                      style={{ color: accent }}
+                    >
+                      <Gift className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={1.6} aria-hidden />
+                    </div>
+                    <div className="min-w-0 pt-0.5">
+                      <p className="font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a7340] sm:text-[11px]">
+                        {ui.offerKicker}
+                      </p>
+                      <p className="mt-1 font-serif text-lg font-semibold leading-snug text-[#1a3328] sm:text-xl">
+                        {isAr ? "ابدأ رحلتك بعرض مميز" : "Start with an exclusive deal"}
+                      </p>
+                    </div>
                   </div>
+
+                  <ul className="space-y-2.5">
+                    {course.offer.lines.map((line) => {
+                      const { Icon, accent: lineAccent } = offerLineMeta(line);
+                      return (
+                        <li
+                          key={line}
+                          className="flex items-start gap-3 rounded-xl border border-[#e8e4dc]/90 bg-white/90 px-3.5 py-3 shadow-sm sm:px-4 sm:py-3.5"
+                        >
+                          <span
+                            className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                            style={{ backgroundColor: `${lineAccent}14`, color: lineAccent }}
+                          >
+                            <Icon className="h-4 w-4" strokeWidth={2} aria-hidden />
+                          </span>
+                          <span className="text-[13.5px] font-medium leading-relaxed text-[#1a3328] sm:text-[14px]">
+                            {stripOfferEmoji(line)}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+
                   {course.offer.subcta && (
-                    <p className={`mt-4 text-[15px] italic text-[#4d5f56] ${hf}`}>
+                    <p className={`mt-4 rounded-xl border border-[#e8e4dc]/80 bg-white/70 px-4 py-3 text-[14px] italic leading-relaxed text-[#4d5f56] sm:text-[15px] ${hf}`}>
                       {course.offer.subcta}
                     </p>
                   )}
+
                   {course.pricing && (
-                    <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                       {course.pricing.promo && (
-                        <div>
-                          <h4 className="mb-2 font-sans text-[11px] font-bold uppercase tracking-wide text-[#6b7a72]">
+                        <div className="rounded-2xl border border-[#d4a017]/25 bg-white p-4 shadow-sm">
+                          <h4 className="mb-3 flex items-center gap-2 font-sans text-[11px] font-bold uppercase tracking-wide text-[#8a7340]">
+                            <Sparkles className="h-4 w-4 text-[#c45c26]" aria-hidden />
                             {ui.promoPricing}
                           </h4>
-                          <ul className="space-y-1 font-mono text-[12px] text-[#3d5249] sm:text-[13px]">
+                          <ul className="space-y-2 text-[12.5px] leading-relaxed text-[#3d5249] sm:text-[13px]">
                             {course.pricing.promo.map((l) => (
-                              <li key={l}>{l}</li>
+                              <li key={l} className="flex gap-2">
+                                <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#b8860b]" aria-hidden />
+                                <span>{l}</span>
+                              </li>
                             ))}
                           </ul>
                         </div>
                       )}
                       {course.pricing.regular && (
-                        <div>
-                          <h4 className="mb-2 font-sans text-[11px] font-bold uppercase tracking-wide text-[#6b7a72]">
+                        <div className="rounded-2xl border border-[#e8e4dc] bg-white p-4 shadow-sm">
+                          <h4 className="mb-3 flex items-center gap-2 font-sans text-[11px] font-bold uppercase tracking-wide text-[#6b7a72]">
+                            <Tag className="h-4 w-4 text-[#1d6b4a]" aria-hidden />
                             {ui.regularPricing}
                           </h4>
-                          <ul className="space-y-1 font-mono text-[12px] text-[#3d5249] sm:text-[13px]">
+                          <ul className="space-y-2 text-[12.5px] leading-relaxed text-[#3d5249] sm:text-[13px]">
                             {course.pricing.regular.map((l) => (
-                              <li key={l}>{l}</li>
+                              <li key={l} className="flex gap-2">
+                                <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#6b7a72]" aria-hidden />
+                                <span>{l}</span>
+                              </li>
                             ))}
                           </ul>
                         </div>
                       )}
                       {course.pricing.sample && (
-                        <div>
-                          <h4 className="mb-2 font-sans text-[11px] font-bold uppercase tracking-wide text-[#6b7a72]">
+                        <div className="rounded-2xl border border-[#e8e4dc] bg-white p-4 shadow-sm sm:col-span-2 lg:col-span-1">
+                          <h4 className="mb-3 flex items-center gap-2 font-sans text-[11px] font-bold uppercase tracking-wide text-[#6b7a72]">
+                            <CalendarDays className="h-4 w-4 text-[#2156a0]" aria-hidden />
                             {ui.monthlySamples}
                           </h4>
-                          <ul className="space-y-1 font-mono text-[12px] text-[#3d5249] sm:text-[13px]">
+                          <ul className="space-y-2 text-[12.5px] leading-relaxed text-[#3d5249] sm:text-[13px]">
                             {course.pricing.sample.map((l) => (
-                              <li key={l}>{l}</li>
+                              <li key={l} className="flex gap-2">
+                                <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#2156a0]" aria-hidden />
+                                <span>{l}</span>
+                              </li>
                             ))}
                           </ul>
                         </div>
@@ -782,10 +851,11 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
                     </div>
                   )}
                 </div>
-                <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col">
+
+                <div className="relative flex w-full shrink-0 flex-col gap-3 sm:flex-row lg:w-[220px] lg:flex-col">
                   <Link
                     href="/book-trial"
-                    className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-center text-[14px] font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-center text-[14px] font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5 sm:px-8 sm:py-4"
                     style={{ backgroundColor: accent }}
                   >
                     {ui.bookTrial}
@@ -793,8 +863,9 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
                   </Link>
                   <Link
                     href="/contact?advisor=1"
-                    className="inline-flex items-center justify-center rounded-full border border-[#1a3328]/15 bg-white px-8 py-4 text-[14px] font-semibold text-[#1a3328] transition-colors hover:bg-[#faf9f6]"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#1a3328]/15 bg-white px-6 py-3.5 text-[14px] font-semibold text-[#1a3328] transition-colors hover:bg-[#faf9f6] sm:px-8 sm:py-4"
                   >
+                    <Users className="h-4 w-4 text-[#6b7a72]" aria-hidden />
                     {ui.talkAdvisor}
                   </Link>
                 </div>

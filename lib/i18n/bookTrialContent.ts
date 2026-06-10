@@ -53,6 +53,8 @@ export type BookTrialCopy = {
   messagePh: string;
   submit: string;
   validationFill: string;
+  validationName: string;
+  validationAge: string;
   validationCourses: string;
   validationDays: string;
   validationTimes: string;
@@ -159,6 +161,8 @@ const en: BookTrialCopy = {
   messagePh: "Short summary",
   submit: "Get your free trial",
   validationFill: "Please fill in all required fields.",
+  validationName: "First and last name must contain letters only (at least 2 characters).",
+  validationAge: "Please enter numbers only for student age (e.g., 15).",
   validationCourses: "Please select at least one course.",
   validationDays: "Please select at least one preferred day.",
   validationTimes: "Please select at least one preferred time (5:00 PM – 11:00 PM).",
@@ -265,6 +269,8 @@ const ar: BookTrialCopy = {
   messagePh: "ملخص قصير",
   submit: "احصل على تجربتك المجانية",
   validationFill: "يرجى تعبئة جميع الحقول المطلوبة.",
+  validationName: "يجب أن يحتوي الاسم الأول واسم العائلة على حروف فقط (حرفان على الأقل).",
+  validationAge: "يرجى إدخال أرقام فقط لعمر الطالب (مثال: 15).",
   validationCourses: "يرجى اختيار دورة واحدة على الأقل.",
   validationDays: "يرجى اختيار يوم مفضل واحد على الأقل.",
   validationTimes: "يرجى اختيار معاد واحد على الأقل (5:00 م – 11:00 م).",
