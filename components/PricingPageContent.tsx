@@ -1353,7 +1353,7 @@ export default function PricingPageContent() {
       </p>
       <div className="flex items-center gap-2.5 flex-wrap justify-center">
         <Link
-          href="/book"
+          href="/book-trial"
           className="shrink-0 inline-flex items-center gap-2 bg-[#254A3A] hover:bg-[#1e3d2f] text-[#F0E8CC] text-[13px] font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-[0_6px_20px_rgba(37,74,58,0.22)] hover:-translate-y-0.5 whitespace-nowrap"
         >
           {isAr ? "احجز تجربة مجانية" : "Book free trial"}
