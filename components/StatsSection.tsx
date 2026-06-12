@@ -55,7 +55,7 @@ function StatCell({
       }`}
     >
       <div className="mb-4 text-[#B8860B]">{icon}</div>
-      <p className="text-3xl md:text-4xl font-bold tabular-nums text-[#1C3A2E]">
+      <p className="text-3xl md:text-4xl font-bold tabular-nums text-[#1C3A2E]" dir="ltr">
         {prefix}
         {formatted}
         {suffix}
@@ -70,7 +70,7 @@ function StatCell({
 export default function StatsSection() {
   const { ref, visible } = useReveal<HTMLElement>();
   const { locale, t } = useI18n();
-  const numberLocale = locale === "ar" ? "ar-EG" : "en-US";
+  const numberLocale = "en-US";
 
   return (
     <section
