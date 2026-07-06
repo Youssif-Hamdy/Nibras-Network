@@ -32,7 +32,7 @@ export default async function QuranCoursePage({ params }: Props) {
   if (!getCourse(slug)) notFound();
 
   return (
-    <main className="relative flex min-h-screen flex-col">
+    <main className="relative flex min-h-screen flex-col flex-wrap">
       <Navbar />
       <QuranCoursePageContent slug={slug} />
       <SiteFooter />
