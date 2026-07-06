@@ -235,8 +235,11 @@ const en: Record<string, string> = {
   "kids.badge3": "Role Model",
   "kids.prevArrow": "Previous card",
   "kids.nextArrow": "Next card",
-  "kids.gotoCard": "Go to card {{number}}",
   "kids.progressOf": "of",
+
+  "announcement.discount": "30% off your first 3 months! Limited time offer.",
+  "announcement.contact": "WhatsApp: +20 109 949 3640",
+  "announcement.close": "Close announcement",
 };
 
 const ar: Record<string, string> = {
@@ -463,8 +466,11 @@ const ar: Record<string, string> = {
   "kids.badge3": "نموذج يحتذى",
   "kids.prevArrow": "الكارد السابق",
   "kids.nextArrow": "الكارد التالي",
-  "kids.gotoCard": "اذهب للكارد {{number}}",
   "kids.progressOf": "من",
+
+  "announcement.discount": "خصم ٣٠٪ على أول ٣ شهور! لفترة محدودة.",
+  "announcement.contact": "واتساب: +20 109 949 3640",
+  "announcement.close": "إغلاق الإعلان",
 };
 
 export const messages: Record<Locale, Record<string, string>> = { en, ar };

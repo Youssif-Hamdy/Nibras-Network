@@ -234,17 +234,17 @@ function PkgCard({
 
           {/* Price */}
           <div className="flex items-baseline gap-2 mb-1">
-            <span className="text-[1.55rem] sm:text-[1.65rem] font-extrabold tabular-nums leading-none" style={{ color: brandGreen }}>
+            <span className="text-[1.85rem] sm:text-[2.1rem] font-black tabular-nums leading-none" style={{ color: brandGreen }}>
               {pkg.launch}
             </span>
-            <span className="text-[13px] text-[#9aada6] line-through tabular-nums">{pkg.regular}</span>
-            <span className="text-[11px] text-[#6b7d75]">/mo</span>
+            <span className="text-[14px] text-[#9aada6] line-through tabular-nums">{pkg.regular}</span>
+            <span className="text-[13px] font-semibold text-[#6b7d75]">/ {isAr ? "شهر" : "mo"}</span>
           </div>
           <div className="flex items-center flex-wrap gap-2 mb-3">
-            <span className="text-[10px] font-bold text-[#8B6508] bg-[#FFF4D6] rounded-full px-2.5 py-0.5 border border-[#D4A017]/30">
-              🔥 30% OFF · {isAr ? "أول 3 أشهر" : "First 3 months"}
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#8B6508] bg-[#FFF4D6] rounded-full px-2.5 py-1 border border-[#D4A017]/30">
+              <IconTag size={12} /> 30% OFF · {isAr ? "أول 3 أشهر" : "First 3 months"}
             </span>
-            <span className="text-[11px] text-[#9aada6]">
+            <span className="text-[12px] font-medium text-[#9aada6]">
               {isAr ? `ثم ${pkg.regular}/شهر` : `then ${pkg.regular}/mo`}
             </span>
           </div>
@@ -530,25 +530,25 @@ function PricingTabs({
                     <p
                       className="text-[#9aada6] tabular-nums"
                       style={{
-                        fontSize: "1rem",
+                        fontSize: "1.1rem",
                         color: "#8A9A5B"
                       }}                    >
                       <span className="line-through">{pkg.regular}</span>
-                      <span className="text-[#9aada6] ms-1">/ {isAr ? "شهر" : "month"}</span>
+                      <span className="text-[#9aada6] ms-1 text-[13px]">/ {isAr ? "شهر" : "month"}</span>
                     </p>
 
                     {/* Launch price box */}
-                    <div className="mt-2 w-full rounded-xl border border-[#E4D8C5] bg-[#F7F2E8] px-2 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_5px_12px_rgba(38,33,23,0.07)]">
+                    <div className="mt-2 w-full rounded-xl border border-[#E4D8C5] bg-[#FBF8F1] px-2 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,1),0_5px_15px_rgba(38,33,23,0.08)]">
                       <p className="flex items-end justify-center gap-1 text-[#4B2B11] tabular-nums">
                         <span
-                          className="font-black leading-none tracking-[-0.015em]"
-                          style={{ fontSize: "clamp(1.25rem, 2.6vw, 1.8rem)" }}
+                          className="font-black leading-none tracking-[-0.015em] text-[#8B6508]"
+                          style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}
                         >
                           {pkg.launch}
                         </span>
                         <span
-                          className="mb-1 font-semibold"
-                          style={{ fontSize: "0.68rem" }}
+                          className="mb-1.5 font-bold text-[#8B6508]"
+                          style={{ fontSize: "0.8rem" }}
                         >
                           / {isAr ? "شهر" : "mo"}
                         </span>
@@ -647,22 +647,28 @@ function PricingTabs({
                         </p>
                       </td>
                       <td className="px-4 py-3 border-b border-[#EEE5D6]">
-                        <span className="text-[12px] text-[#60746B] tabular-nums">{row.m2.regular}</span>
+                        <span className="text-[14px] text-[#60746B] font-bold tabular-nums">{row.m2.regular}</span>
                       </td>
                       <td className="px-4 py-3 border-b border-[#EEE5D6]">
-                        <span className="text-[12px] font-bold text-[#8B6508] tabular-nums">🔥 {row.m2.discounted}</span>
+                        <span className="inline-flex items-center gap-1.5 text-[17px] font-black text-[#8B6508] tabular-nums">
+                          <IconTag size={16} /> {row.m2.discounted}
+                        </span>
                       </td>
                       <td className="px-4 py-3 border-b border-[#EEE5D6]">
-                        <span className="text-[12px] text-[#60746B] tabular-nums">{row.m3.regular}</span>
+                        <span className="text-[14px] text-[#60746B] font-bold tabular-nums">{row.m3.regular}</span>
                       </td>
                       <td className="px-4 py-3 border-b border-[#EEE5D6]">
-                        <span className="text-[12px] font-bold text-[#8B6508] tabular-nums">🔥 {row.m3.discounted}</span>
+                        <span className="inline-flex items-center gap-1.5 text-[17px] font-black text-[#8B6508] tabular-nums">
+                          <IconTag size={16} /> {row.m3.discounted}
+                        </span>
                       </td>
                       <td className="px-4 py-3 border-b border-[#EEE5D6]">
-                        <span className="text-[12px] text-[#60746B] tabular-nums">{row.m4.regular}</span>
+                        <span className="text-[14px] text-[#60746B] font-bold tabular-nums">{row.m4.regular}</span>
                       </td>
                       <td className="px-4 py-3 border-b border-[#EEE5D6]">
-                        <span className="text-[12px] font-bold text-[#8B6508] tabular-nums">🔥 {row.m4.discounted}</span>
+                        <span className="inline-flex items-center gap-1.5 text-[17px] font-black text-[#8B6508] tabular-nums">
+                          <IconTag size={16} /> {row.m4.discounted}
+                        </span>
                       </td>
                     </tr>
                   ))}
@@ -686,27 +692,33 @@ function PricingTabs({
                   </div>
 
                   <div className="space-y-2">
-                    <div className="rounded-lg border border-[#ECE3D3] bg-[#FAF7F1] px-2.5 py-2">
-                      <p className="text-[11px] font-semibold text-[#2F433B]">{isAr ? "عضوان" : "2 Members"}</p>
-                      <div className="mt-1 flex items-baseline justify-between text-[12px]">
-                        <span className="text-[#60746B] tabular-nums">{row.m2.regular}</span>
-                        <span className="font-bold text-[#8B6508] tabular-nums">{row.m2.discounted}</span>
+                    <div className="rounded-lg border border-[#E8DFC9] bg-[#FAF7F1] px-3 py-2.5 shadow-sm">
+                      <p className="text-[12px] font-bold text-[#2F433B] mb-1.5">{isAr ? "عضوان" : "2 Members"}</p>
+                      <div className="flex items-baseline justify-between">
+                        <span className="text-[14px] text-[#60746B] font-bold tabular-nums">{row.m2.regular}</span>
+                        <span className="inline-flex items-center gap-1 text-[18px] font-black text-[#8B6508] tabular-nums">
+                          <IconTag size={16} /> {row.m2.discounted}
+                        </span>
                       </div>
                     </div>
 
-                    <div className="rounded-lg border border-[#ECE3D3] bg-[#FAF7F1] px-2.5 py-2">
-                      <p className="text-[11px] font-semibold text-[#2F433B]">{isAr ? "3 أعضاء" : "3 Members"}</p>
-                      <div className="mt-1 flex items-baseline justify-between text-[12px]">
-                        <span className="text-[#60746B] tabular-nums">{row.m3.regular}</span>
-                        <span className="font-bold text-[#8B6508] tabular-nums">{row.m3.discounted}</span>
+                    <div className="rounded-lg border border-[#E8DFC9] bg-[#FAF7F1] px-3 py-2.5 shadow-sm">
+                      <p className="text-[12px] font-bold text-[#2F433B] mb-1.5">{isAr ? "3 أعضاء" : "3 Members"}</p>
+                      <div className="flex items-baseline justify-between">
+                        <span className="text-[14px] text-[#60746B] font-bold tabular-nums">{row.m3.regular}</span>
+                        <span className="inline-flex items-center gap-1 text-[18px] font-black text-[#8B6508] tabular-nums">
+                          <IconTag size={16} /> {row.m3.discounted}
+                        </span>
                       </div>
                     </div>
 
-                    <div className="rounded-lg border border-[#ECE3D3] bg-[#FAF7F1] px-2.5 py-2">
-                      <p className="text-[11px] font-semibold text-[#2F433B]">{isAr ? "+4 أعضاء" : "4+ Members"}</p>
-                      <div className="mt-1 flex items-baseline justify-between text-[12px]">
-                        <span className="text-[#60746B] tabular-nums">{row.m4.regular}</span>
-                        <span className="font-bold text-[#8B6508] tabular-nums">{row.m4.discounted}</span>
+                    <div className="rounded-lg border border-[#E8DFC9] bg-[#FAF7F1] px-3 py-2.5 shadow-sm">
+                      <p className="text-[12px] font-bold text-[#2F433B] mb-1.5">{isAr ? "+4 أعضاء" : "4+ Members"}</p>
+                      <div className="flex items-baseline justify-between">
+                        <span className="text-[14px] text-[#60746B] font-bold tabular-nums">{row.m4.regular}</span>
+                        <span className="inline-flex items-center gap-1 text-[18px] font-black text-[#8B6508] tabular-nums">
+                          <IconTag size={16} /> {row.m4.discounted}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -733,15 +745,10 @@ function PricingTabs({
 
         {/* ── Footer CTA ── */}
         <div className="px-4 sm:px-5 py-4 bg-[#FBF8F1] border-t border-[#E1D7C3]">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <p className="text-[12px] text-[#61746C]">
-              {isAr
-                ? "الأسعار المعروضة هي أسعار الإطلاق (خصم 30% لأول 3 أشهر)"
-                : "Prices shown are launch rates (30% off for first 3 months)"}
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-center gap-3">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold text-[#F2D58C]"
+              className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-2.5 text-[13px] font-semibold text-[#F2D58C]"
               style={{ backgroundColor: brandGreen }}
             >
               {isAr ? "اشترك / استفسر" : "Subscribe / Enquire"}
@@ -866,48 +873,48 @@ function HeroPaymentCardSlider({ isAr }: { isAr: boolean }) {
           {/* Slide 2 — Launch offer */}
           <div className="flex min-h-[288px] min-w-full shrink-0 px-0.5">
             <div
-              className={`${slideShell} border-[#B49B44]/28`}
+              className={`${slideShell.replace("bg-white", "")} border-[#9FB366]/60 bg-[#E0E8D3]`}
               style={{
-                boxShadow: "0 20px 54px rgba(180,155,68,0.13), 0 4px 16px rgba(26,26,20,0.08)",
+                boxShadow: "0 20px 54px rgba(159,179,102,0.25), 0 4px 16px rgba(26,26,20,0.06)",
               }}
             >
-              <div className="h-[3px] w-full bg-gradient-to-r from-[#B49B44]/40 via-[#F2D58C]/60 to-[#B49B44]/40" />
+              <div className="h-[4px] w-full bg-gradient-to-r from-[#9FB366] via-[#B2C776] to-[#9FB366]" />
               <div className={slideBody} dir={isAr ? "rtl" : "ltr"}>
                 <div className="mb-4 flex items-center gap-3">
                   <div
-                    className={`${slideIcon} text-[#8A7430]`}
+                    className={`${slideIcon} text-[#3a4f1a]`}
                     style={{
-                      background: "linear-gradient(135deg, #FFF4D6 0%, #F2D58C 100%)",
-                      boxShadow: "0 4px 12px rgba(180,155,68,0.22)",
+                      background: "linear-gradient(135deg, #d3e0b8 0%, #b8cb8c 100%)",
+                      boxShadow: "0 4px 12px rgba(159,179,102,0.35)",
                     }}
                   >
                     <IconSparkles size={18} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[10.5px] font-semibold uppercase tracking-[0.15em] text-[#9A9282]">
+                    <p className="text-[10.5px] font-extrabold uppercase tracking-[0.15em] text-[#566b33]">
                       {isAr ? "عرض الإطلاق" : "Launch offer"}
                     </p>
-                    <p className="text-[14px] font-semibold leading-tight text-[#1A1A14]">
+                    <p className="text-[14px] font-bold leading-tight text-[#16210b]">
                       {isAr ? "خصم 30% — أول 3 شهور" : "30% off — first 3 months"}
                     </p>
                   </div>
-                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[#B49B44]/25 bg-[#FFF4D6] px-2.5 py-1 text-[10px] font-bold tracking-wide text-[#8A7430]">
+                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[#9FB366]/60 bg-[#d5e3b5] px-2.5 py-1 text-[10px] font-black tracking-wide text-[#3a4f1a]">
                     {isAr ? "30%" : "30% OFF"}
                   </span>
                 </div>
-                <div className={slideDivider} />
+                <div className={slideDivider} style={{ backgroundImage: "linear-gradient(to right, transparent, rgba(119,143,62,0.4), transparent)" }} />
                 <div className="flex flex-1 flex-col items-center justify-center py-1 text-center">
-                  <span className="font-serif text-[44px] font-normal leading-none text-[#B49B44] sm:text-[52px]">
+                  <span className="font-serif text-[48px] font-black leading-none text-[#405221] sm:text-[56px] drop-shadow-sm">
                     30%
                   </span>
-                  <p className="mt-2 text-[13px] text-[#6F6F5C]">
+                  <p className="mt-2 text-[14px] font-semibold text-[#485929]">
                     {isAr ? "سعر مخفّض للبداية" : "Discounted starter rate"}
                   </p>
                 </div>
-                <p className="mt-auto text-center text-[12px] leading-snug text-[#3D3D30] opacity-80">
+                <p className="mt-auto text-center text-[12px] leading-snug text-[#2f3d1b] opacity-90 font-bold">
                   {isAr
-                    ? "تشوف السعر المخفّض الآن — وبعدها السعر العادي."
-                    : "See the discounted rate now — then standard price after."}
+                    ? "استفد بالسعر المخفّض الآن — السعر العادي يبدأ بعد 3 شهور."
+                    : "Secure the discounted rate now — standard price after 3 months."}
                 </p>
               </div>
             </div>

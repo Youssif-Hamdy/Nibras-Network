@@ -92,28 +92,28 @@ const SUBJECT_THEME: Record<
     border: "#1C3A2E33",
   },
   PenLine: {
-    accent: "#1a4a6b",
-    bg: "#eaf1f8",
-    hover: "#d4e4f0",
-    border: "#1a4a6b33",
+    accent: "#1c7a45",
+    bg: "#ebf7f0",
+    hover: "#d1ebd8",
+    border: "#1c7a4533",
   },
   Landmark: {
-    accent: "#7a3d10",
-    bg: "#faf0e8",
-    hover: "#f0e0d0",
-    border: "#7a3d1033",
+    accent: "#0f5132",
+    bg: "#e1ede6",
+    hover: "#d1e4d9",
+    border: "#0f513233",
   },
   Baby: {
-    accent: "#C25B7A",
-    bg: "#FDF0F6",
-    hover: "#f5dce8",
-    border: "#C25B7A33",
-  },
-  Briefcase: {
     accent: "#0D9488",
     bg: "#E6F7F5",
     hover: "#cceee9",
     border: "#0D948833",
+  },
+  Briefcase: {
+    accent: "#115e59",
+    bg: "#e0f2f1",
+    hover: "#b2dfdb",
+    border: "#115e5933",
   },
 };
 
@@ -124,7 +124,7 @@ function subjectTheme(icon: string) {
 }
 
 const SUBJECT_LINK_CLS =
-  "group flex items-center gap-1.5 rounded-lg border border-white/70 bg-white/75 px-2 py-1.5 text-[11px] font-medium leading-snug text-[#374151] shadow-sm transition-all hover:border-[var(--subject-accent)]/30 hover:bg-white hover:text-[var(--subject-accent)] hover:shadow-md active:scale-[0.98]";
+  "group flex items-center gap-1.5 rounded-lg border border-white/70 bg-white/75 px-2 py-1.5 text-[11px] font-bold leading-snug text-[#374151] shadow-sm transition-all hover:border-[var(--subject-accent)]/30 hover:bg-white hover:text-[var(--subject-accent)] hover:shadow-md active:scale-[0.98]";
 
 // ─── Tab 1: By Subject ────────────────────────────────────────────────────────
 
@@ -260,7 +260,7 @@ function TabLevel({ afterNavigate }: { afterNavigate?: () => void }) {
               </span>
             </div>
 
-            <span className="mt-2 text-[11px] leading-snug text-[#5a7068] sm:text-[11.5px]">
+            <span className="mt-2 text-[11px] font-bold leading-snug text-[#5a7068] sm:text-[11.5px]">
               {level.cardDesc}
             </span>
 
@@ -268,7 +268,7 @@ function TabLevel({ afterNavigate }: { afterNavigate?: () => void }) {
               {level.cardOutcomes.map((outcome) => (
                 <li
                   key={outcome}
-                  className="flex items-start gap-1.5 text-[10.5px] leading-snug text-[#3d5249] sm:text-[11px]"
+                  className="flex items-start gap-1.5 text-[10.5px] font-bold leading-snug text-[#3d5249] sm:text-[11px]"
                 >
                   <span
                     className="mt-1.5 h-1 w-1 shrink-0 rounded-full"
@@ -311,7 +311,7 @@ function TabGoal({ afterNavigate }: { afterNavigate?: () => void }) {
             <Link
               href={item.href}
               onClick={() => afterNavigate?.()}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-[13px] text-[#1C3A2E] font-medium hover:bg-[#f0faf4] transition-colors"
+              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-[13px] text-[#1C3A2E] font-bold hover:bg-[#f0faf4] transition-colors"
             >
               <ChevronRight size={13} className="text-[#1c7a45] flex-shrink-0 rtl:rotate-180" />
               <span className="flex-1">{megaGoalLabel(locale, item.href, item.label)}</span>
@@ -357,7 +357,7 @@ function TabPathways({ afterNavigate }: { afterNavigate?: () => void }) {
                 {copy.lines.slice(1).map((s) => (
                   <li
                     key={s}
-                    className="text-[11px] text-[#6b7280] leading-snug ps-2 relative before:absolute before:start-0 before:content-['·'] before:text-[#1c7a45] before:font-bold"
+                    className="text-[11px] font-bold text-[#6b7280] leading-snug ps-2 relative before:absolute before:start-0 before:content-['·'] before:text-[#1c7a45] before:font-bold"
                   >
                     {s}
                   </li>

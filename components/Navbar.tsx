@@ -370,6 +370,7 @@ export default function Navbar() {
   const primaryNav = useMemo(() => buildPrimaryNav(t), [t]);
   const moreNav = useMemo(() => buildMoreNav(t), [t]);
 
+  const [showAnnouncement, setShowAnnouncement] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
@@ -397,16 +398,63 @@ export default function Navbar() {
   }, [menuOpen]);
 
   return (
-    <nav
-      className={`fixed top-0 inset-x-0 z-50 bg-[#F5F0E8]/97 backdrop-blur-md border-b border-[#D4A017]/35 shadow-[0_1px_12px_rgba(180,134,11,0.08)] ${locale === "ar" ? "nav-ar-locale" : ""}`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 overflow-visible">
+    <>
+      {/* ── Announcement Bar ── */}
+      {showAnnouncement && (
+        <div className="bg-[#111111] text-[#F5F0E8] text-[13px] relative z-[60] flex items-center justify-between px-4 py-2 w-full transition-all duration-300 min-h-[36px]">
+          {/* Contact Info (Hidden on mobile) */}
+          <a
+            href="https://wa.me/201099493640"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:flex items-center gap-2 opacity-80 hover:opacity-100 hover:text-[#D4A017] transition-all text-[12px] flex-shrink-0"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span dir="ltr">{t("announcement.contact")}</span>
+          </a>
+
+          {/* Discount Message (Absolute Centered) */}
+          <div className="absolute left-1/2 -translate-x-1/2 text-center font-medium px-4 text-[12px] sm:text-[13px] leading-tight w-full max-w-[80%] sm:max-w-none md:w-auto pointer-events-none">
+            {t("announcement.discount")}
+          </div>
+
+          {/* Close Button */}
+          <button
+            onClick={() => setShowAnnouncement(false)}
+            className="text-white/70 hover:text-white transition-colors flex-shrink-0 ms-auto md:ms-0 z-10 p-1"
+            aria-label={t("announcement.close")}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      )}
+
+      <nav
+        className={`sticky top-0 inset-x-0 z-50 bg-[#F5F0E8]/97 backdrop-blur-md border-b border-[#D4A017]/35 shadow-[0_1px_12px_rgba(180,134,11,0.08)] -mb-[72px] md:-mb-[80px] ${locale === "ar" ? "nav-ar-locale" : ""}`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 overflow-visible">
 
         {/* ── Desktop ── */}
-        <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] md:items-center md:h-[80px] relative overflow-visible">
+        <div className="hidden md:flex items-center justify-between md:h-[80px] w-full relative">
 
-          {/* Left: primary nav — slightly roomier gaps so Arabic labels breathe */}
-          <ul className="flex flex-nowrap items-center gap-x-2.5 md:gap-x-3 lg:gap-x-3.5 xl:gap-x-4 justify-start min-w-0 overflow-visible">
+          {/* Left: Logo */}
+          <Link
+            href="/"
+            className="group flex-shrink-0 z-10 flex items-center"
+          >
+            <div className="relative w-48 lg:w-56 xl:w-64 h-[70px] lg:h-[76px] xl:h-[80px] group-hover:scale-[1.03] transition-all duration-300">
+              <Image
+                src="/images/logo.png"
+                alt={t("nav.logoAlt")}
+                fill
+                className="object-contain scale-[1.15] origin-left"
+                priority
+              />
+            </div>
+          </Link>
+
+          {/* Center: primary nav */}
+          <ul className="flex-1 flex flex-wrap lg:flex-nowrap items-center justify-center gap-x-2 md:gap-x-3 lg:gap-x-4 px-2 xl:px-4 min-w-0">
             {primaryNav.map((item) => (
               <NavItemComp
                 key={"mega" in item && item.mega ? "courses-mega" : item.href}
@@ -415,24 +463,8 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Center: Logo */}
-          <Link
-            href="/"
-            className="group flex-shrink-0 justify-self-center px-3 lg:px-4 z-10"
-          >
-            <div className="relative w-32 lg:w-40 xl:w-44 h-[52px] lg:h-[60px] xl:h-[64px] group-hover:scale-[1.03] transition-all duration-300">
-              <Image
-                src="/images/logo.png"
-                alt={t("nav.logoAlt")}
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-          </Link>
-
-          {/* Right: More + CTA */}
-          <div className="flex items-center gap-2.5 lg:gap-4 justify-end shrink-0">
+          {/* Right: Actions */}
+          <div className="flex items-center justify-end gap-2.5 lg:gap-4 shrink-0 z-10">
             <LanguageToggle />
             <span className="w-px h-5 bg-[#D4A017]/40 flex-shrink-0" aria-hidden />
             {/* More dropdown */}
@@ -444,7 +476,7 @@ export default function Navbar() {
             >
               <button
                 onClick={() => setMoreOpen((v) => !v)}
-                className="flex items-center gap-1 text-[11px] lg:text-[12px] xl:text-[13px] font-semibold text-[#3a3a3a] hover:text-[#B8860B] transition-colors duration-200 tracking-wide py-1 whitespace-nowrap"
+                className="flex items-center gap-1 text-[11px] lg:text-[12px] xl:text-[13px] font-semibold text-[#8a8065] hover:text-[#B8935F] transition-colors duration-200 tracking-wide py-1 whitespace-nowrap"
                 aria-haspopup="true"
                 aria-expanded={moreOpen}
               >
@@ -560,5 +592,6 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+    </>
   );
 }
