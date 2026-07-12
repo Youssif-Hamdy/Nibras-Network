@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import BookTrialPageContent from "@/components/BookTrialPageContent";
 import SiteFooter from "@/components/SiteFooter";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import TrialPromoWidget from "@/components/TrialPromoWidget";
 
 export const metadata: Metadata = {
   title: "Book Free Trial | Nibras Network",
@@ -17,6 +18,7 @@ export default function BookTrialPage() {
       <BookTrialPageContent />
       <SiteFooter />
       <WhatsAppFloat />
+      <TrialPromoWidget />
     </main>
   );
 }

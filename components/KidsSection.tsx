@@ -14,7 +14,7 @@ const getKidsData = (t: any) => [
   },
   {
     id: 2,
-    image: "/images/kides/kid2.jpeg",
+    image: "/images/kides/kide2.jpeg",
     alt: "Kid 2",
     titleKey: "kids.kid2.title",
     descKey: "kids.kid2.desc",

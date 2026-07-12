@@ -1,8 +1,9 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useMemo, useState, useEffect, FormEvent } from "react";
 import { toast } from "sonner";
+import { Percent } from "lucide-react";
 import { useI18n } from "@/components/LocaleProvider";
 import { PhoneCountryPicker, COUNTRIES } from "@/components/PhoneCountryPicker";
 import { SearchableSelect } from "@/components/SearchableSelect";
@@ -578,6 +579,16 @@ export default function BookTrialPageContent() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
             <p className="text-[13px] font-medium leading-snug text-[#c8e8d0] sm:text-sm">{copy.privacyBanner}</p>
+          </div>
+
+          {/* Promo banner */}
+          <div className="bg-[#fdf8eb] border-b border-[#f2ebd9] px-4 py-3 text-center flex items-center justify-center gap-2">
+            <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#b45309]/10 text-[#b45309]">
+              <Percent size={14} strokeWidth={3} />
+            </span>
+            <p className="text-[14px] font-extrabold text-[#b45309] tracking-wide">
+              {isAr ? "خصم ٣٠٪ على أول ٣ شهور" : "30% OFF for the first 3 months"}
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6 p-4 sm:space-y-7 sm:p-8">

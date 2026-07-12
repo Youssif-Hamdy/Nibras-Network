@@ -97,7 +97,7 @@ export default function StatsSection() {
           <StatCell
             show={visible}
             delayClass="delay-[80ms]"
-            end={1000}
+            end={450}
             numberLocale={numberLocale}
             label={t("stats.families")}
             icon={
@@ -124,7 +124,7 @@ export default function StatsSection() {
           <StatCell
             show={visible}
             delayClass="delay-[240ms]"
-            end={100}
+            end={50}
             numberLocale={numberLocale}
             label={t("stats.teachers")}
             icon={

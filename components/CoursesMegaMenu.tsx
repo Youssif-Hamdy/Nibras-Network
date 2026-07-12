@@ -87,33 +87,33 @@ const SUBJECT_THEME: Record<
 > = {
   BookOpen: {
     accent: "#1C3A2E",
-    bg: "#eaf6ee",
-    hover: "#d6ede0",
+    bg: "#eaf4ed",
+    hover: "#dcebe1",
     border: "#1C3A2E33",
   },
   PenLine: {
     accent: "#1c7a45",
-    bg: "#ebf7f0",
-    hover: "#d1ebd8",
+    bg: "#fdf8eb",
+    hover: "#f2ebd9",
     border: "#1c7a4533",
   },
   Landmark: {
     accent: "#0f5132",
-    bg: "#e1ede6",
-    hover: "#d1e4d9",
+    bg: "#e6f0e9",
+    hover: "#d9e6dd",
     border: "#0f513233",
   },
   Baby: {
-    accent: "#0D9488",
-    bg: "#E6F7F5",
-    hover: "#cceee9",
-    border: "#0D948833",
+    accent: "#2E5042",
+    bg: "#fbf4e6",
+    hover: "#eee4d1",
+    border: "#2E504233",
   },
   Briefcase: {
-    accent: "#115e59",
-    bg: "#e0f2f1",
-    hover: "#b2dfdb",
-    border: "#115e5933",
+    accent: "#23493A",
+    bg: "#e1efe6",
+    hover: "#d1e6d8",
+    border: "#23493A33",
   },
 };
 
@@ -134,7 +134,7 @@ function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
     <div className="grid grid-cols-5 gap-3">
       {MEGA_BY_SUBJECT.map((col) => {
         const theme = subjectTheme(col.icon);
-        const titleCls = `text-[10.5px] font-bold tracking-[0.04em] leading-tight transition-colors ${
+        const titleCls = `text-[11px] font-bold tracking-[0.03em] leading-tight transition-colors ${
           locale === "en" ? "uppercase" : ""
         }`;
 
@@ -153,32 +153,32 @@ function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
               } as CSSProperties
             }
           >
-            <div className="mb-2 flex items-start gap-1.5">
+            <div className="mb-3 flex items-center gap-2 rounded-lg bg-white p-2 shadow-sm border border-black/5 hover:shadow-md transition-all">
               <span
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/70 shadow-sm"
-                style={{ color: theme.accent }}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
+                style={{ color: theme.accent, backgroundColor: `${theme.accent}15` }}
               >
                 <Icon name={col.icon} size={14} />
               </span>
-              <div className="min-w-0 flex-1 pt-0.5">
+              <div className="min-w-0 flex-1">
                 {col.hubHref ? (
                   <Link
                     href={col.hubHref}
                     onClick={() => afterNavigate?.()}
-                    className={`${titleCls} hover:opacity-80`}
+                    className={`${titleCls} hover:opacity-80 block`}
                     style={{ color: theme.accent }}
                   >
                     {megaSubjectTitle(locale, col.title)}
                   </Link>
                 ) : (
-                  <span className={titleCls} style={{ color: theme.accent }}>
+                  <span className={`${titleCls} block`} style={{ color: theme.accent }}>
                     {megaSubjectTitle(locale, col.title)}
                   </span>
                 )}
               </div>
               {col.count != null && (
                 <span
-                  className="shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-bold text-white"
+                  className="shrink-0 rounded-full px-1.5 py-[1.5px] text-[8.5px] font-bold text-white shadow-sm ms-0.5"
                   style={{ backgroundColor: theme.accent }}
                 >
                   {col.count}
@@ -579,12 +579,12 @@ export function CoursesMobileMega({ onPickLink }: { onPickLink?: () => void }) {
                               "--subject-hover": theme.hover,
                             } as CSSProperties}
                           >
-                            <div className="mb-2 flex items-center gap-1.5">
+                            <div className="mb-3 flex items-center gap-2 rounded-lg bg-white p-2 shadow-sm border border-black/5">
                               <span
-                                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/70"
-                                style={{ color: theme.accent }}
+                                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
+                                style={{ color: theme.accent, backgroundColor: `${theme.accent}15` }}
                               >
-                                <Icon name={col.icon} size={12} />
+                                <Icon name={col.icon} size={14} />
                               </span>
                               {col.hubHref ? (
                                 <Link
@@ -602,7 +602,7 @@ export function CoursesMobileMega({ onPickLink }: { onPickLink?: () => void }) {
                               )}
                               {col.count != null && (
                                 <span
-                                  className="rounded-full px-1.5 py-0.5 text-[9px] font-bold text-white"
+                                  className="rounded-full px-1.5 py-[1.5px] text-[8.5px] font-bold text-white shadow-sm ms-0.5"
                                   style={{ backgroundColor: theme.accent }}
                                 >
                                   {col.count}

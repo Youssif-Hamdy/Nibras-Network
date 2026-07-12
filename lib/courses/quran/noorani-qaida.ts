@@ -218,7 +218,7 @@ export const nooraniQaida: QuranCourse = {
     ],
   },
   images: [
-    quranProgramImage("NOORANI QAIDA.jpg"),
+    quranProgramImage("NOORANI QAIDA1.png"),
     quranProgramImage("NOORANI QAIDA2.jpg"),
     quranProgramImage("NOORANI QAIDA3.jpg"),
   ],

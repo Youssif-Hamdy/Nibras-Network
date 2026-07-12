@@ -401,30 +401,30 @@ export default function Navbar() {
     <>
       {/* ── Announcement Bar ── */}
       {showAnnouncement && (
-        <div className="bg-[#111111] text-[#F5F0E8] text-[13px] relative z-[60] flex items-center justify-between px-4 py-2 w-full transition-all duration-300 min-h-[36px]">
+        <div className="bg-[#1C3A2E] text-[#F5F0E8] text-[13px] relative z-[60] flex items-center justify-between px-4 py-2 w-full transition-all duration-300 min-h-[36px]">
           {/* Contact Info (Hidden on mobile) */}
           <a
             href="https://wa.me/201099493640"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-2 opacity-80 hover:opacity-100 hover:text-[#D4A017] transition-all text-[12px] flex-shrink-0"
+            className="hidden md:flex items-center gap-2 opacity-90 hover:opacity-100 hover:text-[#D4A017] hover:scale-105 hover:-translate-y-[1px] transition-all duration-300 text-[13px] font-semibold flex-shrink-0"
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <svg className="animate-pulse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             <span dir="ltr">{t("announcement.contact")}</span>
           </a>
 
           {/* Discount Message (Absolute Centered) */}
-          <div className="absolute left-1/2 -translate-x-1/2 text-center font-medium px-4 text-[12px] sm:text-[13px] leading-tight w-full max-w-[80%] sm:max-w-none md:w-auto pointer-events-none">
+          <div className="absolute left-1/2 -translate-x-1/2 text-center font-bold px-4 text-[13px] sm:text-[14px] md:text-[15px] leading-tight w-full max-w-[80%] sm:max-w-none md:w-auto transition-all duration-300 hover:text-[#D4A017] hover:scale-[1.03] cursor-default tracking-wide drop-shadow-sm">
             {t("announcement.discount")}
           </div>
 
           {/* Close Button */}
           <button
             onClick={() => setShowAnnouncement(false)}
-            className="text-white/70 hover:text-white transition-colors flex-shrink-0 ms-auto md:ms-0 z-10 p-1"
+            className="text-white/70 hover:text-[#D4A017] hover:scale-110 hover:rotate-90 transition-all duration-300 flex-shrink-0 ms-auto md:ms-0 z-10 p-1"
             aria-label={t("announcement.close")}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
         </div>
       )}
