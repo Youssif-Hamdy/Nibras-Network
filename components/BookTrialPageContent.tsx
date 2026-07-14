@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState, useEffect, FormEvent } from "react";
 import { toast } from "sonner";
-import { Percent } from "lucide-react";
+import { Percent, Gift, BadgePercent, Sparkles } from "lucide-react";
 import { useI18n } from "@/components/LocaleProvider";
 import { PhoneCountryPicker, COUNTRIES } from "@/components/PhoneCountryPicker";
 import { SearchableSelect } from "@/components/SearchableSelect";
@@ -582,13 +582,39 @@ export default function BookTrialPageContent() {
           </div>
 
           {/* Promo banner */}
-          <div className="bg-[#fdf8eb] border-b border-[#f2ebd9] px-4 py-3 text-center flex items-center justify-center gap-2">
-            <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#b45309]/10 text-[#b45309]">
-              <Percent size={14} strokeWidth={3} />
-            </span>
-            <p className="text-[14px] font-extrabold text-[#b45309] tracking-wide">
-              {isAr ? "خصم ٣٠٪ على أول ٣ شهور" : "30% OFF for the first 3 months"}
-            </p>
+          <div className="mx-4 sm:mx-8 mb-6 mt-4 flex flex-col sm:flex-row items-center justify-between rounded-2xl border border-[#d8e5db] bg-[#f9fbf9] p-4 sm:p-5 relative overflow-hidden">
+            <div className="flex items-center gap-4 w-full sm:w-auto relative z-10">
+              <div className="relative flex-shrink-0 flex items-center justify-center w-14 h-14 rounded-full bg-white border-2 border-[#eaf0ea] shadow-sm">
+                <Gift className="text-[#4a7a5a]" size={24} strokeWidth={2} />
+                <Sparkles className="absolute -top-1 -right-1 text-[#f59e0b] w-4 h-4" />
+                <Sparkles className="absolute -bottom-1 -left-1 text-[#f59e0b] w-3 h-3" />
+              </div>
+              <div className="flex flex-col text-start">
+                <span className="text-sm font-bold text-[#0e2a1e]">
+                  {isAr ? "عرض لفترة محدودة" : "Limited Time Offer"}
+                </span>
+                <p className="text-[14px] text-[#4a6355] mt-1">
+                  <span className="text-xl sm:text-2xl font-extrabold text-[#d48c29] me-2">
+                    {isAr ? "٣٠٪ خصم" : "30% OFF"}
+                  </span>
+                  <span className="font-medium text-sm">
+                    {isAr ? "لأول ٣ شهور" : "for the first 3 months"}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            {/* Divider for desktop */}
+            <div className="hidden sm:block w-px h-12 bg-[#d8e5db] mx-4 lg:mx-8"></div>
+            {/* Divider for mobile */}
+            <div className="sm:hidden w-full h-px bg-[#d8e5db] my-4"></div>
+
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <BadgePercent className="text-[#4a7a5a] flex-shrink-0" size={24} strokeWidth={2} />
+              <p className="text-xs sm:text-sm text-[#4a6355] font-medium leading-tight max-w-[180px] text-start">
+                {isAr ? "ابدأ رحلة التعلم اليوم ووفر أكثر!" : "Start your learning journey today and save more!"}
+              </p>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6 p-4 sm:space-y-7 sm:p-8">
@@ -882,11 +908,7 @@ export default function BookTrialPageContent() {
             </>
             )}
 
-            {!hasPackage && (
-              <p className="rounded-xl border border-dashed border-[#c8d9cd] bg-[#f9fbf9] px-4 py-6 text-center text-[13px] text-[#7a9485]">
-                {copy.packagesSelectToContinue}
-              </p>
-            )}
+
 
           </form>
 

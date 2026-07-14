@@ -7,6 +7,7 @@ import {
   isFamilyMemberComplete,
   type FamilyMemberProfile,
 } from "@/components/FamilyMemberModal";
+import { User, Users, UsersRound, ClipboardCheck } from "lucide-react";
 
 type PackageCategory = "p" | "g" | "f";
 
@@ -71,26 +72,32 @@ export function PackageStepBlock({
       </div>
       <p className="mb-4 text-[12px] text-[#7a9485]">{copy.packagesChooseCategory}</p>
 
-      <div className="mb-4 grid grid-cols-1 gap-2 min-[380px]:grid-cols-3">
+      <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
         {(
           [
-            { cat: "p" as const, label: copy.packagesPrivate },
-            { cat: "g" as const, label: copy.packagesGroup },
-            { cat: "f" as const, label: copy.packagesFamily },
+            { cat: "p" as const, label: copy.packagesPrivate, desc: isAr ? "تعلم مخصص" : "Personalized learning", icon: User },
+            { cat: "g" as const, label: copy.packagesGroup, desc: isAr ? "تعلم مع الآخرين" : "Learn with others", icon: Users },
+            { cat: "f" as const, label: copy.packagesFamily, desc: isAr ? "تعلموا معاً" : "Learn together", icon: UsersRound },
           ] as const
-        ).map(({ cat, label }) => (
+        ).map(({ cat, label, desc, icon: Icon }) => (
           <button
             key={cat}
             type="button"
             onClick={() => onSelectCategory(cat)}
             className={[
-              "rounded-xl border px-3 py-3 text-[12px] font-semibold leading-tight transition-all min-[380px]:px-2 min-[380px]:py-2.5 min-[380px]:text-[11px] sm:text-[12px]",
+              "flex items-center gap-3 rounded-xl border p-3 sm:p-4 text-start transition-all",
               packageCategory === cat
-                ? "border-[#1C3A2E] bg-[#1C3A2E] text-white shadow-sm"
-                : "border-[#d8e5db] bg-white text-[#3a5040] hover:border-[#4a7a5a] hover:bg-[#f4faf5]",
+                ? "border-[#1C3A2E] bg-[#f4faf5] shadow-sm ring-1 ring-[#1C3A2E]"
+                : "border-[#d8e5db] bg-white hover:border-[#4a7a5a] hover:bg-[#f9fbf9]",
             ].join(" ")}
           >
-            {label}
+            <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${packageCategory === cat ? "bg-[#1C3A2E] text-white" : "bg-[#eaf6ee] text-[#4a7a5a]"}`}>
+              <Icon size={20} />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[13px] font-bold text-[#0e2a1e]">{label}</span>
+              <span className="text-[11px] text-[#7a9485] mt-0.5">{desc}</span>
+            </div>
           </button>
         ))}
       </div>
@@ -233,10 +240,34 @@ export function PackageStepBlock({
         </div>
       )}
 
-      {selectedPkg && (
-        <p className="mt-4 rounded-lg bg-[#eaf6ee] px-3 py-2 text-[12px] font-medium text-[#1C3A2E]">
-          {copy.packagesSelectToContinue}
-        </p>
+      {selectedPkg ? (
+        <div className="mt-5 flex items-start gap-3 rounded-xl border border-dashed border-[#c8d9cd] bg-[#f9fbf9] p-4">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#eaf6ee] text-[#4a7a5a]">
+            <ClipboardCheck size={18} />
+          </div>
+          <div>
+            <div className="text-[13px] font-bold text-[#0e2a1e]">
+              {isAr ? "تم اختيار الباقة — أكمل بياناتك بالأسفل" : "Package selected — complete your details below"}
+            </div>
+            <div className="text-[11px] text-[#7a9485] mt-0.5">
+              {isAr ? "سنقوم بتخصيص أفضل خطة لك." : "We'll customize the best plan for you."}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="mt-5 flex items-start gap-3 rounded-xl border border-dashed border-[#c8d9cd] bg-[#f9fbf9] p-4">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#eaf6ee] text-[#4a7a5a]">
+            <ClipboardCheck size={18} />
+          </div>
+          <div>
+            <div className="text-[13px] font-bold text-[#0e2a1e]">
+              {isAr ? "اختر باقة للمتابعة" : "Select a package to continue"}
+            </div>
+            <div className="text-[11px] text-[#7a9485] mt-0.5">
+              {isAr ? "اختر الفئة ثم حدد الخطة المناسبة." : "Choose a category, then select the right plan."}
+            </div>
+          </div>
+        </div>
       )}
     </SectionCard>
   );

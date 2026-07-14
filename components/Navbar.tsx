@@ -414,7 +414,7 @@ export default function Navbar() {
           </a>
 
           {/* Discount Message (Absolute Centered) */}
-          <div className="absolute left-1/2 -translate-x-1/2 text-center font-bold px-4 text-[13px] sm:text-[14px] md:text-[15px] leading-tight w-full max-w-[80%] sm:max-w-none md:w-auto transition-all duration-300 hover:text-[#D4A017] hover:scale-[1.03] cursor-default tracking-wide drop-shadow-sm">
+          <div className="absolute left-1/2 -translate-x-1/2 text-center font-bold px-2 text-[10px] sm:text-[12px] md:text-[14px] leading-tight max-w-[85%] md:w-auto transition-all duration-300 hover:text-[#D4A017] hover:scale-[1.03] cursor-default tracking-wide drop-shadow-sm whitespace-nowrap overflow-hidden text-ellipsis">
             {t("announcement.discount")}
           </div>
 

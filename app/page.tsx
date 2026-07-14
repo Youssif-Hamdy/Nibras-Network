@@ -7,6 +7,7 @@ import KidsSection from "@/components/KidsSection";
 import PillarsSection from "@/components/PillarsSection";
 import SiteFooter from "@/components/SiteFooter";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import OfferBanner from "@/components/OfferBanner";
 
 export default function HomePage() {
   return (
@@ -20,6 +21,7 @@ export default function HomePage() {
       <PillarsSection />
       <SiteFooter />
       <WhatsAppFloat />
+      <OfferBanner />
     </main>
   );
 }
