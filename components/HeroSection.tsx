@@ -41,6 +41,15 @@ export default function HeroSection() {
             transform: none !important;
           }
         }
+
+        .hero-bg-image {
+          background-image: url('/images/hero-mobile%20(2).png');
+        }
+        @media (min-width: 768px) {
+          .hero-bg-image {
+            background-image: url('/images/heroo-new.jpeg');
+          }
+        }
       `}</style>
 
       <section
@@ -54,9 +63,8 @@ export default function HeroSection() {
           {/* ── Background Image with Zoom Animation ── */}
           <div className="absolute inset-0 overflow-hidden">
             <div
-              className="w-full h-full bg-zoom-anim"
+              className="w-full h-full bg-zoom-anim hero-bg-image"
               style={{
-                backgroundImage: "url('/images/hero-new.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center center",
                 backgroundRepeat: "no-repeat",
