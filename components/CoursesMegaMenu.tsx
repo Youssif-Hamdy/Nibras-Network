@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   useEffect,
   useLayoutEffect,
@@ -30,7 +31,7 @@ import {
   BookOpen, PenLine, Landmark, Baby, Briefcase,
   Sprout, TrendingUp, Trees, Trophy,
   Route, ClipboardList, Search, BarChart2, Download, GraduationCap,
-  ChevronRight, AlertTriangle,
+  ChevronRight, AlertTriangle, CheckCircle2,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -40,6 +41,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   BookOpen, PenLine, Landmark, Baby, Briefcase,
   Sprout, TrendingUp, Trees, Trophy,
   Route, ClipboardList, Search, BarChart2, Download, GraduationCap,
+  CheckCircle2,
 };
 
 function Icon({ name, size = 16, className }: { name: string; size?: number; className?: string }) {
@@ -56,23 +58,33 @@ type Tab = "subject" | "level" | "goal" | "pathways";
 function QuickToolsStrip({ afterNavigate }: { afterNavigate?: () => void }) {
   const { locale, t } = useI18n();
   return (
-    <div className="border-t border-[#c5ddd2]/80 pt-3">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#5a7a6e] mb-2 px-1">
+    <div className="pt-2">
+      <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#1C3A2E] mb-3 px-1">
         {t("mega.quickTools")}
       </p>
-      <div className="flex flex-wrap gap-x-4 gap-y-2 px-1">
-        {MEGA_QUICK_TOOLS.map((tool) => (
-          <Link
-            key={tool.href}
-            href={tool.href}
-            onClick={() => afterNavigate?.()}
-            className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#1C3A2E] hover:text-[#B8860B] transition-colors whitespace-nowrap"
-          >
-            <Icon name={tool.icon} size={13} className="text-[#5a7a6e]" />
-            <span className="underline-offset-2 hover:underline">
-              {megaQuickLabel(locale, tool.href, tool.label)}
-            </span>
-          </Link>
+      <div className="flex justify-between items-center px-1 overflow-x-auto no-scrollbar gap-2">
+        {MEGA_QUICK_TOOLS.map((tool, idx) => (
+          <div key={tool.href} className="flex items-center shrink-0">
+            <Link
+              href={tool.href}
+              onClick={() => afterNavigate?.()}
+              className="group inline-flex items-center gap-2 text-[10.5px] xl:text-[11px] font-semibold text-[#3A4A41] hover:text-[#1c7a45] transition-colors"
+            >
+              <span className="flex items-center justify-center w-7 h-7 rounded-full border border-gray-200 bg-white shadow-sm text-[#1C3A2E] group-hover:bg-[#f0faf4] group-hover:border-[#1c7a45]/30 group-hover:text-[#1c7a45] transition-all">
+                <Icon name={tool.icon} size={13} />
+              </span>
+              <span className="leading-tight">
+                {megaQuickLabel(locale, tool.href, tool.label).split(" (").map((part, i) => (
+                  <span key={i} className="block whitespace-nowrap">
+                    {i > 0 ? `(${part}` : part}
+                  </span>
+                ))}
+              </span>
+            </Link>
+            {idx < MEGA_QUICK_TOOLS.length - 1 && (
+              <div className="w-px h-6 bg-gray-200 mx-2 hidden lg:block" />
+            )}
+          </div>
         ))}
       </div>
     </div>
@@ -83,37 +95,37 @@ function QuickToolsStrip({ afterNavigate }: { afterNavigate?: () => void }) {
 
 const SUBJECT_THEME: Record<
   string,
-  { accent: string; bg: string; hover: string; border: string }
+  { accent: string; bg: string; hover: string; border: string; bgImage?: string }
 > = {
-  BookOpen: {
-    accent: "#1C3A2E",
-    bg: "#eaf4ed",
-    hover: "#dcebe1",
-    border: "#1C3A2E33",
+  BookOpen: { // Quran Programs
+    accent: "#1C3C30", 
+    bg: "#F2F6F3",
+    hover: "#e9f0eb",
+    border: "#e5ece7",
   },
-  PenLine: {
-    accent: "#1c7a45",
-    bg: "#fdf8eb",
-    hover: "#f2ebd9",
-    border: "#1c7a4533",
+  PenLine: { // Arabic Language
+    accent: "#C19246",
+    bg: "#FEF9F3",
+    hover: "#f7efe6",
+    border: "#f5ece1",
   },
-  Landmark: {
-    accent: "#0f5132",
-    bg: "#e6f0e9",
-    hover: "#d9e6dd",
-    border: "#0f513233",
+  Landmark: { // Islamic Studies
+    accent: "#60846E",
+    bg: "#F4FAF6",
+    hover: "#eef5f0",
+    border: "#eaf3ef",
   },
-  Baby: {
-    accent: "#2E5042",
-    bg: "#fbf4e6",
-    hover: "#eee4d1",
-    border: "#2E504233",
+  Baby: { // Kids Programs
+    accent: "#CD9D68",
+    bg: "#FEF7EF",
+    hover: "#f7efe6",
+    border: "#f5ece1",
   },
-  Briefcase: {
-    accent: "#23493A",
-    bg: "#e1efe6",
-    hover: "#d1e6d8",
-    border: "#23493A33",
+  Briefcase: { // Special Programs
+    accent: "#648A74",
+    bg: "#F4FAF6",
+    hover: "#eef5f0",
+    border: "#eaf3ef",
   },
 };
 
@@ -124,68 +136,82 @@ function subjectTheme(icon: string) {
 }
 
 const SUBJECT_LINK_CLS =
-  "group flex items-center gap-1.5 rounded-lg border border-white/70 bg-white/75 px-2 py-1.5 text-[11px] font-bold leading-snug text-[#374151] shadow-sm transition-all hover:border-[var(--subject-accent)]/30 hover:bg-white hover:text-[var(--subject-accent)] hover:shadow-md active:scale-[0.98]";
+  "group flex items-center gap-3 px-1 py-1.5 text-[11.5px] font-semibold leading-snug text-[#3A4A41] transition-all hover:text-[var(--subject-accent)] hover:translate-x-1 active:scale-[0.98]";
 
 // ─── Tab 1: By Subject ────────────────────────────────────────────────────────
 
 function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   return (
     <div className="grid grid-cols-5 gap-3">
       {MEGA_BY_SUBJECT.map((col) => {
         const theme = subjectTheme(col.icon);
-        const titleCls = `text-[11px] font-bold tracking-[0.03em] leading-tight transition-colors ${
+        const titleCls = `text-[11px] xl:text-[11.5px] font-extrabold tracking-[0.02em] leading-[1.1] transition-colors min-w-0 ${
           locale === "en" ? "uppercase" : ""
         }`;
 
         return (
           <div
             key={col.title}
-            className="flex min-w-0 flex-col rounded-xl border p-2.5"
+            className="group/col flex min-w-0 flex-col rounded-[20px] border p-3 relative overflow-hidden h-full"
             style={
               {
                 backgroundColor: theme.bg,
                 borderColor: theme.border,
-                borderTopWidth: 3,
-                borderTopColor: theme.accent,
                 "--subject-accent": theme.accent,
                 "--subject-hover": theme.hover,
               } as CSSProperties
             }
           >
-            <div className="mb-3 flex items-center gap-2 rounded-lg bg-white p-2 shadow-sm border border-black/5 hover:shadow-md transition-all">
-              <span
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
-                style={{ color: theme.accent, backgroundColor: `${theme.accent}15` }}
-              >
-                <Icon name={col.icon} size={14} />
-              </span>
-              <div className="min-w-0 flex-1">
-                {col.hubHref ? (
-                  <Link
-                    href={col.hubHref}
-                    onClick={() => afterNavigate?.()}
-                    className={`${titleCls} hover:opacity-80 block`}
-                    style={{ color: theme.accent }}
+            {/* Background graphic placeholder at bottom (gradient to simulate the image graphic) */}
+            <div 
+              className="absolute bottom-0 left-0 right-0 h-40 opacity-[0.08] pointer-events-none z-0" 
+              style={{
+                background: `linear-gradient(to top, ${theme.accent} 0%, transparent 100%)`
+              }} 
+            />
+            
+            {/* Islamic Skyline Background */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 opacity-60 pointer-events-none z-0 overflow-hidden rounded-b-[20px] mix-blend-multiply" style={{ backgroundColor: 'transparent' }}>
+              <div className="relative w-full h-full">
+                <Image 
+                  src="/images/mega-bg.png" 
+                  alt="" 
+                  fill 
+                  className="object-cover object-bottom opacity-70 grayscale contrast-150 brightness-90"
+                  sizes="250px"
+                />
+              </div>
+            </div>
+            
+            <div className="mb-4 relative z-10">
+              <div className="flex items-start gap-2 w-full">
+                <span
+                  className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-[10px] text-white shadow-sm"
+                  style={{ backgroundColor: theme.accent }}
+                >
+                  <Icon name={col.icon} size={20} />
+                </span>
+                <div className={`${titleCls} flex flex-col pt-0.5 max-w-[calc(100%-60px)]`}>
+                  <span style={{ color: theme.accent }} className="truncate">
+                    {megaSubjectTitle(locale, col.title).split(" ")[0]}
+                  </span>
+                  <span style={{ color: theme.accent }} className="truncate">
+                    {megaSubjectTitle(locale, col.title).split(" ").slice(1).join(" ")}
+                  </span>
+                </div>
+                {col.count != null && (
+                  <span
+                    className="shrink-0 flex items-center justify-center h-5 w-5 rounded-full text-[11px] font-bold text-white shadow-sm ms-auto mt-0.5"
+                    style={{ backgroundColor: theme.accent }}
                   >
-                    {megaSubjectTitle(locale, col.title)}
-                  </Link>
-                ) : (
-                  <span className={`${titleCls} block`} style={{ color: theme.accent }}>
-                    {megaSubjectTitle(locale, col.title)}
+                    {col.count}
                   </span>
                 )}
               </div>
-              {col.count != null && (
-                <span
-                  className="shrink-0 rounded-full px-1.5 py-[1.5px] text-[8.5px] font-bold text-white shadow-sm ms-0.5"
-                  style={{ backgroundColor: theme.accent }}
-                >
-                  {col.count}
-                </span>
-              )}
             </div>
-            <ul className="flex flex-1 flex-col gap-1">
+
+            <ul className="flex flex-1 flex-col gap-1.5 relative z-10 mb-4">
               {col.links.map((l) => (
                 <li key={l.href}>
                   <Link
@@ -193,20 +219,32 @@ function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
                     onClick={() => afterNavigate?.()}
                     className={SUBJECT_LINK_CLS}
                   >
-                    <span className="min-w-0 flex-1">{megaHrefLabel(locale, l.href, l.label)}</span>
+                    <span 
+                      className="shrink-0 flex items-center justify-center h-[20px] w-[20px] rounded-[5px] border border-black/5 bg-white/70 shadow-sm transition-opacity"
+                      style={{ color: theme.accent }}
+                    >
+                      <Icon name={col.icon} size={11} />
+                    </span>
+                    <span className="min-w-0 flex-1 leading-snug truncate whitespace-break-spaces line-clamp-2">{megaHrefLabel(locale, l.href, l.label)}</span>
                     <ChevronRight
-                      size={12}
-                      className="shrink-0 text-[#9ca3af] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--subject-accent)] rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
+                      size={13}
+                      className="shrink-0 text-[#9ca3af] transition-transform group-hover:text-[var(--subject-accent)] rtl:rotate-180"
                     />
-                    {"badge" in l && (l as { badge?: string }).badge && (
-                      <span className="shrink-0 whitespace-nowrap rounded px-1 py-0.5 text-[9px] font-bold bg-[#fef3c7] text-[#92400e]">
-                        {(l as { badge?: string }).badge}
-                      </span>
-                    )}
                   </Link>
                 </li>
               ))}
             </ul>
+
+            <div className="mt-auto pt-3 relative z-10 flex justify-center border-t border-black/5 mx-1">
+              <Link
+                href={col.hubHref || "#"}
+                onClick={() => afterNavigate?.()}
+                className="inline-flex items-center gap-1.5 text-[11px] font-bold transition-opacity hover:opacity-70"
+                style={{ color: theme.accent }}
+              >
+                Explore all <span className="rtl:rotate-180">→</span>
+              </Link>
+            </div>
           </div>
         );
       })}
@@ -467,39 +505,49 @@ export function CoursesMegaPanel({
       <div
         ref={panelRef}
         className={`absolute top-full z-[60] mt-2 rounded-xl border border-[#b8d4c9] bg-[#FDFAF4] shadow-[0_20px_60px_rgba(28,58,46,0.18)] overflow-hidden hidden md:block ${anchorRef ? "left-0" : "left-1/2 -translate-x-1/2"}`}
-        style={{ width: "min(96vw, 900px)" }}
+        style={{ width: "min(98vw, 1180px)" }}
         role="region"
         aria-label={t("mega.coursesMenu")}
       >
         {/* Header: tabs + view all */}
-        <div className="flex items-center justify-between border-b border-[#c5ddd2] bg-[#f4faf7] px-4">
-          <div className="flex">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-3.5 text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
-                  activeTab === tab.id
-                    ? "text-[#1C3A2E] border-[#1c7a45]"
-                    : "text-[#5a7a6e] border-transparent hover:text-[#1C3A2E]"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+        <div className="flex items-center justify-between bg-white px-5 pt-4 pb-1">
+          <div className="flex gap-2 bg-[#F9F9F9] p-1 rounded-full border border-gray-100">
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.id;
+              // Add specific icons for each tab based on the image
+              let TabIcon = "Grid";
+              if (tab.id === "level") TabIcon = "BarChart2";
+              if (tab.id === "goal") TabIcon = "Target";
+              if (tab.id === "pathways") TabIcon = "User";
+
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-1.5 px-4 py-2 text-[12px] font-bold rounded-full transition-all whitespace-nowrap ${
+                    isActive
+                      ? "bg-[#6A8775] text-white shadow-sm"
+                      : "text-[#6b7280] hover:text-[#1C3A2E] hover:bg-white"
+                  }`}
+                >
+                  <Icon name={TabIcon} size={14} className={isActive ? "text-white/90" : "text-[#9ca3af]"} />
+                  {tab.label}
+                </button>
+              );
+            })}
           </div>
           <Link
             href="/courses"
             onClick={onNavigate}
-            className="text-[12px] font-semibold text-[#1C3A2E] hover:text-[#B8860B] transition-colors inline-flex items-center gap-1 whitespace-nowrap ms-4"
+            className="text-[12px] font-semibold text-[#1C3A2E] hover:text-[#B8860B] transition-colors inline-flex items-center gap-1 whitespace-nowrap ms-4 px-3 py-1.5 border border-gray-200 rounded-full"
           >
             {t("mega.viewAll")} <span className="rtl:rotate-180">→</span>
           </Link>
         </div>
 
         {/* Tab panel */}
-        <div className="p-5">
+        <div className="px-5 pt-3 pb-5">
           {activeTab === "subject"  && <TabSubject  afterNavigate={onNavigate} />}
           {activeTab === "level"    && <TabLevel    afterNavigate={onNavigate} />}
           {activeTab === "goal"     && <TabGoal     afterNavigate={onNavigate} />}
