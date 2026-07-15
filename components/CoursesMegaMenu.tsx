@@ -102,30 +102,35 @@ const SUBJECT_THEME: Record<
     bg: "#F2F6F3",
     hover: "#e9f0eb",
     border: "#e5ece7",
+    bgImage: "/images/mega-bg-quran.png",
   },
   PenLine: { // Arabic Language
     accent: "#C19246",
     bg: "#FEF9F3",
     hover: "#f7efe6",
     border: "#f5ece1",
+    bgImage: "/images/mega-bg.png", // Using skyline to avoid Arabic text
   },
   Landmark: { // Islamic Studies
     accent: "#60846E",
     bg: "#F4FAF6",
     hover: "#eef5f0",
     border: "#eaf3ef",
+    bgImage: "/images/mega-bg-islamic.png",
   },
   Baby: { // Kids Programs
     accent: "#CD9D68",
     bg: "#FEF7EF",
     hover: "#f7efe6",
     border: "#f5ece1",
+    bgImage: "/images/mega-bg-kids.png",
   },
   Briefcase: { // Special Programs
     accent: "#648A74",
     bg: "#F4FAF6",
     hover: "#eef5f0",
     border: "#eaf3ef",
+    bgImage: "/images/mega-bg-special.png",
   },
 };
 
@@ -171,14 +176,14 @@ function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
               }} 
             />
             
-            {/* Islamic Skyline Background */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 opacity-60 pointer-events-none z-0 overflow-hidden rounded-b-[20px] mix-blend-multiply" style={{ backgroundColor: 'transparent' }}>
+            {/* Specific Card Background */}
+            <div className="absolute bottom-0 left-0 right-0 h-36 opacity-[0.85] pointer-events-none z-0 overflow-hidden rounded-b-[20px] mix-blend-multiply" style={{ backgroundColor: 'transparent' }}>
               <div className="relative w-full h-full">
                 <Image 
-                  src="/images/mega-bg.png" 
+                  src={theme.bgImage || "/images/mega-bg.png"} 
                   alt="" 
                   fill 
-                  className="object-cover object-bottom opacity-70 grayscale contrast-150 brightness-90"
+                  className="object-cover object-bottom opacity-60 transition-opacity duration-500 group-hover/col:opacity-80"
                   sizes="250px"
                 />
               </div>
