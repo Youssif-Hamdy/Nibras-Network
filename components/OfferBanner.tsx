@@ -29,7 +29,7 @@ export default function OfferBanner() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 50, scale: 0.95 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className={`fixed bottom-4 md:bottom-8 z-50 w-full max-w-[calc(100vw-2rem)] md:max-w-2xl ${isRtl ? 'right-4 md:right-8' : 'left-4 md:left-8'}`}
+          className={`fixed bottom-4 md:bottom-8 z-[70] w-full max-w-[calc(100vw-2rem)] md:max-w-2xl ${isRtl ? 'right-4 md:right-8' : 'left-4 md:left-8'}`}
         >
           <div className="relative flex flex-row items-center bg-[#f7faeb] border border-[#e2e8d5] shadow-2xl rounded-2xl p-3 md:p-6 overflow-hidden pr-8 md:pr-6">
             {/* Background elements (sparkles) */}
