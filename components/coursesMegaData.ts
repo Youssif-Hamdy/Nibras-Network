@@ -1,6 +1,6 @@
 /**
  * Slugs for course mega menu — pages can be added incrementally
- * Icons: lucide-react — import { BookOpen, PenLine, Landmark, Baby, Briefcase, ... } from "lucide-react"
+ * Subject icons: custom SVGs in /public (quran, arabic, islamic-studies, kids, special-programs)
  */
 
 // ─── Quick Tools ─────────────────────────────────────────────────────────────

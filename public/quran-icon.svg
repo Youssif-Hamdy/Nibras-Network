@@ -1,0 +1,16 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="quranGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f5c3f"/>
+      <stop offset="100%" stop-color="#0f3d29"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="112" height="112" rx="24" fill="url(#quranGrad)"/>
+  <g fill="#ffffff">
+    <!-- Open book -->
+    <path d="M60 42 C52 36 40 34 32 36 L32 78 C40 76 52 78 60 84 C68 78 80 76 88 78 L88 36 C80 34 68 36 60 42 Z" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+    <line x1="60" y1="42" x2="60" y2="84" stroke="#ffffff" stroke-width="3"/>
+    <!-- Crescent -->
+    <path d="M60 20 C64 16 70 16 74 20 C69 20 65 24 65 29 C65 34 69 38 74 38 C70 42 64 42 60 38 C56 34 56 24 60 20 Z" fill="#ffffff"/>
+  </g>
+</svg>

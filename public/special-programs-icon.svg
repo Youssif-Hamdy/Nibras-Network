@@ -1,0 +1,20 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="giftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5c7a4f"/>
+      <stop offset="100%" stop-color="#3d5a34"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="112" height="112" rx="24" fill="url(#giftGrad)"/>
+  <g fill="#ffffff">
+    <!-- Box -->
+    <rect x="32" y="54" width="56" height="38" rx="2"/>
+    <!-- Lid -->
+    <rect x="26" y="42" width="68" height="14" rx="2"/>
+    <!-- Ribbon vertical -->
+    <rect x="55" y="42" width="10" height="50" fill="#3d5a34"/>
+    <!-- Bow -->
+    <path d="M60 42 C60 32 46 28 44 36 C42 42 50 44 60 42 Z"/>
+    <path d="M60 42 C60 32 74 28 76 36 C78 42 70 44 60 42 Z"/>
+  </g>
+</svg>

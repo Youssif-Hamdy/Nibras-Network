@@ -1,0 +1,23 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mosqueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2f6b4f"/>
+      <stop offset="100%" stop-color="#1a4632"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="112" height="112" rx="24" fill="url(#mosqueGrad)"/>
+  <g fill="#ffffff">
+    <!-- Dome -->
+    <path d="M60 26 C68 26 74 34 74 42 L46 42 C46 34 52 26 60 26 Z"/>
+    <rect x="58" y="18" width="4" height="10"/>
+    <circle cx="60" cy="16" r="3"/>
+    <!-- Building body -->
+    <rect x="34" y="42" width="52" height="36" />
+    <!-- Windows/arches -->
+    <path d="M42 78 L42 62 C42 58 46 56 49 56 C52 56 56 58 56 62 L56 78 Z" fill="#1a4632"/>
+    <path d="M64 78 L64 62 C64 58 68 56 71 56 C74 56 78 58 78 62 L78 78 Z" fill="#1a4632"/>
+    <!-- Base steps -->
+    <rect x="28" y="78" width="64" height="6"/>
+    <rect x="24" y="84" width="72" height="6"/>
+  </g>
+</svg>

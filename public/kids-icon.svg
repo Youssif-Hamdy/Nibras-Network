@@ -1,0 +1,21 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="kidsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c98a4b"/>
+      <stop offset="100%" stop-color="#a56a30"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="112" height="112" rx="24" fill="url(#kidsGrad)"/>
+  <g fill="#ffffff">
+    <!-- Left child head -->
+    <circle cx="44" cy="42" r="12"/>
+    <path d="M44 30 C50 30 54 34 54 40 L34 40 C34 34 38 30 44 30 Z" fill="#7a4a20"/>
+    <!-- Left child body -->
+    <path d="M28 90 C28 74 34 64 44 64 C54 64 60 74 60 90 Z"/>
+    <!-- Right child head -->
+    <circle cx="76" cy="46" r="12"/>
+    <path d="M76 34 C82 34 86 38 86 44 L66 44 C66 38 70 34 76 34 Z" fill="#7a4a20"/>
+    <!-- Right child body -->
+    <path d="M60 92 C60 76 66 68 76 68 C86 68 92 76 92 92 Z"/>
+  </g>
+</svg>

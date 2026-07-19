@@ -49,6 +49,39 @@ function Icon({ name, size = 16, className }: { name: string; size?: number; cla
   return Comp ? <Comp size={size} className={className} aria-hidden /> : null;
 }
 
+const SUBJECT_ICON_SRC: Record<string, string> = {
+  BookOpen: "/quran-icon.svg",
+  PenLine: "/arabic-icon.svg",
+  Landmark: "/islamic-studies-icon.svg",
+  Baby: "/kids-icon.svg",
+  Briefcase: "/special-programs-icon.svg",
+};
+
+function SubjectIcon({
+  name,
+  size = 36,
+  className,
+}: {
+  name: string;
+  size?: number;
+  className?: string;
+}) {
+  const src = SUBJECT_ICON_SRC[name];
+  if (src) {
+    return (
+      <Image
+        src={src}
+        alt=""
+        width={size}
+        height={size}
+        className={className}
+        aria-hidden
+      />
+    );
+  }
+  return <Icon name={name} size={Math.round(size * 0.55)} className={className} />;
+}
+
 // ─── Tabs config ──────────────────────────────────────────────────────────────
 
 type Tab = "subject" | "level" | "goal" | "pathways";
@@ -191,11 +224,8 @@ function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
             
             <div className="mb-4 relative z-10">
               <div className="flex items-start gap-2 w-full">
-                <span
-                  className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-[10px] text-white shadow-sm"
-                  style={{ backgroundColor: theme.accent }}
-                >
-                  <Icon name={col.icon} size={20} />
+                <span className="flex h-[36px] w-[36px] shrink-0 items-center justify-center overflow-hidden rounded-[10px] shadow-sm">
+                  <SubjectIcon name={col.icon} size={36} />
                 </span>
                 <div className={`${titleCls} flex flex-col pt-0.5 max-w-[calc(100%-60px)]`}>
                   <span style={{ color: theme.accent }} className="truncate">
@@ -224,11 +254,8 @@ function TabSubject({ afterNavigate }: { afterNavigate?: () => void }) {
                     onClick={() => afterNavigate?.()}
                     className={SUBJECT_LINK_CLS}
                   >
-                    <span 
-                      className="shrink-0 flex items-center justify-center h-[20px] w-[20px] rounded-[5px] border border-black/5 bg-white/70 shadow-sm transition-opacity"
-                      style={{ color: theme.accent }}
-                    >
-                      <Icon name={col.icon} size={11} />
+                    <span className="shrink-0 flex h-[20px] w-[20px] items-center justify-center overflow-hidden rounded-[5px] shadow-sm transition-opacity">
+                      <SubjectIcon name={col.icon} size={20} />
                     </span>
                     <span className="min-w-0 flex-1 leading-snug truncate whitespace-break-spaces line-clamp-2">{megaHrefLabel(locale, l.href, l.label)}</span>
                     <ChevronRight
@@ -633,11 +660,8 @@ export function CoursesMobileMega({ onPickLink }: { onPickLink?: () => void }) {
                             } as CSSProperties}
                           >
                             <div className="mb-3 flex items-center gap-2 rounded-lg bg-white p-2 shadow-sm border border-black/5">
-                              <span
-                                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
-                                style={{ color: theme.accent, backgroundColor: `${theme.accent}15` }}
-                              >
-                                <Icon name={col.icon} size={14} />
+                              <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-md shadow-sm">
+                                <SubjectIcon name={col.icon} size={28} />
                               </span>
                               {col.hubHref ? (
                                 <Link

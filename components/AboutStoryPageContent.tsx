@@ -60,6 +60,65 @@ function Divider() {
   );
 }
 
+function Flourish({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
+      <path d="M50 10c0 20-15 30-15 30s15 10 15 30c0-20 15-30 15-30S50 30 50 10Z" />
+      <circle cx="50" cy="50" r="3" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function DiamondDot({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+      <path d="M10 0 L13 7 L20 10 L13 13 L10 20 L7 13 L0 10 L7 7 Z" />
+    </svg>
+  );
+}
+
+function MandalaFlower({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 60 60" fill="none" aria-hidden>
+      <g fill="currentColor">
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+          <ellipse key={deg} cx="30" cy="18" rx="4.2" ry="9" transform={`rotate(${deg} 30 30)`} opacity="0.9" />
+        ))}
+      </g>
+      <circle cx="30" cy="30" r="5" fill="#FCFAF5" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  );
+}
+
+function LeafBranch({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 220 200" fill="none" aria-hidden>
+      <path d="M210 6C160 18 120 40 92 78" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      <g fill="currentColor">
+        <ellipse cx="165" cy="18" rx="20" ry="10" transform="rotate(-28 165 18)" opacity="0.55" />
+        <ellipse cx="140" cy="34" rx="18" ry="9" transform="rotate(-18 140 34)" opacity="0.6" />
+        <ellipse cx="118" cy="54" rx="17" ry="8.5" transform="rotate(-8 118 54)" opacity="0.65" />
+        <ellipse cx="98" cy="76" rx="15" ry="7.5" transform="rotate(2 98 76)" opacity="0.7" />
+        <ellipse cx="190" cy="10" rx="14" ry="7" transform="rotate(-40 190 10)" opacity="0.5" />
+      </g>
+    </svg>
+  );
+}
+
+function LaurelMotif({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 100 30" fill="none" aria-hidden>
+      <g fill="currentColor" opacity="0.75">
+        <ellipse cx="18" cy="16" rx="8" ry="4" transform="rotate(24 18 16)" />
+        <ellipse cx="31" cy="12" rx="7" ry="3.4" transform="rotate(12 31 12)" />
+        <ellipse cx="69" cy="12" rx="7" ry="3.4" transform="rotate(-12 69 12)" />
+        <ellipse cx="82" cy="16" rx="8" ry="4" transform="rotate(-24 82 16)" />
+      </g>
+      <circle cx="50" cy="14" r="2.6" fill="#C79B3B" />
+    </svg>
+  );
+}
+
 function StoryIcon({ name, className = "h-5 w-5" }: { name: string; className?: string }) {
   const base = {
     className,
@@ -74,7 +133,32 @@ function StoryIcon({ name, className = "h-5 w-5" }: { name: string; className?: 
 
   switch (name) {
     case "mosque":
-      return <svg {...base}><path d="M3 20h18" /><path d="M6 20v-6h12v6" /><path d="M8 14V9l4-3 4 3v5" /><path d="M12 6V3" /><path d="M11 3h2" /></svg>;
+      return (
+        <svg {...base}>
+          {/* base line */}
+          <path d="M2 20h20" />
+          {/* left minaret */}
+          <rect x="3" y="9" width="2.5" height="11" rx="0.4" />
+          <path d="M3 9C3 8 4.25 6.5 4.25 6.5S5.5 8 5.5 9" />
+          <line x1="4.25" y1="6.5" x2="4.25" y2="5" strokeWidth="1.2" />
+          <circle cx="4.25" cy="4.6" r="0.6" fill="currentColor" stroke="none" />
+          {/* right minaret */}
+          <rect x="18.5" y="9" width="2.5" height="11" rx="0.4" />
+          <path d="M18.5 9C18.5 8 19.75 6.5 19.75 6.5S21 8 21 9" />
+          <line x1="19.75" y1="6.5" x2="19.75" y2="5" strokeWidth="1.2" />
+          <circle cx="19.75" cy="4.6" r="0.6" fill="currentColor" stroke="none" />
+          {/* main walls */}
+          <path d="M6 20v-9h12v9" />
+          {/* main dome */}
+          <path d="M9 11V9a3 3 0 0 1 6 0v2" />
+          <path d="M10.5 9C10.5 7.2 12 5.5 12 5.5S13.5 7.2 13.5 9" />
+          {/* door arch */}
+          <path d="M10.5 20v-4a1.5 1.5 0 0 1 3 0v4" />
+          {/* windows */}
+          <path d="M7.5 14.5h1.2" />
+          <path d="M15.3 14.5h1.2" />
+        </svg>
+      );
     case "plane":
       return <svg {...base}><path d="M22 2 11 13" /><path d="m22 2-7 20-4-9-9-4Z" /></svg>;
     case "wallet":
@@ -103,6 +187,31 @@ function StoryIcon({ name, className = "h-5 w-5" }: { name: string; className?: 
       return <svg {...base}><rect x="4.5" y="10" width="15" height="10" rx="2" /><path d="M8 10V7.8A4.2 4.2 0 0 1 15.5 5" /></svg>;
     case "scroll":
       return <svg {...base}><path d="M7 4h10a3 3 0 1 1 0 6H7a3 3 0 1 0 0 6h10" /><path d="M7 4a3 3 0 0 0 0 6" /><path d="M17 20a3 3 0 0 0 0-6" /></svg>;
+    case "lantern":
+      return (
+        <svg {...base}>
+          {/* chain */}
+          <line x1="12" y1="2" x2="12" y2="5" />
+          {/* ring at top */}
+          <path d="M9.5 5h5a.5.5 0 0 1 .5.5v.5H9v-.5a.5.5 0 0 1 .5-.5Z" fill="currentColor" stroke="none" />
+          {/* body */}
+          <path d="M7.5 6.5h9l1.5 7h-12Z" />
+          {/* flame glow inner */}
+          <path d="M10.5 11.5c.3-1 .8-1.8 1.5-2.2.7.4 1.2 1.2 1.5 2.2" strokeWidth="1.2" />
+          {/* mid band */}
+          <rect x="7" y="13.5" width="10" height="1.2" rx=".6" fill="currentColor" stroke="none" />
+          {/* lower body */}
+          <path d="M7.5 14.7h9l-1 4.3H8.5Z" />
+          {/* base disc */}
+          <ellipse cx="12" cy="19" rx="3.8" ry="1" fill="currentColor" stroke="none" />
+          {/* glow rays */}
+          <line x1="12" y1="8.5" x2="12" y2="7.5" strokeWidth="1" />
+          <line x1="9.5" y1="9.2" x2="8.8" y2="8.5" strokeWidth="1" />
+          <line x1="14.5" y1="9.2" x2="15.2" y2="8.5" strokeWidth="1" />
+        </svg>
+      );
+    case "book":
+      return <svg {...base}><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" /><path d="M8 7h6" /><path d="M8 11h8" /></svg>;
     default:
       return null;
   }
@@ -139,6 +248,32 @@ export default function AboutStoryPageContent() {
           70%  { box-shadow: 0 0 0 14px rgba(199,155,59,0); }
           100% { box-shadow: 0 0 0 0 rgba(199,155,59,0); }
         }
+        @keyframes twinkle {
+          0%,100% { opacity: .25; }
+          50%      { opacity: .9; }
+        }
+        @keyframes iconGlow {
+          0%,100% { box-shadow: 0 0 0 0 rgba(216,181,103,0); }
+          50%      { box-shadow: 0 0 28px 8px rgba(216,181,103,.5); }
+        }
+        @keyframes drift {
+          0%,100% { transform: translateY(0) translateX(0) rotate(0deg); }
+          50%      { transform: translateY(-14px) translateX(6px) rotate(8deg); }
+        }
+        @keyframes lanternSwing {
+          0%,100% { transform: rotate(-6deg); }
+          50%      { transform: rotate(6deg); }
+        }
+        @keyframes orbitRing {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+        .lantern-swing { transform-origin: top center; animation: lanternSwing 3s ease-in-out infinite; }
+        .orbit-ring    { animation: orbitRing 8s linear infinite; }
+        @keyframes spinSlow {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
 
         .a1 { opacity:0; animation: fadeUp 680ms ease .08s forwards; }
         .a2 { opacity:0; animation: fadeUp 680ms ease .22s forwards; }
@@ -148,8 +283,19 @@ export default function AboutStoryPageContent() {
         .float-icon  { animation: floatIcon 3.4s ease-in-out infinite; }
         .scroll-hint { animation: shimmer 2.2s ease-in-out infinite; }
         .pulse-ring  { animation: pulseRing 2s ease-out infinite; }
+        .star-twinkle { animation: twinkle 2.6s ease-in-out infinite; }
+        .icon-glow   { animation: iconGlow 3s ease-in-out infinite; }
+        .drift-slow  { animation: drift 6s ease-in-out infinite; }
+        .spin-slow   { animation: spinSlow 22s linear infinite; }
 
         .icon-pop { animation: iconPop 500ms cubic-bezier(.2,.8,.2,1) both; }
+
+        .icon-badge {
+          transition: transform 260ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms ease;
+        }
+        .icon-badge:hover {
+          transform: scale(1.16) rotate(-8deg);
+        }
 
         .hover-card {
           transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
@@ -175,6 +321,15 @@ export default function AboutStoryPageContent() {
           transform: translateY(-3px);
           box-shadow: 0 10px 28px rgba(28,58,46,.1);
         }
+
+        .timeline-card {
+          transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+        }
+        .timeline-card:hover {
+          transform: translateY(-3px);
+          border-color: rgba(199,155,59,.5);
+          box-shadow: 0 14px 34px rgba(28,58,46,.1);
+        }
       `}</style>
 
       {/* ══════════════ HERO ══════════════ */}
@@ -199,13 +354,8 @@ export default function AboutStoryPageContent() {
           </p>
 
           {/* floating lantern */}
-          <div className="a2 float-icon pulse-ring mb-8 flex h-[88px] w-[88px] items-center justify-center rounded-full border border-[#C79B3B]/40 bg-[#C79B3B]/12 backdrop-blur-sm">
-            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#C79B3B" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M8 2h8l1 7H7L8 2z" />
-              <path d="M9 9s-.5 5 3 7 3 6 3 6" />
-              <path d="M15 9s.5 5-3 7-3 6-3 6" />
-              <line x1="9" y1="22" x2="15" y2="22" />
-            </svg>
+          <div className="a2 float-icon pulse-ring icon-glow mb-8 flex h-[88px] w-[88px] items-center justify-center rounded-full border border-[#C79B3B]/40 bg-[#C79B3B]/12 backdrop-blur-sm">
+            <StoryIcon name="lantern" className="h-[42px] w-[42px] text-[#C79B3B]" />
           </div>
 
           {/* headline */}
@@ -245,60 +395,75 @@ export default function AboutStoryPageContent() {
       </section>
 
       {/* ══════════════ BODY ══════════════ */}
-      <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 py-10 sm:py-20 sm:px-6">
 
         <p className="mb-12 text-center text-[10px] font-semibold uppercase tracking-[.22em] text-[#B8892A]">
           {isAr ? "— الصفحة 1 — قصتنا —" : "— Page 1 — Our Story —"}
         </p>
 
-        {/* ══ 1. THE BEGINNING — split: illustration left, text right ══ */}
+        {/* ══ 1. THE BEGINNING — brand card left, text right (matches ref) ══ */}
         <section className="mb-0">
-          <div className="hover-card overflow-hidden rounded-3xl border border-[#E5D9C1] bg-white shadow-[0_6px_24px_rgba(28,58,46,.07)]">
-            <div className="grid lg:grid-cols-[420px_1fr]">
+          <div className="hover-card rounded-3xl border border-[#E5D9C1] bg-white shadow-[0_6px_24px_rgba(28,58,46,.07)]">
+            <div className="relative grid lg:grid-cols-[420px_1fr]">
 
               {/* illustration panel */}
-              <div className="relative flex min-h-[240px] flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#21463A] to-[#2F6251] p-6 sm:min-h-[320px] sm:p-10 lg:min-h-[500px]">
-                {/* decorative circles */}
-                <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full border border-[#C79B3B]/10" />
-                <div className="pointer-events-none absolute -bottom-10 -left-10 h-40 w-40 rounded-full border border-[#C79B3B]/8" />
+              <div className="relative h-56 w-full overflow-hidden rounded-t-3xl sm:h-80 lg:h-auto lg:min-h-[500px] lg:rounded-s-3xl lg:rounded-tr-none">
+                <Image
+                  src="/images/about2.jpeg"
+                  alt="Nibras Network Origin"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0E2019]/55 via-transparent to-transparent" />
+                <Flourish className="drift-slow pointer-events-none absolute right-4 top-4 h-10 w-10 text-[#F0DBA0]/70" />
+                <span className="pulse-ring absolute left-5 top-5 flex h-3 w-3 items-center justify-center rounded-full bg-[#C79B3B]" />
+              </div>
 
-                {/* mosque SVG illustration */}
-                <div className="float-icon mb-5 flex h-28 w-28 items-center justify-center rounded-full border border-[#C79B3B]/30 bg-[#C79B3B]/10">
-                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#C79B3B" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-                    {/* dome */}
-                    <path d="M20 30 Q20 14 32 14 Q44 14 44 30" />
-                    {/* main body */}
-                    <rect x="14" y="30" width="36" height="22" rx="2" />
-                    {/* door arch */}
-                    <path d="M27 52 L27 40 Q27 35 32 35 Q37 35 37 40 L37 52" />
-                    {/* minaret left */}
-                    <rect x="8" y="22" width="6" height="30" rx="1" />
-                    <path d="M8 22 Q11 17 14 22" />
-                    <line x1="11" y1="17" x2="11" y2="12" />
-                    {/* minaret right */}
-                    <rect x="50" y="22" width="6" height="30" rx="1" />
-                    <path d="M50 22 Q53 17 56 22" />
-                    <line x1="53" y1="17" x2="53" y2="12" />
-                    {/* crescent */}
-                    <path d="M30 9 Q32 6 34 9 Q32 7.5 30 9Z" />
-                    {/* windows */}
-                    <circle cx="23" cy="38" r="2.5" />
-                    <circle cx="41" cy="38" r="2.5" />
+              {/* ── Mushaf badge: sits ON the edge between image & text panels ── */}
+              <div className="pointer-events-none absolute z-20 hidden lg:flex flex-col items-center gap-1.5 bottom-4 end-4 sm:bottom-6 sm:end-6 lg:bottom-auto lg:end-auto lg:top-1/2 lg:left-[420px] lg:-translate-x-1/2 lg:-translate-y-1/2">
+                <div className="relative flex items-center justify-center">
+                  {/* spinning dashed gold ring */}
+                  <svg className="spin-slow pointer-events-none absolute" width="96" height="96"
+                    viewBox="0 0 96 96" fill="none" aria-hidden>
+                    <circle cx="48" cy="48" r="45" stroke="#C79B3B" strokeWidth="1.3"
+                      strokeDasharray="7 5" strokeLinecap="round" opacity="0.6" />
                   </svg>
+                  {/* pulse glow ring */}
+                  <span className="pulse-ring pointer-events-none absolute inset-0 rounded-full border-2 border-[#C79B3B]/50" />
+                  {/* main badge circle */}
+                  <div className="icon-glow float-icon relative z-10 flex h-[72px] w-[72px] items-center justify-center rounded-full border-[2.5px] border-[#C79B3B]/60 bg-gradient-to-br from-[#1B4332] to-[#0a1f15] shadow-[0_12px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)]">
+                    {/* inner subtle ring */}
+                    <span className="pointer-events-none absolute inset-[6px] rounded-full border border-[#C79B3B]/25" />
+                    {/* ── Open Quran / Mushaf SVG ── */}
+                    <svg viewBox="0 0 24 24" className="h-9 w-9 text-[#E9C878]" fill="none"
+                      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      {/* spine */}
+                      <line x1="12" y1="5" x2="12" y2="20" strokeWidth="1.2" />
+                      {/* left page */}
+                      <path d="M12 6C10 5.5 6.5 5.5 4 6.5V19.5C6.5 18.5 10 18.5 12 19" />
+                      {/* right page */}
+                      <path d="M12 6C14 5.5 17.5 5.5 20 6.5V19.5C17.5 18.5 14 18.5 12 19" />
+                      {/* left lines */}
+                      <line x1="6" y1="10" x2="10.5" y2="9.5" strokeWidth="0.9" opacity="0.7" />
+                      <line x1="6" y1="13" x2="10.5" y2="12.5" strokeWidth="0.9" opacity="0.7" />
+                      <line x1="6" y1="16" x2="10.5" y2="15.5" strokeWidth="0.9" opacity="0.7" />
+                      {/* right lines */}
+                      <line x1="18" y1="10" x2="13.5" y2="9.5" strokeWidth="0.9" opacity="0.7" />
+                      <line x1="18" y1="13" x2="13.5" y2="12.5" strokeWidth="0.9" opacity="0.7" />
+                      <line x1="18" y1="16" x2="13.5" y2="15.5" strokeWidth="0.9" opacity="0.7" />
+                      {/* top arch */}
+                      <path d="M9 6C9 4.5 10.3 3.5 12 3.5S15 4.5 15 6" strokeWidth="1.1" />
+                    </svg>
+                  </div>
                 </div>
-
-                <p className="font-serif text-3xl font-bold text-[#C79B3B]">نبراس</p>
-                <p className="mt-1 text-sm text-[#6B9E87]">Nibras Network · Est. 2025</p>
-
-                {/* floating dots */}
-                <div className="absolute bottom-10 left-10 h-2 w-2 rounded-full bg-[#C79B3B]/40" />
-                <div className="absolute bottom-16 left-16 h-1.5 w-1.5 rounded-full bg-[#C79B3B]/25" />
-                <div className="absolute right-12 top-12 h-2 w-2 rounded-full bg-[#C79B3B]/40" />
-                <div className="absolute right-20 top-20 h-1 w-1 rounded-full bg-[#C79B3B]/25" />
+                {/* label */}
+                <span className="rounded-full bg-[#0a1f15]/80 px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-[.16em] text-[#E9C878] shadow backdrop-blur-sm">
+                  {isAr ? "مصحف" : "Quran"}
+                </span>
               </div>
 
               {/* text panel */}
-              <div className="flex flex-col justify-center p-5 sm:p-8 md:p-10">
+              <div className="flex flex-col justify-center p-4 sm:p-8 md:p-10">
                 <p className="mb-1 text-[10px] font-semibold uppercase tracking-[.18em] text-[#B8892A]">{isAr ? "الأصل" : "Origin"}</p>
                 <h2 className="mb-5 text-2xl font-bold text-[#1C3A2E]">{isAr ? "البداية" : "The Beginning"}</h2>
                 <p className="mb-5 text-[15px] leading-[1.8] text-[#4A6858]">
@@ -308,17 +473,26 @@ export default function AboutStoryPageContent() {
                 </p>
 
                 {/* challenges with icon + hover slide */}
-                <div className="space-y-1.5">
-                  {beginningChallenges.map(({ icon, text }) => (
-                    <div
-                      key={text.en}
-                      className="challenge-row flex items-start gap-3 rounded-xl px-3 py-2.5"
-                      style={{ ["--challenge-shift" as string]: isAr ? "-6px" : "6px" }}
-                    >
-                      <span className="mt-0.5 text-[#2E5A4C]"><StoryIcon name={icon} className="h-[18px] w-[18px]" /></span>
-                      <span className="text-[14px] leading-[1.7] text-[#4A6858]">{isAr ? text.ar : text.en}</span>
-                    </div>
-                  ))}
+                <div className="space-y-2">
+                  {beginningChallenges.map(({ icon, text }, i) => {
+                    const palette = ["#2D6A4F", "#40916C", "#1B4332", "#52B788"];
+                    const tint   = ["#D8F3DC", "#D8F3DC", "#D8F3DC", "#D8F3DC"];
+                    return (
+                      <div
+                        key={text.en}
+                        className="challenge-row flex items-start gap-3 rounded-xl bg-[#F7F5F0] px-3 py-2.5"
+                        style={{ ["--challenge-shift" as string]: isAr ? "-6px" : "6px" }}
+                      >
+                        <span
+                          className="icon-pop icon-badge mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full shadow-sm"
+                          style={{ background: tint[i], color: palette[i], animationDelay: `${i * 0.12}s` }}
+                        >
+                          <StoryIcon name={icon} className="h-[18px] w-[18px]" />
+                        </span>
+                        <span className="pt-1 text-[14px] leading-[1.7] text-[#4A6858]">{isAr ? text.ar : text.en}</span>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 <p className="mt-5 text-[15px] leading-[1.8] text-[#4A6858]">
@@ -333,74 +507,91 @@ export default function AboutStoryPageContent() {
 
         <Divider />
 
-        {/* ══ 2. WHY NIBRAS — text left + animated 2×2 grid right ══ */}
+        {/* ══ 2. WHY NIBRAS — lantern photo as full-bleed background for the whole left side ══ */}
         <section>
-          <div className="hover-card overflow-hidden rounded-3xl border border-[#E5D9C1] bg-white shadow-[0_6px_24px_rgba(28,58,46,.07)]">
-            <div className="grid items-start gap-0 md:grid-cols-2" dir={isAr ? "rtl" : "ltr"}>
+          <div className="hover-card overflow-hidden rounded-3xl border border-[#E5D9C1] bg-[#FCFAF5] shadow-[0_6px_24px_rgba(28,58,46,.07)]">
+            <div className="grid md:grid-cols-[50%_1fr]">
 
-              {/* text left */}
-              <div className="flex flex-col justify-start bg-gradient-to-b from-white to-[#FCFAF5] p-5 md:p-6 lg:p-7" dir={isAr ? "rtl" : "ltr"}>
-                <p className="mb-1 text-[10px] font-semibold uppercase tracking-[.18em] text-[#B8892A]">{isAr ? "الاسم والمعنى" : "Name & Meaning"}</p>
-                <h2 className="mb-3 text-[1.45rem] font-bold leading-snug text-[#1C3A2E] sm:text-[1.6rem]">
-                  {isAr ? "لماذا" : "Why"} "Nibras"?{" "}
-                  <span className="font-serif text-[#C79B3B]">نبراس</span>
-                </h2>
-                <p className="mb-3.5 max-w-2xl text-[14px] leading-[1.75] text-[#4A6858]">
-                  {isAr ? (
-                    <>
-                      نبراس هي كلمة عربية جميلة تعني{" "}
-                      <strong className="font-semibold text-[#1C3A2E]">"المصباح"</strong> الذي ينير الطريق.
-                      وكما ينير المصباح الدروب المظلمة ويقود الناس بأمان، فمهمتنا أن نضيء طريق فهم
-                      القرآن والعلم الإسلامي الأصيل.
-                    </>
-                  ) : (
-                    <>
-                      Nibras (نبراس) is a beautiful Arabic word meaning{" "}
-                      <strong className="font-semibold text-[#1C3A2E]">"lantern"</strong> — a lamp
-                      that gives light. Just as a lantern illuminates dark paths and guides travelers
-                      safely, our mission is to illuminate the path to understanding the Quran and
-                      authentic Islamic knowledge.
-                    </>
-                  )}
-                </p>
+              {/* left side — the image IS the background for this entire column */}
+              <div className="relative min-h-[340px] w-full overflow-hidden sm:min-h-[420px] md:min-h-[640px]" dir={isAr ? "rtl" : "ltr"}>
+                <Image
+                  src="/images/about33.png"
+                  alt="Lantern Background"
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-fill"
+                />
+                {/* soft overlay for text readability — lighter so image shows through */}
+                <div className="absolute inset-0 bg-gradient-to-b from-[#0E2019]/60 via-transparent to-[#0E2019]/55" />
 
-                {/* compact visual row */}
-                <div className={`flex flex-wrap items-center gap-2.5 ${isAr ? "justify-start md:justify-end" : "justify-start"}`}>
-                  <div className="float-icon flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-[#C79B3B]/30 bg-gradient-to-br from-[#FFF8E7] to-[#FFF0CC]">
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#C79B3B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M8 2h8l1 7H7L8 2z" />
-                      <path d="M9 9s-.5 5 3 7 3 6 3 6" />
-                      <path d="M15 9s.5 5-3 7-3 6-3 6" />
-                      <line x1="9" y1="22" x2="15" y2="22" />
-                    </svg>
+                <div className="relative z-10 flex h-full flex-col justify-between p-4 sm:p-8 md:p-10">
+                  <div>
+                    <p className="mb-1 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[.2em] text-[#D8B567]">
+                      {isAr ? "الاسم والمعنى" : "Name & meaning"}
+                      <span className="h-px w-8 bg-[#C79B3B]/60" />
+                    </p>
+
+                    <h2 className="mb-3 text-[1.7rem] font-bold leading-snug text-[#F7F1E3] sm:text-[2.1rem]">
+                      {isAr ? "لماذا" : "Why"} &ldquo;Nibras&rdquo;?{" "}
+                      <span className="font-serif text-[#C79B3B]">نبراس</span>
+                    </h2>
+
+                    {/* ornament divider */}
+                    <div className="mb-5 flex items-center gap-3 text-[#C79B3B]">
+                      <span className="h-px w-10 bg-[#C79B3B]/60" />
+                      <DiamondDot className="h-3 w-3" />
+                      <span className="h-px w-10 bg-[#C79B3B]/60" />
+                    </div>
+
+                    <p className="text-[14.5px] leading-[1.85] text-[#E9E5D8]">
+                      {isAr ? (
+                        <>
+                          نبراس هي كلمة عربية جميلة تعني{" "}
+                          <strong className="font-semibold text-[#F7F1E3]">&ldquo;المصباح&rdquo;</strong> الذي ينير الطريق.
+                          وكما ينير المصباح الدروب المظلمة ويقود الناس بأمان، فمهمتنا أن نضيء طريق فهم
+                          القرآن والعلم الإسلامي الأصيل.
+                        </>
+                      ) : (
+                        <>
+                          Nibras (نبراس) is a beautiful Arabic word meaning{" "}
+                          <strong className="font-semibold text-[#F7F1E3]">&ldquo;lantern&rdquo;</strong> — a lamp
+                          that gives light. Just as a lantern illuminates dark paths and guides travelers
+                          safely, our mission is to illuminate the path to understanding the Quran and
+                          authentic Islamic knowledge.
+                        </>
+                      )}
+                    </p>
                   </div>
-                  <div className="rounded-xl border border-[#E8DFC9] bg-white/80 px-4 py-2.5">
-                    <p className="font-serif text-2xl font-bold leading-none text-[#C79B3B]">نبراس</p>
-                    <p className="mt-1 text-[12px] text-[#6F9283]">{isAr ? "مصباح · نور · هداية" : "Lantern · Light · Guidance"}</p>
+
+                  {/* logo with glow */}
+                  <div className="mx-auto mt-6 flex items-center justify-center">
+                    <div className="icon-glow pulse-ring flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-white/85 shadow-lg">
+                      <Image src="/images/logo.png" alt="Nibras Logo" width={96} height={96} className="h-full w-full object-contain p-1" />
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* animated 2×2 symbolism grid */}
-              <div className="border-t border-[#E5D9C1] bg-[#FFFEFB] p-2.5 md:border-s md:border-t-0 md:p-3" dir={isAr ? "rtl" : "ltr"}>
-                <div className="grid grid-cols-1 gap-2 content-start min-[400px]:grid-cols-2">
-                {symbolismItems.map(({ icon, color, border, title, desc }, i) => (
-                  <div
-                    key={title.en}
-                    className="vis-card flex min-h-[100px] flex-col rounded-lg border border-[#E5D9C1] p-3 sm:min-h-[108px] sm:p-2.5"
-                    style={{ background: color, animationDelay: `${i * 0.13}s` }}
-                  >
-                    <span className="icon-pop mb-1 inline-flex text-[#2F6251]">
-                      <StoryIcon name={icon} className="h-5 w-5" />
-                    </span>
-                    <p className="mb-0.5 text-[11.5px] font-bold leading-tight text-[#1C3A2E]">{isAr ? title.ar : title.en}</p>
-                    <p className="overflow-hidden text-[10.5px] leading-[1.35] text-[#5A7A68] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">{isAr ? desc.ar : desc.en}</p>
+              {/* right side — 2×2 symbolism grid, vertically centered against the photo's height */}
+              <div className="flex items-center p-4 sm:p-9 md:p-10">
+                <div className="grid w-full grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:gap-5">
+                  {symbolismItems.map(({ icon, color, border, title, desc }, i) => (
                     <div
-                      className="mt-1.5 h-0.5 w-6 rounded-full"
-                      style={{ background: border }}
-                    />
-                  </div>
-                ))}
+                      key={title.en}
+                      className="vis-card flex flex-col items-center rounded-2xl border border-[#E5D9C1]/70 px-3 py-5 text-center sm:px-4 sm:py-7"
+                      style={{ background: color, animationDelay: `${i * 0.13}s` }}
+                    >
+                      <span
+                        className="icon-pop icon-badge mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-md sm:mb-4 sm:h-14 sm:w-14"
+                        style={{ color: border, border: `1.5px solid ${border}40`, animationDelay: `${i * 0.13}s` }}
+                      >
+                        <StoryIcon name={icon} className="h-5 w-5 sm:h-7 sm:w-7" />
+                      </span>
+                      <p className="mb-1.5 text-[13px] font-bold leading-tight text-[#1C3A2E] sm:mb-2 sm:text-[15px]">{isAr ? title.ar : title.en}</p>
+                      <div className="mb-1.5 h-0.5 w-6 rounded-full sm:mb-2 sm:w-7" style={{ background: border }} />
+                      <p className="text-[11px] leading-[1.5] text-[#5A7A68] sm:text-[12.5px] sm:leading-[1.55]">{isAr ? desc.ar : desc.en}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -412,30 +603,62 @@ export default function AboutStoryPageContent() {
 
         {/* ══ 3. GROWTH — horizontal timeline ══ */}
         <section>
-          <div className="hover-card rounded-3xl border border-[#E5D9C1] bg-white p-5 shadow-[0_6px_24px_rgba(28,58,46,.07)] sm:p-8 md:p-10">
-            <p className="mb-1 text-[10px] font-semibold uppercase tracking-[.18em] text-[#B8892A]">{isAr ? "الرحلة" : "Journey"}</p>
-            <h2 className="mb-10 text-2xl font-bold text-[#1C3A2E]">{isAr ? "نموّنا" : "Our Growth"}</h2>
+          <div className="hover-card relative overflow-hidden rounded-3xl border border-[#E5D9C1] shadow-[0_6px_24px_rgba(28,58,46,.07)]">
+            {/* Background image */}
+            <Image
+              src="/images/about4.png"
+              alt="Growth Background"
+              fill
+              className="object-cover"
+            />
+            {/* overlay: light at top, fades out so the mosque skyline stays visible at the base */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#FCFAF5]/92 via-[#FCFAF5]/70 to-transparent" />
 
-            {/* timeline */}
-            <div className="grid gap-8 md:grid-cols-3">
-              {timelineItems.map(({ era, label, text, icon }, i) => (
-                <div key={era.en} className="relative">
-                  {/* connector (md only) */}
-                  {i < timelineItems.length - 1 && (
-                    <div className="absolute left-[calc(50%+22px)] top-[20px] hidden h-px bg-[#C79B3B]/25 md:block"
-                      style={{ width: "calc(100% + 2rem - 44px)" }} />
-                  )}
+            {/* leaf branch corner decoration */}
+            <LeafBranch className="pointer-events-none absolute -right-2 -top-2 h-32 w-36 text-[#7C9E7C] sm:h-40 sm:w-44" />
 
-                  {/* icon bubble */}
-                  <div className="pulse-ring mb-4 flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#C79B3B]/40 bg-[#FFF8E7] text-[#2F6251]">
-                    <StoryIcon name={icon} className="h-5 w-5" />
+            <div className="relative z-10 p-4 pb-20 sm:p-8 sm:pb-28 md:p-10 md:pb-32">
+              <p className="mb-1 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[.2em] text-[#B8892A]">
+                {isAr ? "الرحلة" : "Journey"}
+                <span className="h-px w-8 bg-[#C79B3B]/50" />
+              </p>
+              <h2 className="mb-2 font-serif text-[2rem] font-bold text-[#1C3A2E] sm:text-[2.3rem]">{isAr ? "نموّنا" : "Our Growth"}</h2>
+              <div className="mb-5 h-px w-14 bg-[#C79B3B]/50" />
+              <p className="mb-8 max-w-md text-[13px] leading-[1.7] text-[#5A7A68] sm:mb-16">
+                {isAr
+                  ? "رحلة من النوايا الصادقة، والنمو المستمر، والأثر الحقيقي."
+                  : "A journey of sincere intentions, continuous growth, and meaningful impact."}
+              </p>
+
+              {/* timeline */}
+              <div className="relative grid gap-x-6 gap-y-8 md:grid-cols-3 md:gap-y-14">
+                {/* connecting gold line (desktop only) */}
+                <div className="pointer-events-none absolute left-[16.6%] right-[16.6%] top-8 hidden h-px bg-gradient-to-r from-[#C79B3B]/10 via-[#C79B3B]/60 to-[#C79B3B]/10 md:block" />
+
+                {timelineItems.map(({ era, label, text, icon }, i) => (
+                  <div key={era.en} className="relative flex flex-col items-center text-center">
+                    {/* icon medallion */}
+                    <div
+                      className="pulse-ring icon-glow icon-badge relative z-10 mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-b from-[#274A3D] to-[#0E2019] text-[#E9C878] shadow-[0_0_0_4px_#FCFAF5,0_0_0_7px_#C79B3B,0_10px_20px_rgba(0,0,0,.18)]"
+                      style={{ animationDelay: `${i * 0.2}s` }}
+                    >
+                      <StoryIcon name={icon} className="h-7 w-7" />
+                    </div>
+
+                    {/* card */}
+                    <div className="timeline-card w-full rounded-2xl border border-[#E5D9C1]/70 bg-white/95 p-5 shadow-sm backdrop-blur-sm">
+                      <span className="mb-3 inline-block rounded-full bg-[#1C3A2E] px-3 py-1 text-[9px] font-bold uppercase tracking-[.14em] text-[#E9C878]">
+                        {isAr ? era.ar : era.en}
+                      </span>
+                      <p className="mb-2 font-serif text-[19px] font-bold text-[#1C3A2E]">{isAr ? label.ar : label.en}</p>
+                      <p className="text-[13px] leading-[1.75] text-[#5A7A68]">{isAr ? text.ar : text.en}</p>
+                    </div>
+
+                    {/* laurel motif */}
+                    <LaurelMotif className="mt-4 h-6 w-24 text-[#7C9E7C]" />
                   </div>
-
-                  <p className="text-[10px] font-semibold uppercase tracking-[.14em] text-[#B8892A]">{isAr ? era.ar : era.en}</p>
-                  <p className="mb-2 mt-0.5 text-[15px] font-bold text-[#1C3A2E]">{isAr ? label.ar : label.en}</p>
-                  <p className="text-[13px] leading-[1.75] text-[#5A7A68]">{isAr ? text.ar : text.en}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -444,77 +667,124 @@ export default function AboutStoryPageContent() {
 
         {/* ══ 4. VISION — quote + 2×2 cards ══ */}
         <section>
-          <div className="hover-card rounded-3xl border border-[#E5D9C1] bg-white p-5 shadow-[0_6px_24px_rgba(28,58,46,.07)] sm:p-8 md:p-10">
+          <div className="hover-card relative overflow-hidden rounded-3xl border border-[#E5D9C1] p-4 pb-20 shadow-[0_6px_24px_rgba(28,58,46,.07)] sm:p-8 sm:pb-28 md:p-10 md:pb-32">
+            {/* Background image */}
+            <Image
+              src="/images/about4.png"
+              alt="Vision Background"
+              fill
+              className="object-cover"
+            />
+            {/* overlay: light at top, fades out so the mosque skyline stays visible at the base */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#FCFAF5]/92 via-[#FCFAF5]/72 to-transparent" />
+            <LeafBranch className="pointer-events-none absolute -right-2 -top-2 h-28 w-32 text-[#7C9E7C] sm:h-36 sm:w-40" />
 
+            <div className="relative z-10">
             {/* header row */}
-            <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_280px]">
+            <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_320px]">
               <div>
                 <p className="mb-1 text-[10px] font-semibold uppercase tracking-[.18em] text-[#B8892A]">{isAr ? "نظرة للمستقبل" : "Looking Forward"}</p>
                 <h2 className="mb-3 text-2xl font-bold text-[#1C3A2E]">{isAr ? "رؤيتنا" : "Our Vision"}</h2>
-                <p className="max-w-sm text-[15px] leading-[1.8] text-[#4A6858]">
+                <p className="max-w-md text-[15px] leading-[1.8] text-[#4A6858]">
                   {isAr
-                    ? "حلمنا بسيط لكنه عميق: لسنا في سباق لنكون الأكبر، بل ملتزمون أن نبقى الأصدق."
+                    ? "حلمنا بسيط لكنه عميق. لسنا في سباق لنكون الأكبر، بل ملتزمون أن نبقى الأصدق."
                     : "Our dream is simple but meaningful. We're not racing to become the biggest — we're committed to remaining the most sincere."}
                 </p>
               </div>
-              {/* pull quote */}
-              <div className="flex flex-col justify-center rounded-2xl bg-[#2B5B4A] p-6">
-                <span className="mb-2 font-serif text-5xl leading-none text-[#C79B3B]">"</span>
-                <p className="font-serif text-[15px] leading-[1.7] text-[#D8C9A5]">
-                  {isAr ? <>لسنا الأكبر —<br />بل الأصدق.</> : <>Not the biggest —<br />the most sincere.</>}
-                </p>
-                <span className="mt-3 text-xs text-[#4E7A6A]">— {isAr ? "نبراس" : "Nibras Network"}</span>
+              {/* pull quote block */}
+              <div className="relative flex flex-col justify-center overflow-hidden rounded-2xl bg-[#1C3A2E] p-6 shadow-lg">
+                <Image
+                  src="/images/about/story-2.jpg"
+                  alt="Mosque Silhouette"
+                  fill
+                  className="object-cover opacity-20"
+                />
+                <div className="relative z-10">
+                  <span className="mb-1 font-serif text-4xl leading-none text-[#C79B3B]">"</span>
+                  <p className="font-serif text-[17px] leading-[1.6] text-[#F7F1E3]">
+                    {isAr ? <>لسنا الأكبر —<br />بل <span className="text-[#C79B3B]">الأصدق</span>.</> : <>Not the biggest —<br />the <span className="text-[#C79B3B]">most sincere</span>.</>}
+                  </p>
+                  <span className="mt-4 block text-xs text-[#6B9E87]">— {isAr ? "نبراس" : "Nibras Network"}</span>
+                </div>
               </div>
             </div>
 
             {/* 2×2 grid */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {visionItems.map(({ num, icon, title, desc, bg }) => (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+              {visionItems.map(({ num, icon, title, desc, bg }, i) => (
                 <div
                   key={num}
-                  className="vis-card flex items-start gap-4 rounded-2xl border border-[#E5D9C1] p-5"
-                  style={{ background: bg }}
+                  className="vis-card flex flex-row items-start gap-3 rounded-xl border border-[#E5D9C1]/50 bg-white/95 p-4 shadow-sm backdrop-blur-sm sm:flex-col sm:gap-4 sm:p-6 md:flex-row md:items-center"
                 >
-                  {/* icon bubble */}
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="icon-pop flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white bg-white text-[#2F6251] shadow-sm">
-                      <StoryIcon name={icon} className="h-6 w-6" />
+                  {/* icon + number column */}
+                  <div className="flex shrink-0 flex-col items-center gap-1.5">
+                    <div
+                      className="icon-pop icon-badge flex h-11 w-11 items-center justify-center rounded-full text-[#1C3A2E] shadow-md sm:h-14 sm:w-14"
+                      style={{ background: bg, border: "2px solid #C79B3B55", animationDelay: `${i * 0.12}s` }}
+                    >
+                      <StoryIcon name={icon} className="h-5 w-5 sm:h-6 sm:w-6" />
                     </div>
-                    <span className="text-[10px] font-bold text-[#B8892A]">{num}</span>
+                    <span className="rounded bg-[#C79B3B]/10 px-2 py-0.5 text-[10px] font-bold text-[#B8892A]">{num}</span>
                   </div>
                   <div>
-                    <p className="mb-1 text-[14px] font-bold text-[#1C3A2E]">{isAr ? title.ar : title.en}</p>
+                    <p className="mb-1.5 text-[15px] font-bold text-[#1C3A2E]">{isAr ? title.ar : title.en}</p>
                     <p className="text-[13px] leading-[1.65] text-[#5A7A68]">{isAr ? desc.ar : desc.en}</p>
                   </div>
                 </div>
               ))}
             </div>
+            </div>
           </div>
         </section>
 
         {/* ══ CTA ══ */}
-        <div className="relative mt-16 overflow-hidden rounded-3xl bg-[#2B5B4A] px-5 py-10 text-center sm:px-8 sm:py-14">
-          <div className="pointer-events-none absolute -top-20 left-1/2 h-56 w-80 -translate-x-1/2 rounded-full bg-[#C79B3B]/12 blur-3xl" />
+        <div className="relative mt-16 overflow-hidden rounded-3xl text-center">
 
-          <div className="float-icon pulse-ring mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#C79B3B]/35 bg-[#C79B3B]/12">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C79B3B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-            </svg>
+          <Image src="/images/about4.png" alt="Mosque Background" fill className="object-cover" />
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(135deg, rgba(245,233,216,0.72) 0%, rgba(240,226,204,0.62) 50%, rgba(237,217,192,0.72) 100%)" }}
+          />
+
+          <div className="relative z-10 px-4 py-10 sm:px-10 sm:py-16">
+            <div className="mx-auto flex max-w-lg flex-col items-center">
+
+              <div
+                className="float-icon mb-6 flex h-[68px] w-[68px] items-center justify-center rounded-full shadow-[0_6px_24px_rgba(26,77,58,.25)]"
+                style={{ background: "#1A4D3A" }}
+              >
+                <StoryIcon name="book" className="h-8 w-8 text-[#D4A544]" />
+              </div>
+
+              <h2 className="mb-1 font-serif text-[2.4rem] font-bold leading-tight sm:text-5xl" style={{ color: "#1A4D3A" }}>
+                {isAr ? "جاهز لتبدأ" : "Ready to begin"}
+              </h2>
+              <h2 className="mb-6 font-serif text-[2.4rem] font-bold leading-tight sm:text-5xl">
+                {isAr
+                  ? <span style={{ color: "#C9962E" }}>رحلتك؟</span>
+                  : <><span style={{ color: "#1A4D3A" }}>your </span><span style={{ color: "#C9962E" }}>journey?</span></>
+                }
+              </h2>
+
+              <p className="mb-8 whitespace-pre-line text-[15px] leading-[1.75]" style={{ color: "#6B6560" }}>
+                {isAr ? "ابدأ بحصة تجريبية مجانية — بدون أي التزام" : "Start with a free trial class —\nno commitment required"}
+              </p>
+
+              <Link
+                href="/book-trial"
+                className="group inline-flex items-center gap-3 rounded-full py-2.5 pl-2.5 pr-7 text-sm font-bold text-white shadow-[0_4px_20px_rgba(26,77,58,.3)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_28px_rgba(26,77,58,.4)]"
+                style={{ background: "#1A4D3A" }}
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-110" style={{ background: "#D4A544" }}>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1A4D3A" strokeWidth="2.5" strokeLinecap="round" className={isAr ? "rotate-180" : ""}>
+                    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </div>
+                {isAr ? "احجز الحصة التجريبية" : "Book Free Trial"}
+              </Link>
+
+            </div>
           </div>
-
-          <h2 className="mb-2 text-2xl font-bold text-[#F7F1E3]">{isAr ? "جاهز تبدأ رحلتك؟" : "Ready to begin your journey?"}</h2>
-          <p className="mb-8 text-[15px] text-[#6B9E87]">{isAr ? "ابدأ بحصة تجريبية مجانية — بدون أي التزام." : "Start with a free trial class — no commitment required"}</p>
-
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 rounded-full bg-[#C79B3B] px-8 py-3.5 text-sm font-semibold text-[#0F211B] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#D8B567]"
-          >
-            {isAr ? "احجز الحصة التجريبية المجانية" : "Book Free Trial"}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" className={isAr ? "rotate-180" : ""}>
-              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
         </div>
 
       </div>

@@ -128,8 +128,8 @@ const en: KidsProgramsBundle = {
         ageLabel: "Ages 4–6",
         headline: "Little Learners Start Here",
         oneLine: "Fun first steps into Quran, Arabic sounds, and Islamic basics.",
-        accent: "#E879A8",
-        accentLight: "#FDF0F6",
+        accent: "#4A7059",
+        accentLight: "#E8EFEA",
         sections: [
           {
             title: "Focus Areas",
@@ -582,8 +582,8 @@ const ar: KidsProgramsBundle = {
         ageLabel: "من 4 إلى 6 سنوات",
         headline: "يبدأ المتعلّمون الصغار هنا",
         oneLine: "خطوات ممتعة أولى في القرآن وأصوات العربية وأساسيات الإسلام.",
-        accent: "#E879A8",
-        accentLight: "#FDF0F6",
+        accent: "#4A7059",
+        accentLight: "#E8EFEA",
         sections: [
           {
             title: "مجالات التركيز",
