@@ -694,7 +694,7 @@ export default function AboutStoryPageContent() {
               {/* pull quote block */}
               <div className="relative flex flex-col justify-center overflow-hidden rounded-2xl bg-[#1C3A2E] p-6 shadow-lg">
                 <Image
-                  src="/images/about/story-2.jpg"
+                  src="/images/about4.png"
                   alt="Mosque Silhouette"
                   fill
                   className="object-cover opacity-20"
