@@ -21,7 +21,7 @@ const missionPracticalTitle: LocalizedText = {
 const missionGroups = [
   {
     title: { en: "For Students:", ar: "للطلاب:" },
-    image: "/images/mission2.jpg",
+    image: "/images/Missions2.png",
     items: [
       {
         en: "* Accessible Learning - Study from anywhere at times that fit your life",
@@ -43,7 +43,7 @@ const missionGroups = [
   },
   {
     title: { en: "For Teachers:", ar: "للمعلمين:" },
-    image: "/images/mission3.jpg",
+    image: "/images/Miss3.png",
     items: [
       {
         en: "* Proper Qualification - Demonstrated Islamic credentials and teaching experience required",
@@ -65,7 +65,7 @@ const missionGroups = [
   },
   {
     title: { en: "For the Community:", ar: "للمجتمع:" },
-    image: "/images/visson.jpg",
+    image: "/images/miss4.png",
     items: [
       {
         en: "* Serving Reverts - Special attention and completely free initial support for new Muslims",
@@ -243,7 +243,7 @@ export default function AboutMissionPageContent() {
         {/* ✅ التعديل هنا: object-[center_20%] + blur-[1.5px] + scale-110 */}
         <div className="absolute inset-0 -z-10">
           <Image
-            src="/images/Mission.jpg"
+            src="/images/Missions.jpeg"
             alt={isAr ? "رسالتنا ورؤيتنا" : "Mission and Vision"}
             fill
             priority

@@ -350,49 +350,49 @@ export default function AboutWhyUsPageContent() {
             <SectionBadge icon={Target} label="8 Real Reasons to Choose Us" />
           </div>
 
-          <div className="grid gap-5 md:gap-6">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {eightReasons.map((reason, idx) => {
               const Icon = reason.icon;
               return (
                 <article key={reason.n}
-                  className="reason-card rounded-3xl border border-[#E5D9C1] bg-white overflow-hidden"
-                  style={{ animationDelay: `${idx * 40}ms` }}>
-                  <div className="flex flex-col sm:flex-row sm:items-stretch">
-                    {/* Left accent panel */}
-                    <div className="flex w-full shrink-0 flex-row items-center justify-center gap-4 bg-[#1F463B] px-4 py-4 text-center sm:w-[88px] sm:flex-col sm:gap-3 sm:px-3 sm:py-7">
-                      <span className="font-serif text-2xl font-bold text-[#C79B3B] sm:text-3xl">{reason.n}</span>
-                      <div className="hidden h-px w-8 bg-[#C79B3B]/40 sm:block" />
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
-                        <Icon className="float-soft h-5 w-5 text-[#E3C98F]" strokeWidth={1.6} aria-hidden />
-                      </div>
+                  className="reason-card group flex flex-col rounded-3xl border border-[#E5D9C1] bg-white overflow-hidden"
+                  style={{ animationDelay: `${idx * 60}ms` }}>
+                  {/* Top accent header */}
+                  <div className="relative flex items-center gap-3 bg-[#1F463B] px-5 py-4">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#C79B3B]/20 font-serif text-lg font-bold text-[#C79B3B]">
+                      {reason.n}
+                    </span>
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10">
+                      <Icon className="float-soft h-[18px] w-[18px] text-[#E3C98F]" strokeWidth={1.6} aria-hidden />
                     </div>
+                    {/* Decorative gradient line at bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#C79B3B] via-[#E3C98F] to-transparent" />
+                  </div>
 
-                    {/* Right content */}
-                    <div className="min-w-0 flex-1 p-5 sm:p-6 md:p-8">
-                      <h2 className="font-serif text-[18px] font-bold text-[#17342C] mb-4 md:text-xl">
-                        {reason.title}
-                      </h2>
-                      <div className="space-y-3 text-[13.5px] leading-7 text-[#455B50]">
-                        {reason.blocks.map((block, i) => {
-                          if (block.type === "p" && block.text) return <p key={i}>{block.text}</p>;
-                          if (block.type === "ul" && block.items) {
-                            return (
-                              <ul key={i} className="space-y-2">
-                                {block.items.map((item) => (
-                                  <li key={item} className="flex items-start gap-2">
-                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C79B3B]" />
-                                    {item.replace(/^\* /, "")}
-                                  </li>
-                                ))}
-                              </ul>
-                            );
-                          }
-                          return null;
-                        })}
-                      </div>
+                  {/* Card body */}
+                  <div className="flex flex-1 flex-col p-5">
+                    <h2 className="mb-3 font-serif text-[16px] font-bold leading-snug text-[#17342C]">
+                      {reason.title}
+                    </h2>
+                    <div className="space-y-2.5 text-[12.5px] leading-[1.7] text-[#455B50]">
+                      {reason.blocks.map((block, i) => {
+                        if (block.type === "p" && block.text) return <p key={i}>{block.text}</p>;
+                        if (block.type === "ul" && block.items) {
+                          return (
+                            <ul key={i} className="space-y-1.5">
+                              {block.items.map((item) => (
+                                <li key={item} className="flex items-start gap-2">
+                                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#C79B3B]" />
+                                  <span>{item.replace(/^\* /, "")}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          );
+                        }
+                        return null;
+                      })}
                     </div>
                   </div>
-                  <div className="h-[2px] bg-gradient-to-r from-[#C79B3B] via-[#E3C98F] to-transparent" />
                 </article>
               );
             })}

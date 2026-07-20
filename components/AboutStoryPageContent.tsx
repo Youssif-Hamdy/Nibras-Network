@@ -13,11 +13,12 @@ const beginningChallenges = [
   { icon: "help", text: { en: "New Muslims often felt lost, not knowing where to start", ar: "كثير من المسلمين الجدد كانوا يشعرون بالحيرة ولا يعرفون من أين يبدؤون." } },
 ];
 
+// ⬇️ هنا التعديل: كل عنصر بقى فيه "img" بدل "icon" علشان نستخدم SVG الحقيقي بتاعك
 const symbolismItems = [
-  { icon: "sun", color: "#FFF8E1", border: "#F5C842", title: { en: "Light in Darkness", ar: "نور في الظلام" }, desc: { en: "Making the Quran clear for non-Arabic speakers", ar: "توضيح القرآن لغير الناطقين بالعربية" } },
-  { icon: "compass", color: "#E8F5ED", border: "#4A9E6B", title: { en: "Guidance & Direction", ar: "هداية واتجاه" }, desc: { en: "Step-by-step from where you are to where you want to be", ar: "خطوة بخطوة من مكانك الحالي إلى هدفك" } },
-  { icon: "hands", color: "#FEF0E8", border: "#E07B3F", title: { en: "Warmth & Welcome", ar: "دفء وترحيب" }, desc: { en: "Every student feels welcomed, supported, and valued", ar: "كل طالب يشعر بالترحيب والدعم والتقدير" } },
-  { icon: "globe", color: "#E8F0FE", border: "#4A78D4", title: { en: "Portable & Accessible", ar: "قريب وسهل الوصول" }, desc: { en: "Bringing authentic education to you, wherever you are", ar: "ننقل التعليم الأصيل إليك أينما كنت" } },
+  { img: "/images/why/lantern.svg", color: "#FFF8E1", border: "#F5C842", title: { en: "Light in Darkness", ar: "نور في الظلام" }, desc: { en: "Making the Quran clear for non-Arabic speakers", ar: "توضيح القرآن لغير الناطقين بالعربية" } },
+  { img: "/images/why/compass.svg", color: "#E8F5ED", border: "#4A9E6B", title: { en: "Guidance & Direction", ar: "هداية واتجاه" }, desc: { en: "Step-by-step from where you are to where you want to be", ar: "خطوة بخطوة من مكانك الحالي إلى هدفك" } },
+  { img: "/images/why/warmth.svg", color: "#FEF0E8", border: "#E07B3F", title: { en: "Warmth & Welcome", ar: "دفء وترحيب" }, desc: { en: "Every student feels welcomed, supported, and valued", ar: "كل طالب يشعر بالترحيب والدعم والتقدير" } },
+  { img: "/images/why/globe.svg", color: "#E8F0FE", border: "#4A78D4", title: { en: "Portable & Accessible", ar: "قريب وسهل الوصول" }, desc: { en: "Bringing authentic education to you, wherever you are", ar: "ننقل التعليم الأصيل إليك أينما كنت" } },
 ];
 
 const timelineItems = [
@@ -465,7 +466,7 @@ export default function AboutStoryPageContent() {
               {/* text panel */}
               <div className="flex flex-col justify-center p-4 sm:p-8 md:p-10">
                 <p className="mb-1 text-[10px] font-semibold uppercase tracking-[.18em] text-[#B8892A]">{isAr ? "الأصل" : "Origin"}</p>
-                <h2 className="mb-5 text-2xl font-bold text-[#1C3A2E]">{isAr ? "البداية" : "The Beginning"}</h2>
+                <h2 className="mb-5 font-serif text-3xl font-extrabold text-[#1C3A2E] sm:text-[2rem]">{isAr ? "البداية" : "The Beginning"}</h2>
                 <p className="mb-5 text-[15px] leading-[1.8] text-[#4A6858]">
                   {isAr
                     ? "في بداية عام 2025 وُلِدت نبراس من ملاحظة بسيطة ونية صادقة، بعد رؤية كثير من المسلمين يواجهون صعوبة في الوصول إلى التعليم الإسلامي الأصيل بلغتهم."
@@ -507,89 +508,166 @@ export default function AboutStoryPageContent() {
 
         <Divider />
 
-        {/* ══ 2. WHY NIBRAS — lantern photo as full-bleed background for the whole left side ══ */}
-        <section>
-          <div className="hover-card overflow-hidden rounded-3xl border border-[#E5D9C1] bg-[#FCFAF5] shadow-[0_6px_24px_rgba(28,58,46,.07)]">
-            <div className="grid md:grid-cols-[50%_1fr]">
+      </div>
 
-              {/* left side — the image IS the background for this entire column */}
-              <div className="relative min-h-[340px] w-full overflow-hidden sm:min-h-[420px] md:min-h-[640px]" dir={isAr ? "rtl" : "ltr"}>
-                <Image
-                  src="/images/about33.png"
-                  alt="Lantern Background"
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-fill"
-                />
-                {/* soft overlay for text readability — lighter so image shows through */}
-                <div className="absolute inset-0 bg-gradient-to-b from-[#0E2019]/60 via-transparent to-[#0E2019]/55" />
+      {/* ══ 2. WHY NIBRAS — wider breakout section ══ */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="hover-card relative overflow-hidden rounded-3xl border border-[#E5D9C1] shadow-[0_8px_32px_rgba(28,58,46,.09)]">
+            
+            {/* Background Image: covers the entire section */}
+            <Image
+              src="/images/why/why2.png"
+              alt="Why Nibras Background"
+              fill
+              sizes="(min-width: 1280px) 1280px, 100vw"
+className={`object-cover object-center brightness-100 contrast-100 saturate-100 ${isAr ? "-scale-x-100" : ""}`}
+            />
 
-                <div className="relative z-10 flex h-full flex-col justify-between p-4 sm:p-8 md:p-10">
-                  <div>
-                    <p className="mb-1 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[.2em] text-[#D8B567]">
-                      {isAr ? "الاسم والمعنى" : "Name & meaning"}
-                      <span className="h-px w-8 bg-[#C79B3B]/60" />
-                    </p>
+            {/* soft overlay for readability — lightened so the background artwork (lantern, arches) stays visible */}
 
-                    <h2 className="mb-3 text-[1.7rem] font-bold leading-snug text-[#F7F1E3] sm:text-[2.1rem]">
-                      {isAr ? "لماذا" : "Why"} &ldquo;Nibras&rdquo;?{" "}
-                      <span className="font-serif text-[#C79B3B]">نبراس</span>
-                    </h2>
-
-                    {/* ornament divider */}
-                    <div className="mb-5 flex items-center gap-3 text-[#C79B3B]">
-                      <span className="h-px w-10 bg-[#C79B3B]/60" />
-                      <DiamondDot className="h-3 w-3" />
-                      <span className="h-px w-10 bg-[#C79B3B]/60" />
+            <div className="relative z-10 flex flex-col lg:flex-row min-h-[720px] xl:min-h-[780px]">
+              
+              {/* Left Column: Text */}
+              <div className="w-full lg:w-[46%] xl:w-[44%] flex flex-col justify-center p-6 sm:p-10 lg:p-12 xl:p-14" dir={isAr ? "rtl" : "ltr"}>
+                <div className="mx-auto w-full max-w-xl xl:max-w-2xl rounded-2xl p-6 sm:p-8 lg:p-10">
+                  
+                  <div className="flex flex-col items-center text-center">
+                    {/* NAME & MEANING Badge */}
+                    <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#1C3A2E] px-5 py-2 border border-[#C79B3B]/40 shadow-sm">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C79B3B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <path d="M12 2v22" />
+                        <path d="M17 6H7v6h10V6z" />
+                        <path d="M10 22h4" />
+                        <path d="M10 2h4" />
+                        <path d="M9 12l-1 4h8l-1-4" />
+                      </svg>
+                      <span className="text-[10px] font-bold uppercase tracking-[.16em] text-[#C79B3B]">
+                        {isAr ? "الاسم والمعنى" : "Name & Meaning"}
+                      </span>
                     </div>
 
-                    <p className="text-[14.5px] leading-[1.85] text-[#E9E5D8]">
+                    {/* Title */}
+                    <h2 className="mb-3 font-serif text-[2.2rem] font-extrabold leading-tight text-[#1C3A2E] sm:text-[2.8rem] lg:text-[3rem]">
+                      {isAr ? (
+                        <>لماذا &ldquo;نبراس&rdquo;؟</>
+                      ) : (
+                        <>Why &ldquo;Nibras&rdquo;?</>
+                      )}
+                    </h2>
+
+                    <div className="mb-1 flex items-center justify-center gap-3">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="#C79B3B" className="opacity-80" aria-hidden>
+                        <path d="M12 0l2.5 8.5L23 11l-8.5 2.5L12 22l-2.5-8.5L1 11l8.5-2.5z"/>
+                      </svg>
+                      <span className="font-serif text-[3.2rem] leading-none text-[#C79B3B] sm:text-[4rem] lg:text-[4.5rem]">نبراس</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="#C79B3B" className="opacity-80" aria-hidden>
+                        <path d="M12 0l2.5 8.5L23 11l-8.5 2.5L12 22l-2.5-8.5L1 11l8.5-2.5z"/>
+                      </svg>
+                    </div>
+                    {!isAr && (
+                      <p className="mb-5 text-sm font-medium tracking-wide text-[#5A7A68]">Nibras</p>
+                    )}
+                    
+                    <div className="mb-7 opacity-80">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C79B3B" strokeWidth="1.5" aria-hidden>
+                        <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93" />
+                        <circle cx="12" cy="12" r="3" fill="#C79B3B" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Body copy */}
+                  <div className={`w-full space-y-4 ${isAr ? "text-right" : "text-left"}`}>
+                    <p className="text-[15px] leading-[1.85] text-[#2F4A3C] sm:text-[16px] lg:text-[17px]">
                       {isAr ? (
                         <>
-                          نبراس هي كلمة عربية جميلة تعني{" "}
-                          <strong className="font-semibold text-[#F7F1E3]">&ldquo;المصباح&rdquo;</strong> الذي ينير الطريق.
-                          وكما ينير المصباح الدروب المظلمة ويقود الناس بأمان، فمهمتنا أن نضيء طريق فهم
-                          القرآن والعلم الإسلامي الأصيل.
+                          <span className="font-serif text-xl font-bold text-[#C79B3B]">نبراس</span>{" "}
+                          كلمة عربية جميلة تعني{" "}
+                          <strong className="font-bold text-[#1C3A2E]">&ldquo;المصباح&rdquo;</strong>
+                          {" "}— مصباح يُضيء الطريق.
                         </>
                       ) : (
                         <>
-                          Nibras (نبراس) is a beautiful Arabic word meaning{" "}
-                          <strong className="font-semibold text-[#F7F1E3]">&ldquo;lantern&rdquo;</strong> — a lamp
-                          that gives light. Just as a lantern illuminates dark paths and guides travelers
-                          safely, our mission is to illuminate the path to understanding the Quran and
-                          authentic Islamic knowledge.
+                          <span className="font-serif font-bold text-[#1C3A2E]">Nibras</span>
+                          {" "}(<span className="font-serif text-[#C79B3B]">نبراس</span>) is a beautiful Arabic word meaning{" "}
+                          <strong className="font-bold text-[#1C3A2E]">&ldquo;lantern&rdquo;</strong>
+                          {" "}— a lamp that gives light.
                         </>
                       )}
                     </p>
-                  </div>
 
-                  {/* logo with glow */}
-                  <div className="mx-auto mt-6 flex items-center justify-center">
-                    <div className="icon-glow pulse-ring flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-white/85 shadow-lg">
-                      <Image src="/images/logo.png" alt="Nibras Logo" width={96} height={96} className="h-full w-full object-contain p-1" />
+                    <p className="rounded-xl border border-[#C79B3B]/20 bg-[#FFF9EE]/80 px-4 py-3.5 text-[14px] leading-[1.85] text-[#3A5A48] sm:text-[15px] lg:text-[16px]">
+                      {isAr ? (
+                        <>
+                          وكما ينير المصباح الدروب المظلمة ويقود المسافرين بأمان،
+                          فإن مهمتنا هي <strong className="font-semibold text-[#1C3A2E]">إضاءة طريق</strong> فهم القرآن الكريم
+                          والعلم الإسلامي الأصيل.
+                        </>
+                      ) : (
+                        <>
+                          Just as a lantern illuminates dark paths and guides travelers safely,
+                          our mission is to <strong className="font-semibold text-[#1C3A2E]">illuminate the path</strong> to understanding
+                          the Quran and authentic Islamic knowledge.
+                        </>
+                      )}
+                    </p>
+
+                    <div className={`pt-2 ${isAr ? "text-right" : "text-left"}`}>
+                      <div className="inline-flex items-center gap-4 rounded-xl border border-[#C79B3B]/60 bg-[#1C3A2E] p-3 shadow-lg sm:px-5 sm:py-3.5">
+                        <div className="flex items-center justify-center">
+                           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#C79B3B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                             <path d="M12 2v22" />
+                             <path d="M17 6H7v6h10V6z" />
+                             <path d="M10 22h4" />
+                             <path d="M10 2h4" />
+                             <path d="M9 12l-1 4h8l-1-4" />
+                           </svg>
+                        </div>
+                        <div className={`flex flex-col ${isAr ? "border-r border-[#C79B3B]/40 pr-4" : "border-l border-[#C79B3B]/40 pl-4"}`}>
+                           <span className="mb-1 font-serif text-2xl leading-none text-[#C79B3B] sm:text-3xl">نبراس</span>
+                           <span className="text-white/80 text-[9px] sm:text-[10px] tracking-wide uppercase">
+                             {isAr ? "مصباح · نور · هداية" : "Lantern · Light · Guidance"}
+                           </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
+
                 </div>
               </div>
 
-              {/* right side — 2×2 symbolism grid, vertically centered against the photo's height */}
-              <div className="flex items-center p-4 sm:p-9 md:p-10">
-                <div className="grid w-full grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:gap-5">
-                  {symbolismItems.map(({ icon, color, border, title, desc }, i) => (
+              {/* Right Column: Grid of Symbolism Cards */}
+              <div className="w-full lg:w-[54%] xl:w-[56%] flex items-center justify-center p-6 sm:p-10 lg:p-12 xl:p-14" dir={isAr ? "rtl" : "ltr"}>
+                <div className="grid w-full max-w-[620px] xl:max-w-[680px] grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+                  {symbolismItems.map(({ img, color, border, title, desc }, i) => (
                     <div
                       key={title.en}
-                      className="vis-card flex flex-col items-center rounded-2xl border border-[#E5D9C1]/70 px-3 py-5 text-center sm:px-4 sm:py-7"
-                      style={{ background: color, animationDelay: `${i * 0.13}s` }}
+                      className="vis-card icon-pop flex flex-col items-center rounded-2xl border bg-white/95 px-3 py-5 text-center shadow-[0_4px_16px_rgba(28,58,46,.06)] backdrop-blur-sm sm:px-4 sm:py-6"
+                      style={{ borderColor: `${border}40`, animationDelay: `${i * 0.1}s` }}
                     >
-                      <span
-                        className="icon-pop icon-badge mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-md sm:mb-4 sm:h-14 sm:w-14"
-                        style={{ color: border, border: `1.5px solid ${border}40`, animationDelay: `${i * 0.13}s` }}
+                      {/* icon in arch-shaped badge — now using your uploaded SVG */}
+                      <div
+                        className="icon-badge mb-4 flex h-18 w-18 items-center justify-center rounded-t-full rounded-b-lg border-2 sm:h-20 sm:w-20 lg:h-24 lg:w-24"
+                        style={{ background: color, borderColor: border, width: '4.5rem', height: '4.5rem' }}
                       >
-                        <StoryIcon name={icon} className="h-5 w-5 sm:h-7 sm:w-7" />
-                      </span>
-                      <p className="mb-1.5 text-[13px] font-bold leading-tight text-[#1C3A2E] sm:mb-2 sm:text-[15px]">{isAr ? title.ar : title.en}</p>
-                      <div className="mb-1.5 h-0.5 w-6 rounded-full sm:mb-2 sm:w-7" style={{ background: border }} />
-                      <p className="text-[11px] leading-[1.5] text-[#5A7A68] sm:text-[12.5px] sm:leading-[1.55]">{isAr ? desc.ar : desc.en}</p>
+                        <Image
+                          src={img}
+                          alt={isAr ? title.ar : title.en}
+                          width={48}
+                          height={48}
+                          className="h-9 w-9 sm:h-11 sm:w-11 lg:h-12 lg:w-12"
+                        />
+                      </div>
+
+                      <p className="mb-2 text-[13px] min-[400px]:text-[14px] sm:text-[16px] lg:text-[18px] font-extrabold leading-tight text-[#1C3A2E]">
+                        {isAr ? title.ar : title.en}
+                      </p>
+
+                      <div className="mb-2.5 h-[2px] w-8 rounded-full" style={{ background: border, opacity: 0.6 }} />
+
+                      <p className="text-[11px] min-[400px]:text-[12px] sm:text-[13px] lg:text-[14px] leading-[1.5] sm:leading-[1.65] text-[#4A6858] font-semibold">
+                        {isAr ? desc.ar : desc.en}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -599,6 +677,7 @@ export default function AboutStoryPageContent() {
           </div>
         </section>
 
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <Divider />
 
         {/* ══ 3. GROWTH — horizontal timeline ══ */}
@@ -622,7 +701,7 @@ export default function AboutStoryPageContent() {
                 {isAr ? "الرحلة" : "Journey"}
                 <span className="h-px w-8 bg-[#C79B3B]/50" />
               </p>
-              <h2 className="mb-2 font-serif text-[2rem] font-bold text-[#1C3A2E] sm:text-[2.3rem]">{isAr ? "نموّنا" : "Our Growth"}</h2>
+              <h2 className="mb-2 font-serif text-[2.2rem] font-extrabold text-[#1C3A2E] sm:text-[2.6rem]">{isAr ? "نموّنا" : "Our Growth"}</h2>
               <div className="mb-5 h-px w-14 bg-[#C79B3B]/50" />
               <p className="mb-8 max-w-md text-[13px] leading-[1.7] text-[#5A7A68] sm:mb-16">
                 {isAr
@@ -650,7 +729,7 @@ export default function AboutStoryPageContent() {
                       <span className="mb-3 inline-block rounded-full bg-[#1C3A2E] px-3 py-1 text-[9px] font-bold uppercase tracking-[.14em] text-[#E9C878]">
                         {isAr ? era.ar : era.en}
                       </span>
-                      <p className="mb-2 font-serif text-[19px] font-bold text-[#1C3A2E]">{isAr ? label.ar : label.en}</p>
+                      <p className="mb-2 font-serif text-[21px] font-extrabold text-[#1C3A2E]">{isAr ? label.ar : label.en}</p>
                       <p className="text-[13px] leading-[1.75] text-[#5A7A68]">{isAr ? text.ar : text.en}</p>
                     </div>
 
@@ -684,7 +763,7 @@ export default function AboutStoryPageContent() {
             <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_320px]">
               <div>
                 <p className="mb-1 text-[10px] font-semibold uppercase tracking-[.18em] text-[#B8892A]">{isAr ? "نظرة للمستقبل" : "Looking Forward"}</p>
-                <h2 className="mb-3 text-2xl font-bold text-[#1C3A2E]">{isAr ? "رؤيتنا" : "Our Vision"}</h2>
+                <h2 className="mb-3 font-serif text-3xl font-extrabold text-[#1C3A2E] sm:text-[2.2rem]">{isAr ? "رؤيتنا" : "Our Vision"}</h2>
                 <p className="max-w-md text-[15px] leading-[1.8] text-[#4A6858]">
                   {isAr
                     ? "حلمنا بسيط لكنه عميق. لسنا في سباق لنكون الأكبر، بل ملتزمون أن نبقى الأصدق."
@@ -727,7 +806,7 @@ export default function AboutStoryPageContent() {
                     <span className="rounded bg-[#C79B3B]/10 px-2 py-0.5 text-[10px] font-bold text-[#B8892A]">{num}</span>
                   </div>
                   <div>
-                    <p className="mb-1.5 text-[15px] font-bold text-[#1C3A2E]">{isAr ? title.ar : title.en}</p>
+                    <p className="mb-1.5 font-serif text-[17px] font-extrabold text-[#1C3A2E]">{isAr ? title.ar : title.en}</p>
                     <p className="text-[13px] leading-[1.65] text-[#5A7A68]">{isAr ? desc.ar : desc.en}</p>
                   </div>
                 </div>
@@ -738,7 +817,7 @@ export default function AboutStoryPageContent() {
         </section>
 
         {/* ══ CTA ══ */}
-        <div className="relative mt-16 overflow-hidden rounded-3xl text-center">
+        <div className="relative mt-16 mb-10 overflow-hidden rounded-3xl text-center">
 
           <Image src="/images/about4.png" alt="Mosque Background" fill className="object-cover" />
           <div
@@ -746,7 +825,7 @@ export default function AboutStoryPageContent() {
             style={{ background: "linear-gradient(135deg, rgba(245,233,216,0.72) 0%, rgba(240,226,204,0.62) 50%, rgba(237,217,192,0.72) 100%)" }}
           />
 
-          <div className="relative z-10 px-4 py-10 sm:px-10 sm:py-16">
+          <div className="relative z-10 px-4 py-10  sm:px-10 sm:py-16">
             <div className="mx-auto flex max-w-lg flex-col items-center">
 
               <div
