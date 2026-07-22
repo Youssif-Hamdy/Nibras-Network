@@ -224,10 +224,9 @@ export const tafsirQuran: QuranCourse = {
     subcta: "Reciting the Quran is beautiful. Understanding it is life-changing.",
   },
   images: [
-    quranProgramImage("TAFSIRr1.jpg"),
-    quranProgramImage("TAFSIRr2.jpg"),
-    quranProgramImage("TAFSIR3.jpg"),
-    quranProgramImage("TAFSIR4.jpg"),
+    "/images/Tafsir (Quran Explanation & Interpretation)/Tafsir (Quran Explanation & Interpretation) (1).jpeg",
+    "/images/Tafsir (Quran Explanation & Interpretation)/Tafsir (Quran Explanation & Interpretation) (2).jpeg",
   ],
+  bottomImage: "/images/Tafsir (Quran Explanation & Interpretation)/Tafsir (Quran Explanation & Interpretation) (3).jpeg",
   accent: "#B84455",
 };

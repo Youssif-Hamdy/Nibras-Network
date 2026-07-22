@@ -215,10 +215,12 @@ export const tajweedCourse: QuranCourse = {
     subcta: "Every letter matters. Let's make yours perfect.",
   },
   images: [
-    quranProgramImage("TAJWEED1.jpg"),
-    quranProgramImage("TAJWEED2.jpg"),
-    quranProgramImage("TAJWEED3.jpg"),
-    quranProgramImage("TAJWEED4.jpg"),
+    "/images/Tajweed (Perfect Pronunciation)/Tajweed (Perfect Pronunciation) (4).jpeg",
+    "/images/Tajweed (Perfect Pronunciation)/Tajweed (Perfect Pronunciation) (2).jpeg",
+    "/images/Tajweed (Perfect Pronunciation)/Tajweed (Perfect Pronunciation) (1).jpeg",
+    "/images/Tajweed (Perfect Pronunciation)/Tajweed (Perfect Pronunciation) (3).jpeg",
+    
   ],
+  bottomImage: "/images/Tajweed (Perfect Pronunciation)/Tajweed (Perfect Pronunciation) (5).jpeg",
   accent: "#A8720D",
 };

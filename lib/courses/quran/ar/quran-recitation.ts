@@ -214,9 +214,10 @@ export const quranRecitationAr: QuranCourse = {
     subcta: "قرآنك ينتظر أن يغنّي بصوتك.",
   },
   images: [
-    quranProgramImage("TILAWAH(Quran Recitation)1.jpg"),
-    quranProgramImage("TILAWAH (Quran Recitation)2.jpg"),
-    quranProgramImage("TILAWAH (Quran Recitation)3.jpg"),
+    "/images/Quran Recitation (Tilawah)/Quran Recitation (Tilawah) (1).jpeg",
+    "/images/Quran Recitation (Tilawah)/Quran Recitation (Tilawah) (2).jpeg",
+    "/images/Quran Recitation (Tilawah)/Quran Recitation (Tilawah) (3).jpeg",
   ],
+  bottomImage: "/images/Quran Recitation (Tilawah)/Quran Recitation (Tilawah) (4).jpeg",
   accent: "#2156A0",
 };

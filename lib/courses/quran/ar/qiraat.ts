@@ -224,6 +224,7 @@ export const qiraatCourseAr: QuranCourse = {
     cta: "قدّم على برنامج إتقان القراءات",
     subcta: "من طالب إلى عالم. من متعلّم إلى حارس للتقليد.",
   },
-  images: [quranProgramImage("QIRA'AT11.jpg")],
+  images: ["/images/Qira'at (Variant Recitations)/Qira'at (Variant Recitations).jpeg"],
+  bottomImage: "/images/Qira'at (Variant Recitations)/Qira'at (Variant Recitations) (2).jpeg",
   accent: "#1C3A2E",
 };

@@ -111,9 +111,9 @@ function HeroGallery({ images, title, accent }: { images: string[]; title: strin
           src={src}
           alt={`${title} — ${i + 1}`}
           fill
-          className={`object-cover transition-opacity duration-1000 ease-in-out ${
+          className={`transition-opacity duration-1000 ease-in-out ${
             i === idx ? "opacity-100" : "opacity-0"
-          }`}
+          } ${i >= 1 && i <= 3 ? "object-fill" : "object-cover"}`}
           sizes="(max-width: 1024px) 100vw, 50vw"
           priority={i === 0}
         />
@@ -370,35 +370,51 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
               isAr={isAr}
             />
           </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
-            {course.curriculum.phases.map((phase, i) => (
-              <Reveal key={phase.title} delayMs={i * 60}>
-                <div className="h-full rounded-2xl border border-[#e8e4dc] bg-white/85 p-5 transition-shadow hover:shadow-md sm:p-6">
-                  <h3
-                    className="mb-3 font-sans text-[12px] font-bold uppercase tracking-[0.1em]"
-                    style={{ color: accent }}
-                  >
-                    {phase.title}
-                  </h3>
-                  <ul className="space-y-2">
-                    {phase.items.map((item) => (
-                      <li key={item} className="text-[14px] leading-relaxed text-[#3d5249] sm:text-[15px]">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+          <div className="mt-8 grid gap-8 lg:grid-cols-12 items-stretch">
+            <div className={`grid gap-4 sm:grid-cols-2 ${course.bottomImage ? 'lg:col-span-7' : 'lg:col-span-12'}`}>
+              {course.curriculum.phases.map((phase, i) => (
+                <Reveal key={phase.title} delayMs={i * 60}>
+                  <div className="h-full rounded-2xl border border-[#e8e4dc] bg-white/85 p-5 transition-shadow hover:shadow-md sm:p-6">
+                    <h3
+                      className="mb-3 font-sans text-[12px] font-bold uppercase tracking-[0.1em]"
+                      style={{ color: accent }}
+                    >
+                      {phase.title}
+                    </h3>
+                    <ul className="space-y-2">
+                      {phase.items.map((item) => (
+                        <li key={item} className="text-[14px] leading-relaxed text-[#3d5249] sm:text-[15px]">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
+              <Reveal delayMs={100} className="sm:col-span-2">
+                <p
+                  className={`mt-4 rounded-2xl border border-[#d4a017]/20 bg-[#fdfaf4] px-6 py-5 text-center text-[15px] font-semibold text-[#1a3328] sm:text-[16px] ${hf}`}
+                >
+                  {ui.byTheEnd}{" "}
+                  {course.curriculum.outcome}
+                </p>
+              </Reveal>
+            </div>
+            
+            {course.bottomImage && (
+              <Reveal delayMs={150} className="lg:col-span-5 lg:h-full lg:min-h-[300px]">
+                <div className="relative w-full aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[300px] overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm">
+                  <Image
+                    src={course.bottomImage}
+                    alt={`${course.title} feature`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
                 </div>
               </Reveal>
-            ))}
+            )}
           </div>
-          <Reveal delayMs={100}>
-            <p
-              className={`mt-8 rounded-2xl border border-[#d4a017]/20 bg-[#fdfaf4] px-6 py-5 text-center text-[15px] font-semibold text-[#1a3328] sm:text-[16px] ${hf}`}
-            >
-              {ui.byTheEnd}{" "}
-              {course.curriculum.outcome}
-            </p>
-          </Reveal>
         </section>
 
         {/* Methods */}

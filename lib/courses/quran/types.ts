@@ -66,5 +66,6 @@ export type QuranCourse = {
     extra?: string[];
   };
   images: string[];
+  bottomImage?: string;
   accent: string;
 };

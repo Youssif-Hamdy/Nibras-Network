@@ -110,7 +110,8 @@ export const ARABIC_COURSES_AR: QuranCourse[] = [
       cta: "ابدأ نور البيان",
       subcta: "أفضل بداية للمتعلّمين الجدد.",
     },
-    images: [arabicImg("Noor Al-Bayan1.jpg"), arabicImg("Noor Al-Bayan2.jpg"), arabicImg("Noor Al-Bayan3.jpg")],
+    images: [arabicImg("arbic language (1).jpeg"), arabicImg("arbic language (2).jpeg"), arabicImg("arbic language (3).jpeg")],
+    bottomImage: arabicImg("arbic language (4).jpeg"),
     accent: "#0F7A6B",
   },
   {
@@ -195,7 +196,8 @@ export const ARABIC_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["حصص مباشرة أونلاين", "اختبارات LMS", "أوراق مفردات", "شهادة مستوى + تقرير تقدّم"],
     offer: { lines: ["2–3 حصص/أسبوع", "جلسة ممارسة ذاتية/أسبوع"], cta: "انضم للعربية للمبتدئين" },
-    images: [arabicImg("Arabic for Beginners.jpg")],
+    images: [arabicImg("arbic language (5).jpeg"), arabicImg("arbic language (6).jpeg"), arabicImg("arbic language (7).jpeg")],
+    bottomImage: arabicImg("arbic language (8).jpeg"),
     accent: "#2156A0",
   },
   {
@@ -280,7 +282,8 @@ export const ARABIC_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["حصص مباشرة أونلاين", "مدرّب مفردات قرآنية", "أوراق عمل موجّهة", "شهادة إتمام"],
     offer: { lines: ["حصتان/أسبوع", "15–20 دقيقة/يوم مفردات + تأمل"], cta: "ابدأ العربية القرآنية" },
-    images: [arabicImg("Quranic Arabic1.jpg"), arabicImg("Quranic Arabic2.jpg"), arabicImg("Quranic Arabic3.jpg")],
+    images: [arabicImg("arbic language (9).jpeg"), arabicImg("arbic language (10).jpeg"), arabicImg("arbic language (11).jpeg")],
+    bottomImage: arabicImg("arbic language (12).jpeg"),
     accent: "#1D6B4A",
   },
   {
@@ -365,7 +368,8 @@ export const ARABIC_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["جلسات مباشرة أونلاين", "مختبر محادثة (اختياري)", "ملاحظات نطق المعلّم", "شهادة محادثة"],
     offer: { lines: ["حصتان/أسبوع", "3 ممارسات محادثة قصيرة/أسبوع"], cta: "عزّز محادثتي" },
-    images: [arabicImg("Conversational Arabic.jpg")],
+    images: [arabicImg("arbic language (13).jpeg"), arabicImg("arbic language (14).jpeg"), arabicImg("arbic language (15).jpeg")],
+    bottomImage: arabicImg("arbic language (16).png"),
     accent: "#C05621",
   },
   {
@@ -446,7 +450,8 @@ export const ARABIC_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["ندوات مباشرة", "مقاطع مشروحة من المعلّم", "مهام قراءة أسبوعية", "شهادة مرحلة + تقييم"],
     offer: { lines: ["2–3 حصص/أسبوع", "واجب قراءة/أسبوع"], cta: "ادخل المسار الكلاسيكي" },
-    images: [arabicImg("Classical Arabic.jpg")],
+    images: [arabicImg("arbic language (17).jpeg"), arabicImg("arbic language (18).jpeg"), arabicImg("arbic language (1).jpeg")],
+    bottomImage: arabicImg("arbic language (2).jpeg"),
     accent: "#6B46C1",
   },
   {
@@ -535,7 +540,8 @@ export const ARABIC_COURSES_AR: QuranCourse[] = [
       "شهادة مستوى + تقييم محفظة",
     ],
     offer: { lines: ["حصتان/أسبوع", "مهمة كتابة + استماع/أسبوع"], cta: "ادرس الفصحى" },
-    images: [arabicImg("Quranic Arabic2.jpg")],
+    images: [arabicImg("arbic language (3).jpeg"), arabicImg("arbic language (4).jpeg"), arabicImg("arbic language (5).jpeg")],
+    bottomImage: arabicImg("arbic language (6).jpeg"),
     accent: "#334155",
   },
 ];

@@ -224,6 +224,7 @@ export const qiraatCourse: QuranCourse = {
     cta: "APPLY FOR QIRA'AT MASTERY PROGRAM",
     subcta: "From student to scholar. From learner to guardian of tradition.",
   },
-  images: [quranProgramImage("QIRA'AT11.jpg")],
+  images: ["/images/Qira'at (Variant Recitations)/Qira'at (Variant Recitations).png"],
+  bottomImage: "/images/Qira'at (Variant Recitations)/Qira'at (Variant Recitations) (2)..png",
   accent: "#1C3A2E",
 };

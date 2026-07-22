@@ -218,9 +218,10 @@ export const nooraniQaida: QuranCourse = {
     ],
   },
   images: [
-    quranProgramImage("NOORANI QAIDA1.png"),
-    quranProgramImage("NOORANI QAIDA2.jpg"),
-    quranProgramImage("NOORANI QAIDA3.jpg"),
+    "/images/Noorani Qaida/Noorani Qaida(1).jpeg",
+    "/images/Noorani Qaida/Noorani Qaida (2).jpeg",
+    "/images/Noorani Qaida/Noorani Qaida (3).jpeg",
   ],
+  bottomImage: "/images/Noorani Qaida/Noorani Qaida (4).jpeg",
   accent: "#1D6B4A",
 };

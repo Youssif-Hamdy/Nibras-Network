@@ -227,9 +227,9 @@ export const quranMemorizationAr: QuranCourse = {
       "خلال 30 شهراً ستكون حافظاً أو ما زلت تفكّر. هل تبدأ اليوم؟",
   },
   images: [
-    quranProgramImage("HIFZ (Memorization11.jpg"),
-    quranProgramImage("HIFZ (Memorization2.jpg"),
-    quranProgramImage("HIFZ (Memorization3.jpg"),
+    "/images/Memorization/Quran Memorization (Hifz) (1).jpeg",
+    "/images/Memorization/Quran Memorization (Hifz) (2).jpeg",
   ],
+  bottomImage: "/images/Memorization/Quran Memorization (Hifz) (3).jpeg",
   accent: "#5B3A99",
 };

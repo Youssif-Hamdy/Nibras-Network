@@ -112,7 +112,8 @@ export const ARABIC_PROGRAM_COURSES_EN: QuranCourse[] = [
       cta: "Start Noor Al-Bayan",
       subcta: "Best start for new learners.",
     },
-    images: [arabicImg("Noor Al-Bayan1.jpg"), arabicImg("Noor Al-Bayan2.jpg"), arabicImg("Noor Al-Bayan3.jpg")],
+    images: [arabicImg("arbic language (1).jpeg"), arabicImg("arbic language (2).jpeg"), arabicImg("arbic language (3).jpeg")],
+    bottomImage: arabicImg("arbic language (4).jpeg"),
     accent: "#0F7A6B",
   },
   {
@@ -197,7 +198,8 @@ export const ARABIC_PROGRAM_COURSES_EN: QuranCourse[] = [
     ],
     includes: ["Live online classes", "LMS quizzes", "Vocabulary sheets", "Level certificate + progress report"],
     offer: { lines: ["2-3 classes/week", "1 self-practice session/week"], cta: "Join Beginner Arabic" },
-    images: [arabicImg("Arabic for Beginners.jpg")],
+    images: [arabicImg("arbic language (5).jpeg"), arabicImg("arbic language (6).jpeg"), arabicImg("arbic language (7).jpeg")],
+    bottomImage: arabicImg("arbic language (8).jpeg"),
     accent: "#2156A0",
   },
   {
@@ -282,7 +284,8 @@ export const ARABIC_PROGRAM_COURSES_EN: QuranCourse[] = [
     ],
     includes: ["Live online classes", "Quranic vocabulary trainer", "Guided worksheets", "Completion certificate"],
     offer: { lines: ["2 classes/week", "15-20 min/day vocabulary + reflection"], cta: "Start Quranic Arabic" },
-    images: [arabicImg("Quranic Arabic1.jpg"), arabicImg("Quranic Arabic2.jpg"), arabicImg("Quranic Arabic3.jpg")],
+    images: [arabicImg("arbic language (9).jpeg"), arabicImg("arbic language (10).jpeg"), arabicImg("arbic language (11).jpeg")],
+    bottomImage: arabicImg("arbic language (12).jpeg"),
     accent: "#1D6B4A",
   },
   {
@@ -367,7 +370,8 @@ export const ARABIC_PROGRAM_COURSES_EN: QuranCourse[] = [
     ],
     includes: ["Live online sessions", "Optional speaking lab", "Teacher pronunciation notes", "Speaking certificate"],
     offer: { lines: ["2 classes/week", "3 short speaking practices/week"], cta: "Boost My Speaking" },
-    images: [arabicImg("Conversational Arabic.jpg")],
+    images: [arabicImg("arbic language (13).jpeg"), arabicImg("arbic language (14).jpeg"), arabicImg("arbic language (15).jpeg")],
+    bottomImage: arabicImg("arbic language (16).png"),
     accent: "#C05621",
   },
   {
@@ -448,7 +452,8 @@ export const ARABIC_PROGRAM_COURSES_EN: QuranCourse[] = [
     ],
     includes: ["Live seminars", "Teacher-annotated excerpts", "Weekly reading tasks", "Stage certificate + evaluation"],
     offer: { lines: ["2-3 classes/week", "1 reading assignment/week"], cta: "Enter Classical Track" },
-    images: [arabicImg("Classical Arabic.jpg")],
+    images: [arabicImg("arbic language (17).jpeg"), arabicImg("arbic language (18).jpeg"), arabicImg("arbic language (1).jpeg")],
+    bottomImage: arabicImg("arbic language (2).jpeg"),
     accent: "#6B46C1",
   },
   {
@@ -528,7 +533,8 @@ export const ARABIC_PROGRAM_COURSES_EN: QuranCourse[] = [
     ],
     includes: ["Live online classes", "Writing feedback loop", "Optional MSA discussion club", "Level certificate + portfolio evaluation"],
     offer: { lines: ["2 classes/week", "1 writing + 1 listening task/week"], cta: "Study MSA" },
-    images: [arabicImg("Quranic Arabic2.jpg")],
+    images: [arabicImg("arbic language (3).jpeg"), arabicImg("arbic language (4).jpeg"), arabicImg("arbic language (5).jpeg")],
+    bottomImage: arabicImg("arbic language (6).jpeg"),
     accent: "#334155",
   },
 ];
