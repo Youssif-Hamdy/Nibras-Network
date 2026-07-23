@@ -5,7 +5,9 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   BookOpen,
+  ChevronRight,
   GraduationCap,
+  Headphones,
   Home,
   Landmark,
   Mail,
@@ -59,6 +61,19 @@ function IconWhatsApp({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  );
+}
+
+/** Small mosque / crescent glyph used for the central "tagline" block in the bottom bar */
+function IconMosque({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
+      <path d="M12 2.5c1 1 1.6 2 1.6 3 0 .9-.7 1.6-1.6 1.6S10.4 6.4 10.4 5.5c0-1 .6-2 1.6-3z" fill="currentColor" stroke="none" />
+      <path d="M4 21v-6.5a4 4 0 0 1 2-3.46L9.5 9M20 21v-6.5a4 4 0 0 0-2-3.46L14.5 9" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8 21v-4a4 4 0 1 1 8 0v4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2 21h20" strokeLinecap="round" />
+      <path d="M4 14.5V21M20 14.5V21" strokeLinecap="round" />
     </svg>
   );
 }
@@ -135,12 +150,19 @@ function FooterSection({
   );
 }
 
+/** Heading centered with a small line-dot-line divider underneath, to match the reference design */
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="mb-4 flex items-center gap-2 text-[15px] font-extrabold uppercase tracking-[0.12em] text-[#2a4f3e] drop-shadow-sm">
-      <span className="h-1 w-8 sm:w-10 rounded-full bg-gradient-to-r from-[#D4A017] to-transparent" aria-hidden />
-      {children}
-    </h3>
+    <div className="mb-5 flex flex-col items-center text-center lg:items-start lg:text-start">
+      <h3 className="text-[15px] font-extrabold uppercase tracking-[0.12em] text-[#2a4f3e] drop-shadow-sm">
+        {children}
+      </h3>
+      <div className="mt-2 flex items-center gap-1.5" aria-hidden>
+        <span className="h-[2px] w-6 rounded-full bg-gradient-to-r from-transparent to-[#D4A017]/70" />
+        <span className="h-1.5 w-1.5 rounded-full bg-[#D4A017]" />
+        <span className="h-[2px] w-6 rounded-full bg-gradient-to-l from-transparent to-[#D4A017]/70" />
+      </div>
+    </div>
   );
 }
 
@@ -176,7 +198,12 @@ function FooterLink({
           size={14}
           className={`shrink-0 ${forceWhiteOnMobile ? 'text-white/60 sm:text-[#1C3A2E]/40' : 'text-[#1C3A2E]/40'} opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-[#B8860B] group-hover:opacity-100 rtl:rotate-[-90deg] rtl:group-hover:-translate-x-0.5`}
         />
-      ) : null}
+      ) : (
+        <ChevronRight
+          size={14}
+          className={`shrink-0 ${forceWhiteOnMobile ? 'text-white/60 sm:text-[#1C3A2E]/40' : 'text-[#1C3A2E]/40'} transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-[#B8860B] rtl:rotate-180 rtl:group-hover:-translate-x-0.5`}
+        />
+      )}
     </>
   );
 
@@ -252,81 +279,74 @@ export default function SiteFooter() {
         .footer-birds { animation: footer-birds-drift 30s linear infinite; }
       `}</style>
 
-      {/* Decorative background image with overlay */}
-      <div className="pointer-events-none absolute inset-0 z-0">
+      {/*
+        Background: light cream base with your own decorative/pattern image
+        (place it at /public/images/footer.png — a soft geometric pattern
+        with a faint mosque/minaret silhouette on the right, like the reference).
+        No dark overlay here anymore since the target design is a bright cream footer,
+        not a darkened mosque photo. Adjust the wash opacity below if your image
+        already comes pre-toned.
+      */}
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[#FBF3E1]">
         <Image
           src="/images/footer.png"
           alt="Footer Background"
           fill
-          className="object-cover object-center lg:object-[center_30%]"
+          className="object-cover object-center lg:object-[center_30%] opacity-90"
           quality={100}
         />
-        {/* Extremely light overlay so the background image (mosque) shows well */}
-        <div className="absolute inset-0 bg-[#0f2119]/5" />
-        
-        {/* Soft bottom gradient to transition into the dark green footer bottom area */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0f2119]/90 via-[#0f2119]/10 to-transparent" />
+        {/* Light cream wash so the pattern stays soft and text stays readable */}
+        <div className="absolute inset-0 bg-[#FBF3E1]/60" />
       </div>
-      
+
       {/* Drifting Birds Micro-animation */}
       <DriftingBirds />
 
       {/* Gold shimmer top line */}
       <div className="footer-top-shimmer relative z-10 h-[3px] w-full opacity-70 shadow-[0_0_10px_rgba(212,160,23,0.3)]" aria-hidden />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 pb-4 pt-6 sm:px-6 sm:pt-8 lg:pt-10">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-6 xl:gap-10">
-          
+      <div className="relative z-10 mx-auto max-w-7xl px-4 pt-8 pb-10 sm:px-6 sm:pt-10 sm:pb-12 lg:pt-10 lg:pb-14">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-10 lg:items-start">
+
           {/* 1. Brand column (Highest Hierarchy) */}
-          <FooterSection className="lg:col-span-4 xl:col-span-4" delay={0}>
-            <Link href="/" className="group inline-flex max-w-full flex-col">
-              <div className="relative mb-5 inline-flex items-center justify-start">
-                {/* Ambient glow - scaled for the larger logo */}
+          <FooterSection className="lg:col-span-5 flex flex-col items-center lg:items-start" delay={0}>
+            <Link href="/" className="group flex max-w-full flex-col items-center text-center lg:items-start lg:text-start">
+              <div className="relative mb-2 flex items-center justify-center lg:justify-start">
+                {/* Outer wide glow */}
                 <span
-                  className="footer-logo-glow pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-40 sm:h-64 sm:w-64 rounded-full bg-[#D4A017]/25 blur-3xl"
+                  className="footer-logo-glow pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-40 rounded-full bg-[#D4A017]/15 blur-[40px]"
                   aria-hidden
                 />
-                
-                {/* Transparent Logo without white badge - Responsive size */}
-                <div className="footer-logo-float relative z-10 flex h-40 w-56 sm:h-60 sm:w-80 lg:h-72 lg:w-96 items-center justify-start transition-transform duration-500 group-hover:scale-[1.03]">
+                {/* Inner bright core glow */}
+                <span
+                  className="footer-logo-glow pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-24 sm:h-32 sm:w-32 rounded-full bg-[#F2D58C]/30 blur-xl"
+                  aria-hidden
+                  style={{ animationDelay: "1s" }}
+                />
+                <div className="footer-logo-float relative z-10 flex h-40 w-40 sm:h-48 sm:w-48 lg:h-56 lg:w-56 items-center justify-center transition-transform duration-500 group-hover:scale-[1.05]"
+                  style={{ filter: "drop-shadow(0 0 20px rgba(212,160,23,0.4)) drop-shadow(0 0 6px rgba(242,213,140,0.3))" }}
+                >
                   <Image
                     src="/images/logo.png"
                     alt={t("nav.logoAlt")}
                     fill
-                    className="object-contain object-left rtl:object-right drop-shadow-2xl"
-                    sizes="(max-width: 640px) 224px, (max-width: 1024px) 320px, 384px"
+                    className="object-contain"
+                    sizes="(max-width: 640px) 160px, (max-width: 1024px) 192px, 224px"
                   />
                 </div>
               </div>
-              
-              {/* Prominent heading */}
-              <p className="mb-3 font-serif text-xl font-extrabold text-[#2a4f3e] sm:text-2xl drop-shadow-sm">
-                {t("nav.brandSubtitle")}
-              </p>
+
             </Link>
 
-            {/* Narrower paragraph for better readability */}
-            <p className="mb-6 max-w-sm text-[15px] leading-relaxed text-[#1C3A2E] font-semibold">
+            <p className="mx-auto mb-6 max-w-sm text-center text-[15px] leading-relaxed text-[#1C3A2E] font-semibold lg:mx-0 lg:max-w-md lg:text-start">
               {t("footer.blurb")}
             </p>
 
-            {/* Richer CTA Button */}
-            <Link
-              href="/book-trial"
-              className="group mb-8 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#D4A017] via-[#F2D58C] to-[#B8860B] bg-[length:200%_auto] px-7 py-3.5 text-[15px] font-extrabold text-[#0a1510] shadow-[0_8px_24px_rgba(212,160,23,0.4)] transition-all duration-300 hover:scale-[1.03] hover:bg-[position:right_center] hover:shadow-[0_12px_30px_rgba(212,160,23,0.6)]"
-            >
-              <GraduationCap size={20} className="transition-transform duration-300 group-hover:-rotate-12" />
-              {t("nav.bookTrial")}
-              <span className="inline-block font-black transition-transform duration-300 group-hover:translate-x-1.5 rtl:rotate-180 rtl:group-hover:-translate-x-1.5">
-                →
-              </span>
-            </Link>
-
-            <div>
+            <div className="flex flex-col items-center lg:items-start">
               <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.15em] text-[#2a4f3e] drop-shadow-sm">
                 {t("footer.followUs")}
               </p>
-              <div className="flex flex-wrap gap-2.5">
+              <div className="flex flex-wrap justify-center gap-2.5 lg:justify-start">
                 {SOCIAL_LINKS.map((social) => {
                   const IconComp = social.icon;
                   return (
@@ -336,7 +356,7 @@ export default function SiteFooter() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={t(social.labelKey)}
-                      className={`${social.animClass} group flex h-10 w-10 items-center justify-center rounded-xl border border-[#2a4f3e]/20 bg-white/50 backdrop-blur-sm text-[#2a4f3e] transition-all duration-300 hover:-translate-y-1.5 hover:bg-gradient-to-br hover:from-[#D4A017] hover:to-[#B8860B] hover:text-white hover:border-transparent hover:shadow-[0_8px_20px_rgba(212,160,23,0.35)]`}
+                      className={`${social.animClass} group flex h-10 w-10 items-center justify-center rounded-full border border-[#2a4f3e]/20 bg-white/50 backdrop-blur-sm text-[#2a4f3e] transition-all duration-300 hover:-translate-y-1.5 hover:bg-gradient-to-br hover:from-[#D4A017] hover:to-[#B8860B] hover:text-white hover:border-transparent hover:shadow-[0_8px_20px_rgba(212,160,23,0.35)]`}
                     >
                       <IconComp className="h-[18px] w-[18px] transition-transform duration-300 group-hover:scale-110" />
                     </a>
@@ -347,9 +367,9 @@ export default function SiteFooter() {
           </FooterSection>
 
           {/* 2. Quick links */}
-          <FooterSection className="lg:col-span-2 lg:col-start-6" delay={80}>
+          <FooterSection className="lg:col-span-2 lg:pt-8" delay={80}>
             <FooterHeading>{t("footer.quickLinks")}</FooterHeading>
-            <ul className="space-y-1">
+            <ul className="mx-auto max-w-[180px] space-y-1 lg:mx-0">
               {quick.map((l) => (
                 <li key={l.href}>
                   <FooterLink href={l.href} label={t(l.labelKey)} icon={l.icon} />
@@ -359,9 +379,9 @@ export default function SiteFooter() {
           </FooterSection>
 
           {/* 3. Courses */}
-          <FooterSection className="lg:col-span-3" delay={140}>
+          <FooterSection className="lg:col-span-3 lg:pt-8" delay={140}>
             <FooterHeading>{t("footer.courses")}</FooterHeading>
-            <ul className="space-y-1">
+            <ul className="mx-auto max-w-[220px] space-y-1 lg:mx-0">
               {courses.map((l) => (
                 <li key={l.href}>
                   <FooterLink href={l.href} label={t(l.labelKey)} icon={l.icon} />
@@ -370,17 +390,16 @@ export default function SiteFooter() {
             </ul>
           </FooterSection>
 
-          {/* 4. Contact & Ready to Begin */}
-          <FooterSection className="lg:col-span-2 xl:col-span-2" delay={200}>
+          {/* 4. Contact */}
+          <FooterSection className="lg:col-span-2 lg:pt-8" delay={200}>
             <FooterHeading>{t("footer.contact")}</FooterHeading>
-            <ul className="space-y-1 mb-5">
+            <ul className="mx-auto max-w-[220px] space-y-1 lg:mx-0">
               <li>
                 <FooterLink
                   href={`mailto:${EMAIL}`}
                   label={EMAIL}
                   icon={Mail}
                   external
-                  forceWhiteOnMobile
                 />
               </li>
               <li>
@@ -389,50 +408,68 @@ export default function SiteFooter() {
                   label={t("footer.whatsAppLine")}
                   icon={IconWhatsApp}
                   external
-                  forceWhiteOnMobile
                 />
               </li>
             </ul>
-
-            {/* Redesigned Ready to Begin Card */}
-            <div className="group relative overflow-hidden rounded-xl border border-[#D4A017]/30 bg-gradient-to-br from-white/95 to-[#F2D58C]/20 backdrop-blur-md p-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 hover:border-[#D4A017]/60 hover:shadow-[0_8px_30px_rgba(212,160,23,0.15)]">
-              {/* Subtle inner glow */}
-              <div className="absolute -left-6 -top-6 h-24 w-24 rounded-full bg-[#D4A017]/15 blur-2xl transition-all duration-500 group-hover:bg-[#D4A017]/25" aria-hidden />
-              
-              <div className="relative z-10">
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[#B8860B]">
-                  {t("footer.readyToStart")}
-                </p>
-                <p className="mt-1.5 mb-3 text-[14px] leading-snug text-[#1C3A2E] font-bold">
-                  {t("footer.readyToStartDesc")}
-                </p>
-                
-                {/* Real Button CTA */}
-                <Link
-                  href="/book-trial"
-                  className="relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg bg-[#1C3A2E] px-4 py-2.5 text-[14px] font-bold text-white shadow-md transition-all duration-300 hover:bg-[#13281f] hover:shadow-lg"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    {t("nav.bookTrial")}
-                    <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:rotate-[-90deg] rtl:group-hover:-translate-y-0.5 rtl:group-hover:-translate-x-0.5" />
-                  </span>
-                  <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
-                </Link>
-              </div>
-            </div>
           </FooterSection>
         </div>
       </div>
-      
-      {/* Dark green bottom area */}
+
+      {/* Dark green bottom bar: Need Help | Tagline | Book a Free Trial */}
       <div className="relative z-10 bg-[#0a1510] border-t border-[#D4A017]/20">
-        <FooterSection delay={260} className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <div className="flex flex-col items-center sm:items-start text-xs font-semibold text-[#8fa396]">
-              <p>
-                © {new Date().getFullYear()} Nibras Network. All Rights Reserved.
+        <FooterSection delay={260} className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+          <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-center lg:justify-between">
+            {/* Need Help */}
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#D4A017]/40 text-[#D4A017]">
+                <Headphones size={20} />
+              </span>
+              <div className="text-start">
+                <p className="text-sm font-extrabold text-white">{t("footer.needHelp")}</p>
+                <p className="text-xs font-semibold text-[#A8C2B3]">{t("footer.needHelpDesc")}</p>
+              </div>
+            </div>
+
+            {/* Center tagline */}
+            <div className="flex flex-col items-center text-center">
+              <IconMosque className="mb-1 h-5 w-5 text-[#D4A017]" />
+              <p className="font-serif text-lg font-extrabold text-[#F2D58C] sm:text-xl">
+                {t("footer.taglineTitle")}
+              </p>
+              <p className="mt-1 text-xs font-semibold text-[#A8C2B3] sm:text-sm">
+                {t("footer.taglineDesc")}
               </p>
             </div>
+
+            {/* Book a Free Trial */}
+            <Link
+              href="/book-trial"
+              className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-[#D4A017] via-[#F2D58C] to-[#B8860B] bg-[length:200%_auto] px-5 py-3 shadow-[0_8px_24px_rgba(212,160,23,0.35)] transition-all duration-300 hover:scale-[1.03] hover:bg-[position:right_center]"
+            >
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#0a1510]/10 text-[#0a1510]">
+                <BookOpen size={18} />
+              </span>
+              <span className="text-start">
+                <span className="block text-[13px] font-extrabold leading-tight text-[#0a1510]">
+                  {t("nav.bookTrial")}
+                </span>
+                <span className="block text-[11px] font-bold leading-tight text-[#0a1510]/70">
+                  {t("footer.startJourney")}
+                </span>
+              </span>
+              <ArrowUpRight
+                size={16}
+                className="shrink-0 text-[#0a1510] transition-transform duration-300 group-hover:translate-x-0.5 rtl:rotate-[-90deg] rtl:group-hover:-translate-x-0.5"
+              />
+            </Link>
+          </div>
+
+          {/* Divider + copyright + policy links */}
+          <div className="mt-6 flex flex-col items-center gap-3 border-t border-white/10 pt-5">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#D4A017]" aria-hidden />
+            <p className="text-xs font-semibold text-[#8fa396]">
+              © {new Date().getFullYear()} Nibras Network. All Rights Reserved.
+            </p>
             <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-bold text-[#A8C2B3]">
               <Link href="/policies" className="transition-all hover:text-[#D4A017] hover:underline underline-offset-4">
                 {t("more.policiesTerms")}
@@ -452,4 +489,3 @@ export default function SiteFooter() {
     </footer>
   );
 }
-

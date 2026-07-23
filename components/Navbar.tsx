@@ -517,7 +517,7 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col leading-tight min-w-0">
               <span className="font-serif text-[#1C3A2E] font-bold text-[0.9rem] tracking-tight truncate">
-                Nibras Network
+                {t("nav.brand")}
               </span>
               <span className="text-[7px] text-[#B8860B] tracking-widest uppercase font-semibold">
                 {t("nav.brandSubtitle")}
