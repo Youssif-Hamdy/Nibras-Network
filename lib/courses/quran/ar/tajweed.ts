@@ -216,10 +216,9 @@ export const tajweedCourseAr: QuranCourse = {
   },
   images: [
     "/images/Tajweed (Perfect Pronunciation)/Tajweed (Perfect Pronunciation) (1).jpeg",
-    "/images/Tajweed (Perfect Pronunciation)/Tajweed (Perfect Pronunciation) (2).jpeg",
-    "/images/Tajweed (Perfect Pronunciation)/Tajweed (Perfect Pronunciation) (3).jpeg",
-    "/images/Tajweed (Perfect Pronunciation)/Tajweed (Perfect Pronunciation) (4).jpeg",
+    "/images/Tajweed (Perfect Pronunciation)/ChatGPT Image Jul 25, 2026, 01_42_36 PM.png",
+  
   ],
-  bottomImage: "/images/Tajweed (Perfect Pronunciation)/Tajweed (Perfect Pronunciation) (5).jpeg",
+  bottomImage: "/images/Tajweed (Perfect Pronunciation)/ChatGPT Image Jul 25, 2026, 01_46_16 PM.png",
   accent: "#A8720D",
 };

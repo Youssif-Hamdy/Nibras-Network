@@ -219,9 +219,9 @@ export const nooraniQaidaAr: QuranCourse = {
   },
   images: [
     "/images/Noorani Qaida/Noorani Qaida(1).jpeg",
-    "/images/Noorani Qaida/Noorani Qaida (2).jpeg",
     "/images/Noorani Qaida/Noorani Qaida (3).jpeg",
   ],
-  bottomImage: "/images/Noorani Qaida/Noorani Qaida (4).jpeg",
+  bottomImage: "/images/Noorani Qaida/Noorani Qaida(6).png",
+  bottomImageSection: "teacher",
   accent: "#1D6B4A",
 };

@@ -95,7 +95,7 @@ function AgeGroupCard({
   return (
     <Reveal delayMs={Math.min(index * 70, 350)}>
       <article
-        className="group relative overflow-hidden rounded-3xl border border-[#e5dfd4] bg-white shadow-[0_28px_70px_-42px_rgba(28,58,46,0.18)] transition-shadow duration-300 hover:shadow-[0_32px_80px_-38px_rgba(28,58,46,0.22)]"
+        className="group relative overflow-hidden flex flex-col md:flex-row rounded-3xl border border-[#e5dfd4] bg-white shadow-[0_28px_70px_-42px_rgba(28,58,46,0.18)] transition-shadow duration-300 hover:shadow-[0_32px_80px_-38px_rgba(28,58,46,0.22)]"
         style={{ borderTopColor: group.accent, borderTopWidth: 4 }}
       >
         <div
@@ -103,7 +103,17 @@ function AgeGroupCard({
           style={{ background: group.accentLight }}
           aria-hidden
         />
-        <div className="relative p-6 sm:p-8" dir={isAr ? "rtl" : "ltr"}>
+        {(group.id === "4-6" || group.id === "7-10") && (
+          <div className={`h-48 md:h-auto md:w-2/5 shrink-0 relative ${isAr ? "md:order-2" : "md:order-1"}`}>
+            {group.id === "4-6" && (
+              <img src="/images/course_kides/ChatGPT Image Jul 25, 2026, 09_26_36 PM.png" className="absolute inset-0 h-full w-full object-cover" alt="4-6 years" />
+            )}
+            {group.id === "7-10" && (
+              <img src="/images/course_kides/ChatGPT Image Jul 25, 2026, 09_17_09 PM.png" className="absolute inset-0 h-full w-full object-cover" alt="7-10 years" />
+            )}
+          </div>
+        )}
+        <div className={`relative p-6 sm:p-8 flex-1 ${isAr ? "md:order-1" : "md:order-2"}`} dir={isAr ? "rtl" : "ltr"}>
           <div className={`flex flex-wrap items-start gap-4 ${isAr ? "flex-row-reverse" : ""}`}>
             <span
               className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl shadow-inner"
@@ -164,6 +174,7 @@ function QuranCard({
   index,
   isAr,
   labels,
+  spanFull = false,
 }: {
   card: KidsProgramCard;
   index: number;
@@ -176,20 +187,29 @@ function QuranCard({
     difficulty: string;
     fun: string;
   };
+  spanFull?: boolean;
 }) {
   const outcomes = card.expectedOutcome ?? card.outcome;
   return (
-    <Reveal delayMs={Math.min(index * 55, 320)}>
+    <Reveal delayMs={Math.min(index * 55, 320)} className={spanFull ? "md:col-span-2" : ""}>
       <article
         dir={isAr ? "rtl" : "ltr"}
-        className="flex h-full flex-col rounded-3xl border border-[#e5dfd4] bg-gradient-to-b from-white to-[#faf9f6] p-6 shadow-[0_20px_60px_-40px_rgba(28,58,46,0.14)] transition-transform duration-300 hover:-translate-y-0.5 sm:p-7"
+        className={`h-full overflow-hidden rounded-3xl border border-[#e5dfd4] bg-gradient-to-b from-white to-[#faf9f6] shadow-[0_20px_60px_-40px_rgba(28,58,46,0.14)] transition-transform duration-300 hover:-translate-y-0.5 ${
+          card.id === "hifz" ? "flex flex-col sm:flex-row" : "flex flex-col"
+        }`}
       >
-        <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse" : ""}`}>
-          <span className="text-2xl" aria-hidden>
-            {card.emoji}
-          </span>
-          <h3 className="font-serif text-lg font-semibold text-[#1a3328] sm:text-xl">{card.title}</h3>
-        </div>
+        {card.id === "hifz" && (
+          <div className={`sm:w-2/5 shrink-0 h-48 sm:h-auto relative ${isAr ? "sm:order-2" : "sm:order-1"}`}>
+            <img src="/images/course_kides/Memorization - برامج اطفال - قران.png" className="absolute inset-0 h-full w-full object-cover" alt="Memorization" />
+          </div>
+        )}
+        <div className={`flex flex-1 flex-col p-6 sm:p-7 ${card.id === "hifz" && isAr ? "sm:order-1" : ""} ${card.id === "hifz" && !isAr ? "sm:order-2" : ""}`}>
+          <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse" : ""}`}>
+            <span className="text-2xl" aria-hidden>
+              {card.emoji}
+            </span>
+            <h3 className="font-serif text-lg font-semibold text-[#1a3328] sm:text-xl">{card.title}</h3>
+          </div>
 
         <div className="mt-5 flex flex-1 flex-col gap-4 text-[14px] leading-relaxed text-[#3d5249] sm:text-[15px]">
           {card.whatChildrenLearn && (
@@ -225,6 +245,7 @@ function QuranCard({
               {card.funMethods}
             </p>
           )}
+        </div>
         </div>
       </article>
     </Reveal>
@@ -330,7 +351,7 @@ function TabPanel({
           </p>
           <div className="grid gap-5 md:grid-cols-2">
             {bundle.quran.programs.map((c, i) => (
-              <QuranCard key={c.id} card={c} index={i} isAr={isAr} labels={ui} />
+              <QuranCard key={c.id} card={c} index={i} isAr={isAr} labels={ui} spanFull={c.id === "hifz"} />
             ))}
           </div>
         </div>
@@ -338,7 +359,7 @@ function TabPanel({
 
       {activeTab === "arabic" && (
         <div className="space-y-6">
-          <p className={`max-w-3xl text-[15px] text-[#5a7068] ${isAr ? "ms-auto text-end" : ""}`}>
+          <p className={`max-w-3xl text-[15px] leading-relaxed text-[#5a7068] sm:text-[16px] ${isAr ? "ms-auto text-end" : ""}`}>
             {bundle.arabic.intro}
           </p>
           <Reveal>
@@ -353,121 +374,143 @@ function TabPanel({
               </p>
             </div>
           </Reveal>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {bundle.arabic.programs.map((c, i) => (
-              <SimpleProgramCard key={c.id} card={c} index={i} isAr={isAr} />
-            ))}
+          <div className={`flex flex-col lg:flex-row gap-6 ${isAr ? "lg:flex-row-reverse" : ""}`}>
+            <Reveal className="w-full lg:w-1/3 shrink-0">
+              <img src="/images/course_kides/اطفال لغة عربية.jpeg" className="h-full w-full rounded-3xl object-cover shadow-sm" alt="Arabic Language" />
+            </Reveal>
+            <div className="flex-1 grid gap-4 sm:grid-cols-2">
+              {bundle.arabic.programs.map((c, i) => (
+                <SimpleProgramCard key={c.id} card={c} index={i} isAr={isAr} />
+              ))}
+            </div>
           </div>
         </div>
       )}
 
       {activeTab === "islamic" && (
         <div className="space-y-6">
-          <p className={`max-w-3xl text-[15px] text-[#5a7068] ${isAr ? "ms-auto text-end" : ""}`}>
+          <p className={`max-w-3xl text-[15px] leading-relaxed text-[#5a7068] sm:text-[16px] ${isAr ? "ms-auto text-end" : ""}`}>
             {bundle.islamic.intro}
           </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {bundle.islamic.programs.map((c, i) => (
-              <SimpleProgramCard key={c.id} card={c} index={i} isAr={isAr} />
-            ))}
+          <div className={`flex flex-col lg:flex-row gap-6 ${isAr ? "lg:flex-row-reverse" : ""}`}>
+            <Reveal className="w-full lg:w-1/3 shrink-0">
+              <img src="/images/course_kides/kids prog - islamic.png" className="h-full w-full rounded-3xl object-cover shadow-sm" alt="Islamic Studies" />
+            </Reveal>
+            <div className="flex-1 grid gap-4 sm:grid-cols-2">
+              {bundle.islamic.programs.map((c, i) => (
+                <SimpleProgramCard key={c.id} card={c} index={i} isAr={isAr} />
+              ))}
+            </div>
           </div>
         </div>
       )}
 
       {activeTab === "goals" && (
         <div className="space-y-6">
-          <p className={`max-w-3xl text-[15px] text-[#5a7068] ${isAr ? "ms-auto text-end" : ""}`}>
+          <p className={`max-w-3xl text-[15px] leading-relaxed text-[#5a7068] sm:text-[16px] ${isAr ? "ms-auto text-end" : ""}`}>
             {bundle.goals.intro}
           </p>
-          <Reveal>
-            <div
-              dir={isAr ? "rtl" : "ltr"}
-              className="overflow-x-auto rounded-3xl border border-[rgba(28,58,46,0.08)] bg-white shadow-[0_24px_70px_-42px_rgba(28,58,46,0.12)]"
-            >
-              <table className="w-full min-w-[640px] border-collapse text-start text-[13px] sm:text-[14px]">
-                <thead>
-                  <tr className="bg-[#1c3a2e] text-[#f5f0e8]">
-                    {bundle.goals.tableHeaders.map((h) => (
-                      <th
-                        key={h}
-                        className="px-4 py-3.5 font-sans text-[11px] font-semibold uppercase tracking-wide sm:text-xs"
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {bundle.goals.rows.map((row, ri) => (
-                    <tr
-                      key={row.goal}
-                      className={ri % 2 === 0 ? "bg-[#faf9f6]" : "bg-white"}
-                    >
-                      <td className="border-b border-[#e8e4dc] px-4 py-3.5 font-medium text-[#1a3328]">
-                        {row.goal}
-                      </td>
-                      <td className="border-b border-[#e8e4dc] px-4 py-3.5 text-[#3d5249]">
-                        {row.pathway}
-                      </td>
-                      <td className="border-b border-[#e8e4dc] px-4 py-3.5 whitespace-nowrap text-[#3d5249]">
-                        {row.timeline}
-                      </td>
-                      <td className="border-b border-[#e8e4dc] px-4 py-3.5 text-[#3d5249]">
-                        {row.courses}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className={`flex flex-col lg:flex-row gap-6 ${isAr ? "lg:flex-row-reverse" : ""}`}>
+            <Reveal className="w-full lg:w-1/3 shrink-0">
+              <img src="/images/course_kides/parent zone.png" className="h-full w-full rounded-3xl object-cover shadow-sm" alt="Learning Goals & Pathways" />
+            </Reveal>
+            <div className="flex-1 flex flex-col justify-center">
+              <Reveal>
+                <div
+                  dir={isAr ? "rtl" : "ltr"}
+                  className="overflow-x-auto rounded-3xl border border-[rgba(28,58,46,0.08)] bg-white shadow-[0_24px_70px_-42px_rgba(28,58,46,0.12)]"
+                >
+                  <table className="w-full min-w-[640px] border-collapse text-start text-[13px] sm:text-[14px]">
+                    <thead>
+                      <tr className="bg-[#1c3a2e] text-[#f5f0e8]">
+                        {bundle.goals.tableHeaders.map((h) => (
+                          <th
+                            key={h}
+                            className="px-4 py-3.5 font-sans text-[11px] font-semibold uppercase tracking-wide sm:text-xs"
+                          >
+                            {h}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {bundle.goals.rows.map((row, ri) => (
+                        <tr
+                          key={row.goal}
+                          className={ri % 2 === 0 ? "bg-[#faf9f6]" : "bg-white"}
+                        >
+                          <td className="border-b border-[#e8e4dc] px-4 py-3.5 font-medium text-[#1a3328]">
+                            {row.goal}
+                          </td>
+                          <td className="border-b border-[#e8e4dc] px-4 py-3.5 text-[#3d5249]">
+                            {row.pathway}
+                          </td>
+                          <td className="border-b border-[#e8e4dc] px-4 py-3.5 whitespace-nowrap text-[#3d5249]">
+                            {row.timeline}
+                          </td>
+                          <td className="border-b border-[#e8e4dc] px-4 py-3.5 text-[#3d5249]">
+                            {row.courses}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Reveal>
+              <Reveal delayMs={120}>
+                <div className={`mt-6 ${isAr ? "text-end" : ""}`}>
+                  <Link
+                    href="/contact?advisor=1"
+                    className="inline-flex items-center justify-center rounded-full bg-[#1c3a2e] px-7 py-3.5 text-sm font-semibold text-[#f5f0e8] shadow-lg transition-transform hover:scale-[1.02]"
+                  >
+                    {bundle.goals.cta}
+                  </Link>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
-          <Reveal delayMs={120}>
-            <div className={isAr ? "text-end" : ""}>
-              <Link
-                href="/contact?advisor=1"
-                className="inline-flex items-center justify-center rounded-full bg-[#1c3a2e] px-7 py-3.5 text-sm font-semibold text-[#f5f0e8] shadow-lg transition-transform hover:scale-[1.02]"
-              >
-                {bundle.goals.cta}
-              </Link>
-            </div>
-          </Reveal>
+          </div>
         </div>
       )}
 
       {activeTab === "parent" && (
         <div className="space-y-8">
-          <p className={`max-w-3xl text-[15px] text-[#5a7068] ${isAr ? "ms-auto text-end" : ""}`}>
+          <p className={`max-w-3xl text-[15px] leading-relaxed text-[#5a7068] sm:text-[16px] ${isAr ? "ms-auto text-end" : ""}`}>
             {bundle.parent.intro}
           </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {bundle.parent.features.map((f, i) => (
-              <Reveal key={f.title} delayMs={Math.min(i * 45, 280)}>
-                <div
-                  dir={isAr ? "rtl" : "ltr"}
-                  className="h-full rounded-2xl border border-[#e5dfd4] bg-white p-5 shadow-sm sm:p-6"
-                >
-                  <div className={`flex items-center gap-2 ${isAr ? "flex-row-reverse" : ""}`}>
-                    <span className="text-xl" aria-hidden>
-                      {f.emoji}
-                    </span>
-                    <h3 className="font-serif text-[1.05rem] font-semibold text-[#1a3328]">
-                      {f.title}
-                    </h3>
+          <div className={`flex flex-col lg:flex-row gap-8 ${isAr ? "lg:flex-row-reverse" : ""}`}>
+            <Reveal className="w-full lg:w-2/5 shrink-0">
+              <img src="/images/course_kides/ChatGPT Image Jul 25, 2026, 09_28_17 PM.png" className="h-full w-full rounded-3xl object-cover shadow-md" alt="Parent Zone" />
+            </Reveal>
+            <div className="flex-1 grid gap-4 sm:grid-cols-2">
+              {bundle.parent.features.map((f, i) => (
+                <Reveal key={f.title} delayMs={Math.min(i * 45, 280)}>
+                  <div
+                    dir={isAr ? "rtl" : "ltr"}
+                    className="h-full rounded-2xl border border-[#e5dfd4] bg-white p-5 shadow-sm sm:p-6"
+                  >
+                    <div className={`flex items-center gap-2 ${isAr ? "flex-row-reverse" : ""}`}>
+                      <span className="text-xl" aria-hidden>
+                        {f.emoji}
+                      </span>
+                      <h3 className="font-serif text-[1.05rem] font-semibold text-[#1a3328]">
+                        {f.title}
+                      </h3>
+                    </div>
+                    <ul className={`mt-3 space-y-2 ${isAr ? "text-end" : ""}`}>
+                      {f.items.map((item) => (
+                        <li
+                          key={item}
+                          className={`flex gap-2 text-[14px] text-[#3d5249] ${isAr ? "flex-row-reverse justify-end" : ""}`}
+                        >
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#b8954a]" aria-hidden />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul className={`mt-3 space-y-2 ${isAr ? "text-end" : ""}`}>
-                    {f.items.map((item) => (
-                      <li
-                        key={item}
-                        className={`flex gap-2 text-[14px] text-[#3d5249] ${isAr ? "flex-row-reverse justify-end" : ""}`}
-                      >
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#b8954a]" aria-hidden />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              ))}
+            </div>
           </div>
           <Reveal delayMs={150}>
             <div className="rounded-3xl border border-[#1c3a2e]/15 bg-gradient-to-br from-[#1c3a2e] via-[#234d3c] to-[#1c3a2e] px-6 py-10 text-center shadow-xl sm:px-12">
@@ -573,45 +616,54 @@ export default function KidsProgramsPageContent() {
         .kids-hero-float {
           animation: kids-float 5s ease-in-out infinite;
         }
+        @keyframes kids-glow {
+          0%, 100% {
+            text-shadow: 0 0 10px rgba(242, 213, 140, 0.4), 0 0 20px rgba(242, 213, 140, 0.2), 0 2px 12px rgba(0,0,0,0.9);
+          }
+          50% {
+            text-shadow: 0 0 20px rgba(242, 213, 140, 0.9), 0 0 35px rgba(242, 213, 140, 0.5), 0 4px 15px rgba(0,0,0,1);
+          }
+        }
+        .animate-kids-glow {
+          animation: kids-glow 3s ease-in-out infinite;
+        }
       `}</style>
 
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-[#e5dfd4]/80 bg-gradient-to-b from-[#eef6f0] via-[#f7f5f0] to-[#f7f5f0] px-4 pb-10 pt-28 sm:px-6 sm:pb-14 sm:pt-32">
-        <div
-          className="pointer-events-none absolute -start-20 top-10 h-56 w-56 rounded-full bg-[#c8e6d4]/50 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -end-16 top-24 h-48 w-48 rounded-full bg-[#f2d58c]/25 blur-3xl"
-          aria-hidden
-        />
-        <div className="relative mx-auto max-w-4xl text-center">
+      <section className="relative flex min-h-[90vh] items-end justify-center overflow-hidden border-b border-[#e5dfd4]/80 px-4 pb-12 pt-32 sm:px-6 sm:pb-20">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/course_kides/ChatGPT Image Jul 25, 2026, 09_31_35 PM.png"
+            alt="Kids Programs Hero"
+            className="h-full w-full object-cover  object-top translate-y-15"
+          />
+        </div>
+        <div className="relative z-10 w-full mx-auto max-w-5xl text-center">
           <Reveal>
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#1c7a45] sm:text-xs">
-              {bundle.hero.kicker}
-            </p>
-            <h1 className="mt-3 font-serif text-[clamp(1.75rem,5vw,2.75rem)] font-bold leading-tight text-[#1a3328]">
-              {bundle.hero.title}
-            </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-[#5a7068] sm:text-[17px]">
-              {bundle.hero.subtitle}
-            </p>
-            <div className="kids-hero-float mt-6 text-4xl motion-reduce:animate-none" aria-hidden>
-              🧒📖🌙
-            </div>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-              <Link
-                href="/book-trial"
-                className="inline-flex w-full max-w-xs items-center justify-center rounded-full bg-[#1c3a2e] px-7 py-3.5 text-sm font-semibold text-[#f5f0e8] shadow-lg transition-transform hover:scale-[1.02] sm:w-auto"
-              >
-                {bundle.hero.ctaPrimary}
-              </Link>
-              <Link
-                href="/contact?advisor=1"
-                className="inline-flex w-full max-w-xs items-center justify-center rounded-full border-2 border-[#1c3a2e]/25 bg-white/80 px-7 py-3.5 text-sm font-semibold text-[#1c3a2e] backdrop-blur-sm transition-transform hover:scale-[1.02] sm:w-auto"
-              >
-                {bundle.hero.ctaSecondary}
-              </Link>
+            <div className="mx-auto max-w-3xl px-6 sm:px-12">
+              <p className="inline-flex items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#f2d58c] sm:text-xs bg-[#1a3328]/70 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg border border-[#f2d58c]/40 animate-pulse">
+                <Baby className="h-4 w-4" /> {bundle.hero.kicker} <Baby className="h-4 w-4" />
+              </p>
+              <h1 className="mt-5 font-serif text-[clamp(2rem,5vw,3.25rem)] font-bold leading-tight text-white animate-kids-glow">
+                {bundle.hero.title}
+              </h1>
+              <p className="mx-auto mt-5 max-w-2xl text-[17px] font-bold leading-relaxed text-[#fcfcfc] sm:text-[19px] animate-kids-glow">
+                {bundle.hero.subtitle}
+              </p>
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+                <Link
+                  href="/book-trial"
+                  className="inline-flex w-full max-w-xs items-center justify-center rounded-full bg-[#1c3a2e] px-7 py-3.5 text-sm font-semibold text-[#f5f0e8] shadow-lg transition-transform hover:scale-[1.02] sm:w-auto"
+                >
+                  {bundle.hero.ctaPrimary}
+                </Link>
+                <Link
+                  href="/contact?advisor=1"
+                  className="inline-flex w-full max-w-xs items-center justify-center rounded-full border-2 border-[#1c3a2e]/50 bg-white/60 backdrop-blur-sm px-7 py-3.5 text-sm font-bold text-[#1c3a2e] shadow-sm transition-transform hover:scale-[1.02] sm:w-auto"
+                >
+                  {bundle.hero.ctaSecondary}
+                </Link>
+              </div>
             </div>
           </Reveal>
         </div>

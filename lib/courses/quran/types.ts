@@ -67,5 +67,7 @@ export type QuranCourse = {
   };
   images: string[];
   bottomImage?: string;
+  /** Where to render `bottomImage` — defaults to curriculum */
+  bottomImageSection?: "teacher" | "curriculum" | "methods";
   accent: string;
 };

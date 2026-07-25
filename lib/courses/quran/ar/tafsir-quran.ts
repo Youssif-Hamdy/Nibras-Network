@@ -227,6 +227,7 @@ export const tafsirQuranAr: QuranCourse = {
     "/images/Tafsir (Quran Explanation & Interpretation)/Tafsir (Quran Explanation & Interpretation) (1).jpeg",
     "/images/Tafsir (Quran Explanation & Interpretation)/Tafsir (Quran Explanation & Interpretation) (2).jpeg",
   ],
-  bottomImage: "/images/Tafsir (Quran Explanation & Interpretation)/Tafsir (Quran Explanation & Interpretation) (3).jpeg",
+  bottomImage: "/images/Tafsir (Quran Explanation & Interpretation)/مدرسين 22.png",
+  bottomImageSection: "teacher",
   accent: "#B84455",
 };

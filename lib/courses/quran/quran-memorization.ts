@@ -227,9 +227,8 @@ export const quranMemorization: QuranCourse = {
       "In 30 months, you'll either be a Hafiz or still thinking about it. Will you START today?",
   },
   images: [
-    "/images/Memorization/Quran Memorization (Hifz) (1).jpeg",
-    "/images/Memorization/Quran Memorization (Hifz) (2).jpeg",
+    "/images/Memorization/Memorization   - تقييم - تطوير او خطة تدريس.jpeg"
   ],
-  bottomImage: "/images/Memorization/Quran Memorization (Hifz) (3).jpeg",
+  bottomImage: "/images/Memorization/ChatGPT Image Jul 25, 2026, 01_11_53 PM.png",
   accent: "#5B3A99",
 };

@@ -111,9 +111,9 @@ function HeroGallery({ images, title, accent }: { images: string[]; title: strin
           src={src}
           alt={`${title} — ${i + 1}`}
           fill
-          className={`transition-opacity duration-1000 ease-in-out ${
+          className={`transition-opacity duration-1000 ease-in-out object-cover ${
             i === idx ? "opacity-100" : "opacity-0"
-          } ${i >= 1 && i <= 3 ? "object-fill" : "object-cover"}`}
+          }`}
           sizes="(max-width: 1024px) 100vw, 50vw"
           priority={i === 0}
         />
@@ -176,6 +176,14 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
   if (!course) return null;
 
   const accent = course.accent;
+  const teacherSideImage =
+    course.bottomImage && course.bottomImageSection === "teacher" ? course.bottomImage : undefined;
+  const methodsSideImage =
+    course.bottomImage && course.bottomImageSection === "methods" ? course.bottomImage : undefined;
+  const curriculumSideImage =
+    course.bottomImage && course.bottomImageSection !== "teacher" && course.bottomImageSection !== "methods"
+      ? course.bottomImage
+      : undefined;
   const isArabicProgram = ARABIC_PROGRAM_SLUGS.includes(slug);
   const isIslamicProgram = ISLAMIC_PROGRAM_SLUGS.includes(slug);
   const isSpecialProgram = SPECIAL_PROGRAM_SLUGS.includes(slug);
@@ -299,64 +307,116 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
       <div className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
         {/* Teacher & Philosophy */}
         <section id="overview" className="py-12 md:py-16">
-          <div className="grid gap-8 md:grid-cols-2 md:gap-10">
-            <Reveal>
-              <div className="rounded-3xl border border-[#e8e4dc]/80 bg-white/90 p-6 shadow-sm sm:p-8">
-                <SectionHeading
-                  id="teacher"
-                  kicker={ui.teacherKicker}
-                  title={ui.teacherTitle}
-                  isAr={isAr}
-                />
-                <ul className="mt-5 space-y-2.5">
-                  {course.teacher.profile.map((item) => (
-                    <li
-                      key={item}
-                      className="flex gap-2.5 text-[14px] leading-relaxed text-[#3d5249] sm:text-[15px]"
+          <div className="flex flex-col gap-8">
+            <div
+              className={`grid items-stretch gap-8 ${
+                teacherSideImage ? "lg:grid-cols-12" : "md:grid-cols-2 md:gap-10"
+              }`}
+            >
+              <Reveal className={teacherSideImage ? "lg:col-span-7" : undefined}>
+                <div className="h-full rounded-3xl border border-[#e8e4dc]/80 bg-white/90 p-6 shadow-sm sm:p-8">
+                  <SectionHeading
+                    id="teacher"
+                    kicker={ui.teacherKicker}
+                    title={ui.teacherTitle}
+                    isAr={isAr}
+                  />
+                  <ul className="mt-5 space-y-2.5">
+                    {course.teacher.profile.map((item) => (
+                      <li
+                        key={item}
+                        className="flex gap-2.5 text-[14px] leading-relaxed text-[#3d5249] sm:text-[15px]"
+                      >
+                        <CheckCircle2
+                          className="mt-0.5 h-4 w-4 shrink-0"
+                          style={{ color: accent }}
+                          aria-hidden
+                        />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <blockquote className="mt-6 rounded-2xl border-s-4 bg-[#faf9f6] py-4 pe-4 ps-4 text-[14px] italic leading-relaxed text-[#243d32] sm:text-[15px]" style={{ borderColor: accent }}>
+                    <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-wide text-[#6b7a72] not-italic">
+                      {course.teacher.whyLabel}
+                    </p>
+                    &ldquo;{course.teacher.whyQuote}&rdquo;
+                  </blockquote>
+                </div>
+              </Reveal>
+
+              {teacherSideImage && (
+                <Reveal delayMs={80} className="lg:col-span-5 lg:h-full lg:min-h-[500px]">
+                  <div className="relative h-full min-h-[400px] w-full overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm lg:min-h-[500px]">
+                    <Image
+                      src={teacherSideImage}
+                      alt={`${course.title} — ${ui.teacherTitle}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 42vw"
+                    />
+                  </div>
+                </Reveal>
+              )}
+
+              {!teacherSideImage && (
+                <Reveal delayMs={80}>
+                  <div className="rounded-3xl border border-[#e8e4dc]/80 bg-gradient-to-br from-white to-[#f5f2eb] p-6 shadow-sm sm:p-8">
+                    <SectionHeading
+                      id="philosophy"
+                      kicker={ui.philosophyKicker}
+                      title={ui.philosophyTitle}
+                      isAr={isAr}
+                    />
+                    <blockquote
+                      className={`mt-4 text-[15px] font-medium leading-[1.7] text-[#1a3328] sm:text-[16px] ${hf}`}
                     >
-                      <CheckCircle2
-                        className="mt-0.5 h-4 w-4 shrink-0"
-                        style={{ color: accent }}
-                        aria-hidden
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <blockquote className="mt-6 rounded-2xl border-s-4 bg-[#faf9f6] py-4 pe-4 ps-4 text-[14px] italic leading-relaxed text-[#243d32] sm:text-[15px]" style={{ borderColor: accent }}>
-                  <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-wide text-[#6b7a72] not-italic">
-                    {course.teacher.whyLabel}
-                  </p>
-                  &ldquo;{course.teacher.whyQuote}&rdquo;
-                </blockquote>
-              </div>
-            </Reveal>
-            <Reveal delayMs={80}>
-              <div className="rounded-3xl border border-[#e8e4dc]/80 bg-gradient-to-br from-white to-[#f5f2eb] p-6 shadow-sm sm:p-8">
-                <SectionHeading
-                  id="philosophy"
-                  kicker={ui.philosophyKicker}
-                  title={ui.philosophyTitle}
-                  isAr={isAr}
-                />
-                <blockquote
-                  className={`mt-4 text-[15px] font-medium leading-[1.7] text-[#1a3328] sm:text-[16px] ${hf}`}
-                >
-                  &ldquo;{course.philosophy.quote}&rdquo;
-                </blockquote>
-                <ul className="mt-6 space-y-2">
-                  {course.philosophy.beliefs.map((b) => (
-                    <li
-                      key={b}
-                      className="flex gap-2 text-[14px] text-[#3d5249] sm:text-[15px]"
-                    >
-                      <Sparkles className="mt-1 h-3.5 w-3.5 shrink-0 text-[#b8954a]" aria-hidden />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
+                      &ldquo;{course.philosophy.quote}&rdquo;
+                    </blockquote>
+                    <ul className="mt-6 space-y-2">
+                      {course.philosophy.beliefs.map((b) => (
+                        <li
+                          key={b}
+                          className="flex gap-2 text-[14px] text-[#3d5249] sm:text-[15px]"
+                        >
+                          <Sparkles className="mt-1 h-3.5 w-3.5 shrink-0 text-[#b8954a]" aria-hidden />
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              )}
+            </div>
+
+            {teacherSideImage && (
+              <Reveal delayMs={120}>
+                <div className="rounded-3xl border border-[#e8e4dc]/80 bg-gradient-to-br from-white to-[#f5f2eb] p-6 shadow-sm sm:p-8">
+                  <SectionHeading
+                    id="philosophy"
+                    kicker={ui.philosophyKicker}
+                    title={ui.philosophyTitle}
+                    isAr={isAr}
+                  />
+                  <blockquote
+                    className={`mt-4 text-[15px] font-medium leading-[1.7] text-[#1a3328] sm:text-[16px] ${hf}`}
+                  >
+                    &ldquo;{course.philosophy.quote}&rdquo;
+                  </blockquote>
+                  <ul className="mt-6 space-y-2">
+                    {course.philosophy.beliefs.map((b) => (
+                      <li
+                        key={b}
+                        className="flex gap-2 text-[14px] text-[#3d5249] sm:text-[15px]"
+                      >
+                        <Sparkles className="mt-1 h-3.5 w-3.5 shrink-0 text-[#b8954a]" aria-hidden />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            )}
           </div>
         </section>
 
@@ -371,7 +431,7 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
             />
           </Reveal>
           <div className="mt-8 grid gap-8 lg:grid-cols-12 items-stretch">
-            <div className={`grid gap-4 sm:grid-cols-2 ${course.bottomImage ? 'lg:col-span-7' : 'lg:col-span-12'}`}>
+            <div className={`grid gap-4 sm:grid-cols-2 ${curriculumSideImage ? "lg:col-span-7" : "lg:col-span-12"}`}>
               {course.curriculum.phases.map((phase, i) => (
                 <Reveal key={phase.title} delayMs={i * 60}>
                   <div className="h-full rounded-2xl border border-[#e8e4dc] bg-white/85 p-5 transition-shadow hover:shadow-md sm:p-6">
@@ -400,12 +460,12 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
                 </p>
               </Reveal>
             </div>
-            
-            {course.bottomImage && (
+
+            {curriculumSideImage && (
               <Reveal delayMs={150} className="lg:col-span-5 lg:h-full lg:min-h-[300px]">
                 <div className="relative w-full aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[300px] overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm">
                   <Image
-                    src={course.bottomImage}
+                    src={curriculumSideImage}
                     alt={`${course.title} feature`}
                     fill
                     className="object-cover"
@@ -438,82 +498,98 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
                   : <GraduationCap className="h-6 w-6" />;
 
               return (
-                <Reveal delayMs={70}>
-                  <div className="mt-8 overflow-hidden rounded-3xl border border-[#e8e4dc] bg-white shadow-sm transition-all hover:shadow-xl">
-                    <div className="grid gap-0 lg:grid-cols-12">
-                      {/* Left Column: Methodology Flow */}
-                      <div className="p-6 sm:p-10 lg:col-span-7 flex flex-col justify-between">
-                        <div>
-                          <div className="mb-6 flex flex-wrap items-center gap-3">
-                            <div
-                              className="flex h-12 w-12 items-center justify-center rounded-2xl text-white shadow-md transition-transform duration-300 hover:scale-105"
-                              style={{ backgroundColor: accent }}
-                            >
-                              {methodIcon}
-                            </div>
-                            {method.badge && (
-                              <span
-                                className="rounded-full px-3 py-1 font-sans text-[11px] font-semibold text-white uppercase tracking-wider"
+                <div className={`mt-8 grid gap-6 items-stretch ${methodsSideImage ? "lg:grid-cols-12" : ""}`}>
+                  <Reveal delayMs={70} className={methodsSideImage ? "lg:col-span-6" : ""}>
+                    <div className="overflow-hidden rounded-3xl border border-[#e8e4dc] bg-white shadow-sm transition-all hover:shadow-xl h-full">
+                      <div className="grid gap-0 lg:grid-cols-12 h-full">
+                        {/* Left Column: Methodology Flow */}
+                        <div className="p-6 sm:p-10 lg:col-span-7 flex flex-col justify-between">
+                          <div>
+                            <div className="mb-6 flex flex-wrap items-center gap-3">
+                              <div
+                                className="flex h-12 w-12 items-center justify-center rounded-2xl text-white shadow-md transition-transform duration-300 hover:scale-105"
                                 style={{ backgroundColor: accent }}
                               >
-                                {method.badge}
-                              </span>
-                            )}
+                                {methodIcon}
+                              </div>
+                              {method.badge && (
+                                <span
+                                  className="rounded-full px-3 py-1 font-sans text-[11px] font-semibold text-white uppercase tracking-wider"
+                                  style={{ backgroundColor: accent }}
+                                >
+                                  {method.badge}
+                                </span>
+                              )}
+                            </div>
+
+                            <h3 className={`text-xl font-bold tracking-tight text-[#1a3328] sm:text-2xl mb-8 ${hf}`}>
+                              {method.title}
+                            </h3>
+
+                            <div className="space-y-4">
+                              <p className="font-sans text-[10px] font-bold uppercase tracking-wider text-[#7a6f4a] sm:text-[11px]">
+                                {isAr ? "خطوات التعلّم" : "Learning Flow"}
+                              </p>
+                              <ol className="relative border-s border-[#e8e4dc] ms-3.5 space-y-6 pb-2">
+                                {method.flow.map((step, idx) => (
+                                  <li key={idx} className="ms-6 relative">
+                                    <span
+                                      className="absolute -start-[37px] top-0.5 flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold text-white shadow-sm transition-transform duration-300 hover:scale-110"
+                                      style={{ backgroundColor: accent }}
+                                      aria-hidden
+                                    >
+                                      {idx + 1}
+                                    </span>
+                                    <p className="text-[14px] leading-relaxed text-[#3d5249] sm:text-[15px] font-medium">
+                                      {step}
+                                    </p>
+                                  </li>
+                                ))}
+                              </ol>
+                            </div>
                           </div>
+                        </div>
 
-                          <h3 className={`text-xl font-bold tracking-tight text-[#1a3328] sm:text-2xl mb-8 ${hf}`}>
-                            {method.title}
-                          </h3>
-
-                          <div className="space-y-4">
-                            <p className="font-sans text-[10px] font-bold uppercase tracking-wider text-[#7a6f4a] sm:text-[11px]">
-                              {isAr ? "خطوات التعلّم" : "Learning Flow"}
-                            </p>
-                            <ol className="relative border-s border-[#e8e4dc] ms-3.5 space-y-6 pb-2">
-                              {method.flow.map((step, idx) => (
-                                <li key={idx} className="ms-6 relative">
-                                  <span
-                                    className="absolute -start-[37px] top-0.5 flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold text-white shadow-sm transition-transform duration-300 hover:scale-110"
-                                    style={{ backgroundColor: accent }}
+                        {/* Right Column: Why it works */}
+                        <div className="p-6 sm:p-10 lg:col-span-5 bg-[#faf9f6] border-t lg:border-t-0 lg:border-s border-[#e8e4dc] flex flex-col justify-center">
+                          <div>
+                            <h4 className="mb-4 font-sans text-[10px] font-bold uppercase tracking-wider text-[#7a6f4a] sm:text-[11px]">
+                              {method.whyTitle}
+                            </h4>
+                            <ul className="space-y-4">
+                              {method.whyPoints.map((point, idx) => (
+                                <li key={idx} className="flex items-start gap-3">
+                                  <CheckCircle2
+                                    className="h-5 w-5 mt-0.5 shrink-0"
+                                    style={{ color: accent }}
                                     aria-hidden
-                                  >
-                                    {idx + 1}
-                                  </span>
-                                  <p className="text-[14px] leading-relaxed text-[#3d5249] sm:text-[15px] font-medium">
-                                    {step}
+                                  />
+                                  <p className="text-[13px] leading-relaxed text-[#4d5f56] sm:text-[14px]">
+                                    {point}
                                   </p>
                                 </li>
                               ))}
-                            </ol>
+                            </ul>
                           </div>
                         </div>
                       </div>
-
-                      {/* Right Column: Why it works */}
-                      <div className="p-6 sm:p-10 lg:col-span-5 bg-[#faf9f6] border-t lg:border-t-0 lg:border-s border-[#e8e4dc] flex flex-col justify-center">
-                        <div>
-                          <h4 className="mb-4 font-sans text-[10px] font-bold uppercase tracking-wider text-[#7a6f4a] sm:text-[11px]">
-                            {method.whyTitle}
-                          </h4>
-                          <ul className="space-y-4">
-                            {method.whyPoints.map((point, idx) => (
-                              <li key={idx} className="flex items-start gap-3">
-                                <CheckCircle2
-                                  className="h-5 w-5 mt-0.5 shrink-0"
-                                  style={{ color: accent }}
-                                  aria-hidden
-                                />
-                                <p className="text-[13px] leading-relaxed text-[#4d5f56] sm:text-[14px]">
-                                  {point}
-                                </p>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
                     </div>
-                  </div>
-                </Reveal>
+                  </Reveal>
+
+                  {methodsSideImage && (
+                    <Reveal delayMs={120} className="lg:col-span-6 lg:h-full lg:min-h-[500px]">
+                      <div className="relative h-full min-h-[400px] w-full overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm lg:min-h-[500px]">
+                        <Image
+                          src={methodsSideImage}
+                          alt={`${course.title} — ${isAr ? "كيف ندرّس" : "How We Teach"}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 1024px) 100vw, 42vw"
+                        />
+                      </div>
+                    </Reveal>
+                  )}
+                </div>
               );
             })()
           ) : (

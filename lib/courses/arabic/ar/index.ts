@@ -111,7 +111,8 @@ export const ARABIC_COURSES_AR: QuranCourse[] = [
       subcta: "أفضل بداية للمتعلّمين الجدد.",
     },
     images: [arabicImg("arbic language (1).jpeg"), arabicImg("arbic language (2).jpeg"), arabicImg("arbic language (3).jpeg")],
-    bottomImage: arabicImg("arbic language (4).jpeg"),
+    bottomImage: arabicImg("download (7).png"),
+    bottomImageSection: "teacher",
     accent: "#0F7A6B",
   },
   {
@@ -197,7 +198,8 @@ export const ARABIC_COURSES_AR: QuranCourse[] = [
     includes: ["حصص مباشرة أونلاين", "اختبارات LMS", "أوراق مفردات", "شهادة مستوى + تقرير تقدّم"],
     offer: { lines: ["2–3 حصص/أسبوع", "جلسة ممارسة ذاتية/أسبوع"], cta: "انضم للعربية للمبتدئين" },
     images: [arabicImg("arbic language (5).jpeg"), arabicImg("arbic language (6).jpeg"), arabicImg("arbic language (7).jpeg")],
-    bottomImage: arabicImg("arbic language (8).jpeg"),
+    bottomImage: arabicImg("ChatGPT Image Jul 25, 2026, 03_11_18 PM.png"),
+    bottomImageSection: "teacher",
     accent: "#2156A0",
   },
   {

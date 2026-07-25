@@ -227,6 +227,7 @@ export const tafsirQuran: QuranCourse = {
     "/images/Tafsir (Quran Explanation & Interpretation)/Tafsir (Quran Explanation & Interpretation) (1).jpeg",
     "/images/Tafsir (Quran Explanation & Interpretation)/Tafsir (Quran Explanation & Interpretation) (2).jpeg",
   ],
-  bottomImage: "/images/Tafsir (Quran Explanation & Interpretation)/Tafsir (Quran Explanation & Interpretation) (3).jpeg",
+  bottomImage: "/images/Tafsir (Quran Explanation & Interpretation)/ChatGPT Image Jul 25, 2026, 02_08_41 PM.png",
+  bottomImageSection: "teacher",
   accent: "#B84455",
 };

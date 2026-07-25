@@ -165,11 +165,9 @@ export const ISLAMIC_COURSES_AR: QuranCourse[] = [
       cta: "ابدأ المسار الشامل",
       subcta: "خذ تقييم تحديد المستوى",
     },
-    images: [
-      islamicImg("Islamic General (Comprehensive Program)1.jpg"),
-      islamicImg("Islamic General (Comprehensive Program)2.jpg"),
-      islamicImg("Islamic General (Comprehensive Program)3.jpg"),
-    ],
+    images: [islamicImg("ChatGPT Image Jul 25, 2026, 05_30_56 PM.png")],
+    bottomImage: islamicImg("islamic general.png"),
+    bottomImageSection: "methods",
     accent: "#1B4332",
   },
   {
@@ -458,7 +456,9 @@ export const ISLAMIC_COURSES_AR: QuranCourse[] = [
       cta: "انضم لدورة الفقه",
       subcta: "تحدّث مع مستشار",
     },
-    images: [islamicImg("Fiqh1.jpg"), islamicImg("Fiqh2.jpg"), islamicImg("Fiqh3.jpg")],
+    images: [islamicImg("islamic ( fiqh.png")],
+    bottomImage: islamicImg("islamic( fiqh).png"),
+    bottomImageSection: "methods",
     accent: "#40916C",
   },
   {
@@ -601,7 +601,9 @@ export const ISLAMIC_COURSES_AR: QuranCourse[] = [
       cta: "ابدأ دراسات الحديث",
       subcta: "خذ تقييم تحديد المستوى",
     },
-    images: [islamicImg("Hadith Studies1.jpg"), islamicImg("Hadith Studies2.jpg")],
+    images: [islamicImg("hadith.png")],
+    bottomImage: islamicImg("Hadith2.png"),
+    bottomImageSection: "methods",
     accent: "#52796F",
   },
   {
@@ -746,7 +748,9 @@ export const ISLAMIC_COURSES_AR: QuranCourse[] = [
       cta: "سجّل في السيرة",
       subcta: "احجز استشارة مجانية",
     },
-    images: [islamicImg("Seerah1.jpg"), islamicImg("Seerah2.jpg")],
+    images: [islamicImg("seerah.png")],
+    bottomImage: islamicImg("islamic ( seerah.png"),
+    bottomImageSection: "methods",
     accent: "#1D3557",
   },
   {
@@ -892,7 +896,9 @@ export const ISLAMIC_COURSES_AR: QuranCourse[] = [
       cta: "انضم لدروس التفسير",
       subcta: "خذ تقييم تحديد المستوى",
     },
-    images: [islamicImg("Tafsir11.jpg")],
+    images: [islamicImg("Tafseer.jpeg")],
+    bottomImage: islamicImg("Siraa.png"),
+    bottomImageSection: "methods",
     accent: "#6B4423",
   },
 ];
