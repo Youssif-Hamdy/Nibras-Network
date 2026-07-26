@@ -154,7 +154,7 @@ function FooterSection({
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return (
     <div className="mb-5 flex flex-col items-center text-center lg:items-start lg:text-start">
-      <h3 className="text-[15px] font-extrabold uppercase tracking-[0.12em] text-[#2a4f3e] drop-shadow-sm">
+      <h3 className="text-[15px] font-extrabold uppercase tracking-[0.12em] rtl:tracking-normal text-[#2a4f3e] drop-shadow-sm">
         {children}
       </h3>
       <div className="mt-2 flex items-center gap-1.5" aria-hidden>
@@ -343,7 +343,7 @@ export default function SiteFooter() {
             </p>
 
             <div className="flex flex-col items-center lg:items-start">
-              <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.15em] text-[#2a4f3e] drop-shadow-sm">
+              <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.15em] rtl:tracking-normal text-[#2a4f3e] drop-shadow-sm">
                 {t("footer.followUs")}
               </p>
               <div className="flex flex-wrap justify-center gap-2.5 lg:justify-start">
