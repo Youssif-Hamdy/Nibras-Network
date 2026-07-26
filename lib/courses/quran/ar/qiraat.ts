@@ -225,6 +225,7 @@ export const qiraatCourseAr: QuranCourse = {
     subcta: "من طالب إلى عالم. من متعلّم إلى حارس للتقليد.",
   },
   images: ["/images/Qira'at (Variant Recitations)/Quran ( القراءات ).png"], 
-  bottomImage: "/images/Qira'at (Variant Recitations)/Qira'at (Variant Recitations) (2).jpeg",
+  bottomImage: "/images/Qira'at (Variant Recitations)/ChatGPT Image Jul 26, 2026, 04_15_51 PM.png",
+  bottomImageSection: "curriculum",
   accent: "#1C3A2E",
 };

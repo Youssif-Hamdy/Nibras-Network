@@ -11,7 +11,7 @@ export const tajweedCourse: QuranCourse = {
     "Learn Professional Tajweed - Become a Certified Reciter",
   ],
   definition:
-    "The comprehensive science of Quranic pronunciation—every rule, every articulation point, every subtle nuance. Master Tajweed means reciting the Quran with 100% phonetic perfection, exactly as the Prophet (PBUH) recited it.",
+    "This is an advanced, comprehensive course that bridges the gap between knowing the rules of Tajweed and applying them perfectly during recitation. It seamlessly blends theoretical knowledge with intensive practical application to help you reach the level of Itqan (perfection).",
   teacher: {
     profile: [
       "Ijazah in multiple Qira'at (recitation methods)",
@@ -36,21 +36,21 @@ export const tajweedCourse: QuranCourse = {
   curriculum: {
     phases: [
       {
-        title: "Months 1–3",
-        items: ["Articulation Points (Makhaarij) — 17 points of Arabic letter pronunciation"],
-      },
-      {
-        title: "Months 4–6",
-        items: ["Letter Characteristics (Sifaat) — subtle properties that change pronunciation"],
-      },
-      {
-        title: "Months 7–9",
-        items: ["Elongation Rules (Madd) — when and how long to extend vowels"],
-      },
-      {
-        title: "Months 10–12",
+        title: "Theoretical Mastery",
         items: [
-          "Advanced Rules: Assimilation, Emphasis, Soft Letters, Stopping Rules",
+          "In-depth theoretical rules of Tajweed (such as Noon Sakinah, Meem Sakinah, Mudood, etc.).",
+        ],
+      },
+      {
+        title: "Practical Application",
+        items: [
+          "Deep practical training on advanced rules (Characteristics of letters / Sifaat, rules of stopping and starting / Waqf & Ibtida’).",
+        ],
+      },
+      {
+        title: "Flawless Recitation",
+        items: [
+          "Personalized feedback to reach the level of Itqan (flawless recitation).",
         ],
       },
     ],
@@ -152,11 +152,9 @@ export const tajweedCourse: QuranCourse = {
   ],
   audience: {
     perfectFor: [
-      "Those who've completed Tilawah",
-      "Anyone seeking recitation perfection",
-      "Future Hafiz students (before memorization)",
-      "Those preparing for Ijazah certification",
-      "Quran teachers wanting deeper knowledge",
+      "Students who have already studied some Tajweed but struggle to apply the rules practically while reading.",
+      "Intermediate learners who want to understand the 'why' behind the rules (Theory) and master the 'how' (Practice).",
+      "Those who have studied Tajweed in the past and need a comprehensive review to perfect their recitation and obtain fluency.",
     ],
     readyIf: [
       "You can recite with decent flow (Tilawah level)",
@@ -164,6 +162,33 @@ export const tajweedCourse: QuranCourse = {
       "You're willing to slow down for mastery",
       "You have 3–4 hours weekly commitment",
       "You dream of flawless Quranic recitation",
+    ],
+  },
+  comparison: {
+    title: "Quick Comparison (Which one should I choose?)",
+    course1Title: "Quran Recitation (Tilawah)",
+    course2Title: "Tajweed (Perfect Pronunciation)",
+    features: [
+      {
+        name: "Level",
+        course1: "Beginner to Post-Foundational",
+        course2: "Intermediate to Advanced",
+      },
+      {
+        name: "Primary Focus",
+        course1: "Reading fluency & basic pronunciation",
+        course2: "Mastering and applying Tajweed rules",
+      },
+      {
+        name: "Prerequisite",
+        course1: "Knowing how to recognize and connect Arabic letters",
+        course2: "Ability to read the Quran (even slowly) with some basic Tajweed knowledge",
+      },
+      {
+        name: "The Goal",
+        course1: "To read the Quran smoothly without major mistakes",
+        course2: "To recite beautifully and flawlessly with complete theoretical & practical mastery",
+      },
     ],
   },
   progression: [
@@ -220,6 +245,6 @@ export const tajweedCourse: QuranCourse = {
    
     
   ],
-  bottomImage: "/images/Tajweed (Perfect Pronunciation)/ChatGPT Image Jul 25, 2026, 01_46_16 PM.png",
+  bottomImage: "/images/Tajweed (Perfect Pronunciation)/tajweed-bottom.png",
   accent: "#A8720D",
 };

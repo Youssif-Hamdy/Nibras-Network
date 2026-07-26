@@ -158,8 +158,8 @@ const values: ValueItem[] = [
   },
   {
     id: "05",
-    label: "VALUE 5 — INTEGRITY · الْأَمَانَة",
-    mainValueAr: "الْأَمَانَة",
+    label: "VALUE 5 — INTEGRITY · النَّزَاهَة",
+    mainValueAr: "النَّزَاهَة",
     mainValueEn: "Integrity",
     title: "Being Honest",
     body: "We tell you the truth about everything — realistic timelines, honest pricing, truthful progress reports, and authentic reviews.",
@@ -295,8 +295,8 @@ const valuesAr: ValueItem[] = [
   },
   {
     id: "05",
-    label: "٥ — الْأَمَانَة",
-    mainValueAr: "الْأَمَانَة",
+    label: "٥ — النَّزَاهَة",
+    mainValueAr: "النَّزَاهَة",
     mainValueEn: "Integrity",
     title: "الصِّدْقُ وَالْوُضُوحُ",
     enTitle: "Being Honest",

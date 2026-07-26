@@ -69,5 +69,15 @@ export type QuranCourse = {
   bottomImage?: string;
   /** Where to render `bottomImage` — defaults to curriculum */
   bottomImageSection?: "teacher" | "curriculum" | "methods";
+  comparison?: {
+    title: string;
+    course1Title: string;
+    course2Title: string;
+    features: {
+      name: string;
+      course1: string;
+      course2: string;
+    }[];
+  };
   accent: string;
 };

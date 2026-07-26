@@ -176,14 +176,20 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
   if (!course) return null;
 
   const accent = course.accent;
+  const fallbackBottomImage = course.images.length > 2 ? course.images[2] : undefined;
+  const actualBottomImage = course.bottomImage || fallbackBottomImage;
+  const actualBottomImageSection = course.bottomImageSection || "methods";
+
   const teacherSideImage =
-    course.bottomImage && course.bottomImageSection === "teacher" ? course.bottomImage : undefined;
+    actualBottomImage && actualBottomImageSection === "teacher" ? actualBottomImage : undefined;
   const methodsSideImage =
-    course.bottomImage && course.bottomImageSection === "methods" ? course.bottomImage : undefined;
+    actualBottomImage && actualBottomImageSection === "methods" ? actualBottomImage : undefined;
   const curriculumSideImage =
-    course.bottomImage && course.bottomImageSection !== "teacher" && course.bottomImageSection !== "methods"
-      ? course.bottomImage
+    actualBottomImage && actualBottomImageSection !== "teacher" && actualBottomImageSection !== "methods"
+      ? actualBottomImage
       : undefined;
+  // When a course has multiple methods, show the bottomImage beside the techniques section instead
+  const techniquesBannerImage = course.methods.length > 1 ? methodsSideImage : undefined;
   const isArabicProgram = ARABIC_PROGRAM_SLUGS.includes(slug);
   const isIslamicProgram = ISLAMIC_PROGRAM_SLUGS.includes(slug);
   const isSpecialProgram = SPECIAL_PROGRAM_SLUGS.includes(slug);
@@ -285,7 +291,7 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
               </div>
             </Reveal>
             <Reveal delayMs={120}>
-              <HeroGallery images={course.images} title={course.title} accent={accent} />
+              <HeroGallery images={course.images.slice(0, 2)} title={course.title} accent={accent} />
             </Reveal>
           </div>
 
@@ -430,7 +436,7 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
               isAr={isAr}
             />
           </Reveal>
-          <div className="mt-8 grid gap-8 lg:grid-cols-12 items-stretch">
+          <div className="mt-8 grid gap-8 lg:grid-cols-12 items-start">
             <div className={`grid gap-4 sm:grid-cols-2 ${curriculumSideImage ? "lg:col-span-7" : "lg:col-span-12"}`}>
               {course.curriculum.phases.map((phase, i) => (
                 <Reveal key={phase.title} delayMs={i * 60}>
@@ -462,14 +468,18 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
             </div>
 
             {curriculumSideImage && (
-              <Reveal delayMs={150} className="lg:col-span-5 lg:h-full lg:min-h-[300px]">
-                <div className="relative w-full aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[300px] overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm">
+              <Reveal delayMs={150} className="lg:col-span-5 lg:sticky lg:top-28">
+                <div className="relative h-[260px] w-full overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm sm:h-[360px] lg:h-[500px]">
                   <Image
                     src={curriculumSideImage}
                     alt={`${course.title} feature`}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
+                    aria-hidden
                   />
                 </div>
               </Reveal>
@@ -479,14 +489,6 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
 
         {/* Methods */}
         <section id="methods" className="py-10 md:py-14">
-          <Reveal>
-            <SectionHeading
-              id="methods-heading"
-              kicker={ui.methodsKicker}
-              title={ui.methodsTitle}
-              isAr={isAr}
-            />
-          </Reveal>
           {course.methods.length === 1 ? (
             (() => {
               const method = course.methods[0];
@@ -498,7 +500,16 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
                   : <GraduationCap className="h-6 w-6" />;
 
               return (
-                <div className={`mt-8 grid gap-6 items-stretch ${methodsSideImage ? "lg:grid-cols-12" : ""}`}>
+                <>
+                  <Reveal>
+                    <SectionHeading
+                      id="methods-heading"
+                      kicker={ui.methodsKicker}
+                      title={ui.methodsTitle}
+                      isAr={isAr}
+                    />
+                  </Reveal>
+                  <div className={`mt-8 grid gap-6 items-stretch ${methodsSideImage ? "lg:grid-cols-12" : ""}`}>
                   <Reveal delayMs={70} className={methodsSideImage ? "lg:col-span-6" : ""}>
                     <div className="overflow-hidden rounded-3xl border border-[#e8e4dc] bg-white shadow-sm transition-all hover:shadow-xl h-full">
                       <div className="grid gap-0 lg:grid-cols-12 h-full">
@@ -577,8 +588,8 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
                   </Reveal>
 
                   {methodsSideImage && (
-                    <Reveal delayMs={120} className="lg:col-span-6 lg:h-full lg:min-h-[500px]">
-                      <div className="relative h-full min-h-[400px] w-full overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm lg:min-h-[500px]">
+                    <Reveal delayMs={120} className="lg:col-span-6 lg:h-full lg:min-h-[600px]">
+                      <div className="relative h-full min-h-[400px] w-full overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm lg:min-h-[600px]">
                         <Image
                           src={methodsSideImage}
                           alt={`${course.title} — ${isAr ? "كيف ندرّس" : "How We Teach"}`}
@@ -590,41 +601,52 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
                     </Reveal>
                   )}
                 </div>
+                </>
               );
             })()
           ) : (
-            <div className="mt-8 grid gap-6 lg:grid-cols-3">
-              {course.methods.map((method, i) => (
-                <Reveal key={method.title} delayMs={i * 70}>
-                  <article className="flex h-full flex-col rounded-3xl border border-[#e8e4dc] bg-white/90 p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
-                    <div className="mb-4 flex items-start justify-between gap-2">
-                      <h3 className={`text-lg font-semibold text-[#1a3328] ${hf}`}>{method.title}</h3>
-                      {method.badge && (
-                        <span
-                          className="shrink-0 rounded-full px-2.5 py-1 font-sans text-[10px] font-semibold text-white"
-                          style={{ backgroundColor: accent }}
-                        >
-                          {method.badge}
-                        </span>
-                      )}
-                    </div>
-                    <FlowSteps steps={method.flow} accent={accent} />
-                    <div className="mt-6 border-t border-[#eee8dc] pt-5">
-                      <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-wide text-[#6b7a72]">
-                        {method.whyTitle}
-                      </p>
-                      <ul className="space-y-1.5">
-                        {method.whyPoints.map((p) => (
-                          <li key={p} className="text-[13px] leading-relaxed text-[#3d5249]">
-                            {p}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </article>
-                </Reveal>
-              ))}
-            </div>
+            <>
+              <Reveal>
+                <SectionHeading
+                  id="methods-heading"
+                  kicker={ui.methodsKicker}
+                  title={ui.methodsTitle}
+                  isAr={isAr}
+                />
+              </Reveal>
+              <div className="mt-6 grid gap-4 lg:grid-cols-3">
+                {course.methods.map((method, i) => (
+                  <Reveal key={method.title} delayMs={i * 60}>
+                    <article className="flex h-full flex-col rounded-2xl border border-[#e8e4dc] bg-white/90 p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md sm:p-5">
+                      <div className="mb-3 flex items-start justify-between gap-2">
+                        <h3 className={`text-[15px] font-semibold text-[#1a3328] ${hf}`}>{method.title}</h3>
+                        {method.badge && (
+                          <span
+                            className="shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] font-semibold text-white"
+                            style={{ backgroundColor: accent }}
+                          >
+                            {method.badge}
+                          </span>
+                        )}
+                      </div>
+                      <FlowSteps steps={method.flow} accent={accent} />
+                      <div className="mt-4 border-t border-[#eee8dc] pt-4">
+                        <p className="mb-1.5 font-sans text-[10px] font-semibold uppercase tracking-wide text-[#6b7a72]">
+                          {method.whyTitle}
+                        </p>
+                        <ul className="space-y-1">
+                          {method.whyPoints.map((p) => (
+                            <li key={p} className="text-[12px] leading-relaxed text-[#3d5249]">
+                              {p}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </article>
+                  </Reveal>
+                ))}
+              </div>
+            </>
           )}
         </section>
 
@@ -638,26 +660,47 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
               isAr={isAr}
             />
           </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {course.techniques.map((tech, i) => (
-              <Reveal key={tech.title} delayMs={i * 50}>
-                <div className="rounded-2xl border border-[#e8e4dc]/90 bg-[#faf9f6] p-5 sm:p-6">
-                  <h3 className={`mb-3 text-base font-semibold text-[#1a3328] ${hf}`}>{tech.title}</h3>
-                  <ul className="space-y-2">
-                    {tech.points.map((p) => (
-                      <li key={p} className="flex gap-2 text-[13px] text-[#3d5249] sm:text-[14px]">
-                        <span
-                          className="mt-2 h-1 w-1 shrink-0 rounded-full"
-                          style={{ backgroundColor: accent }}
-                          aria-hidden
-                        />
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
+          <div className={`mt-8 grid gap-8 items-start ${techniquesBannerImage ? "lg:grid-cols-12" : ""}` }>
+            {/* Technique cards */}
+            <div className={`grid gap-4 sm:grid-cols-2 ${techniquesBannerImage ? "lg:col-span-7" : ""}`}>
+              {course.techniques.map((tech, i) => (
+                <Reveal key={tech.title} delayMs={i * 50}>
+                  <div className="rounded-2xl border border-[#e8e4dc]/90 bg-[#faf9f6] p-5 sm:p-6">
+                    <h3 className={`mb-3 text-base font-semibold text-[#1a3328] ${hf}`}>{tech.title}</h3>
+                    <ul className="space-y-2">
+                      {tech.points.map((p) => (
+                        <li key={p} className="flex gap-2 text-[13px] text-[#3d5249] sm:text-[14px]">
+                          <span
+                            className="mt-2 h-1 w-1 shrink-0 rounded-full"
+                            style={{ backgroundColor: accent }}
+                            aria-hidden
+                          />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+            {/* Side image — only shown when course has multiple methods */}
+            {techniquesBannerImage && (
+              <Reveal delayMs={100} className="lg:col-span-5 lg:sticky lg:top-28">
+                <div className="relative h-[260px] w-full overflow-hidden rounded-2xl border border-[#e8e4dc] shadow-md sm:h-[320px] lg:h-[480px]">
+                  <Image
+                    src={techniquesBannerImage}
+                    alt={`${course.title} — ${isAr ? "ما ستتعلمه" : "What You Will Learn"}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
+                    aria-hidden
+                  />
                 </div>
               </Reveal>
-            ))}
+            )}
           </div>
         </section>
 
@@ -748,6 +791,42 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
             </Reveal>
           </div>
         </section>
+
+        {/* Comparison */}
+        {course.comparison && (
+          <section className="py-10 md:py-14">
+            <Reveal>
+              <SectionHeading
+                id="comparison"
+                kicker="Comparison"
+                title={course.comparison.title}
+                isAr={isAr}
+              />
+            </Reveal>
+            <Reveal delayMs={60}>
+              <div className="mt-8 overflow-x-auto">
+                <table className="w-full min-w-[600px] border-collapse bg-white/90 shadow-sm rounded-2xl overflow-hidden border border-[#e8e4dc]">
+                  <thead>
+                    <tr className="bg-[#f0ebe2] text-left text-[14px] font-bold text-[#1a3328]">
+                      <th className="p-4 border-b border-[#e8e4dc]">Feature</th>
+                      <th className="p-4 border-b border-[#e8e4dc] border-l">{course.comparison.course1Title}</th>
+                      <th className="p-4 border-b border-[#e8e4dc] border-l">{course.comparison.course2Title}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {course.comparison.features.map((feature, i) => (
+                      <tr key={i} className="text-[14px] text-[#3d5249] border-b border-[#e8e4dc] last:border-0 hover:bg-[#faf9f6]">
+                        <td className="p-4 font-semibold text-[#1a3328] align-top">{feature.name}</td>
+                        <td className="p-4 border-l border-[#e8e4dc] align-top">{feature.course1}</td>
+                        <td className="p-4 border-l border-[#e8e4dc] align-top">{feature.course2}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Reveal>
+          </section>
+        )}
 
         {/* Success stories */}
         <section id="stories" className="py-10 md:py-14">

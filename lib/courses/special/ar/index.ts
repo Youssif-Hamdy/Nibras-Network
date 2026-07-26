@@ -68,7 +68,9 @@ export const SPECIAL_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["حصص مباشرة (فردي/مجموعة صغيرة)", "منهج ترحيب منظّم", "3 أشهر أولى مدعومة", "إرشاد مستشار للخطوات التالية"],
     offer: { lines: ["موصى به: تأسيس 3–6 أشهر", "التسليم: مباشر أونلاين"], cta: "ابدأ رحلتي المجانية", subcta: "تحدّث مع مستشار" },
-    images: [specialImg.newMuslims],
+    images: [specialImg.newMuslims[0]],
+    bottomImage: specialImg.newMuslims[1],
+    bottomImageSection: "methods",
     accent: "#0D9488",
   },
   {
@@ -123,7 +125,7 @@ export const SPECIAL_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["مسار فردي لكل فرد", "دعم تنسيق الجداول", "تسعير مجمّع (توفير 20–30٪)", "متابعة تقدّم عائلية"],
     offer: { lines: ["الأساس: 8$/ساعة", "وفر 20–30٪ لـ 2+ أفراد"], cta: "احسب خطتي العائلية", subcta: "سجّل عائلتي" },
-    images: [specialImg.family],
+    images: [...specialImg.family],
     accent: "#B45309",
   },
   {
@@ -178,7 +180,7 @@ export const SPECIAL_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["استشارة أولية", "خطة فردية", "حصص فردية مباشرة", "تحديثات للآباء"],
     offer: { lines: ["الصيغة: فردي مباشر", "الوتيرة: خطة فردية"], cta: "ناقش احتياجات طفلي", subcta: "احجز حصة تجريبية" },
-    images: [specialImg.specialNeeds],
+    images: [...specialImg.specialNeeds],
     accent: "#7C3AED",
   },
   {
@@ -233,7 +235,7 @@ export const SPECIAL_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["3–5 حصص/أسبوع", "خطة واجبات", "مساءلة", "معايير تقدّم"],
     offer: { lines: ["3 حصص/أسبوع كحد أدنى", "واجبات منظّمة"], cta: "ابدأ البرنامج المكثّف", subcta: "تحدّث مع مستشار أكاديمي" },
-    images: [specialImg.intensive],
+    images: [...specialImg.intensive],
     accent: "#DC2626",
   },
   {
@@ -289,7 +291,7 @@ export const SPECIAL_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["تحديد مستوى", "خطة مراجعة", "اختبارات تجريبية", "تقييم جاهزية"],
     offer: { lines: ["الخارطة: تحديد → تجريبي → جاهزية", "مقاييس طوال المسار"], cta: "حضّر لتقييمي", subcta: "اطلب خطة تقييم" },
-    images: [specialImg.exam],
+    images: [...specialImg.exam],
     accent: "#2563EB",
   },
   {
@@ -344,8 +346,10 @@ export const SPECIAL_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["حصص الطفل", "أدلة تعزيز للوالد", "قائمة ممارسة", "تقارير أسبوعية + لوحة"],
     offer: { lines: ["تدريب الوالدين مشمول", "هيكل ممارسة منزلية أسبوعي"], cta: "انضم لبرنامج إرشاد الوالدين" },
-    images: [specialImg.parentGuided],
+    images: [...specialImg.parentGuided],
     accent: "#059669",
+    bottomImage: "/images/Special Programs/ChatGPT Image Jul 26, 2026, 02_32_09 PM.png",
+    bottomImageSection: "teacher",
   },
   {
     slug: "ijazah-pathway",
@@ -400,7 +404,7 @@ export const SPECIAL_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["جلسات تصحيح متقدّمة", "تحقق تلاوة", "إشراف معلّم", "إرشاد جاهزية الشهادة"],
     offer: { lines: ["الدخول: تقييم + موافقة", "الصيغة: مسار علمي طويل"], cta: "قدّم لمسار الإجازة" },
-    images: [specialImg.ijazah],
+    images: [...specialImg.ijazah],
     accent: "#92400E",
   },
   {
@@ -455,7 +459,7 @@ export const SPECIAL_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["وحدات مقررات", "جلسات بإشراف", "تقييم نهائي", "شهادة مهنية"],
     offer: { lines: ["المسار: مقررات → إشراف → تقييم"], cta: "قدّم لبرنامج المعلّمين" },
-    images: [specialImg.teacher],
+    images: [...specialImg.teacher],
     accent: "#4F46E5",
   },
   {
@@ -518,7 +522,7 @@ export const SPECIAL_COURSES_AR: QuranCourse[] = [
     ],
     includes: ["تقييم احتياجات وعرض", "منهج مخصّص", "معلّمون محترفون", "جدولة مجموعات مرنة", "تقارير تقدّم"],
     offer: { lines: ["الصيغ: مباشر · مجموعات · هجين", "تسليم مؤسسي قابل للتوسّع"], cta: "اطلب عرضاً مؤسسياً", subcta: "تحدّث مع مدير البرنامج" },
-    images: [specialImg.corporate],
+    images: [...specialImg.corporate],
     accent: "#1E3A5F",
   },
 ];

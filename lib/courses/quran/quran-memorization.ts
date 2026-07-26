@@ -229,6 +229,6 @@ export const quranMemorization: QuranCourse = {
   images: [
     "/images/Memorization/Memorization   - تقييم - تطوير او خطة تدريس.jpeg"
   ],
-  bottomImage: "/images/Memorization/ChatGPT Image Jul 25, 2026, 01_11_53 PM.png",
+  bottomImage: "/images/Memorization/quran-memorization-bottom.png",
   accent: "#5B3A99",
 };

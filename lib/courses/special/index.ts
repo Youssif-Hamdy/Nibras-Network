@@ -110,7 +110,9 @@ export const SPECIAL_PROGRAM_COURSES_EN: QuranCourse[] = [
       cta: "Start My Free Journey",
       subcta: "Speak to an Advisor",
     },
-    images: [specialImg.newMuslims],
+    images: [specialImg.newMuslims[0]],
+    bottomImage: specialImg.newMuslims[1],
+    bottomImageSection: "methods",
     accent: "#0D9488",
   },
   {
@@ -221,7 +223,7 @@ export const SPECIAL_PROGRAM_COURSES_EN: QuranCourse[] = [
       cta: "Calculate My Family Plan",
       subcta: "Enroll My Family",
     },
-    images: [specialImg.family],
+    images: [...specialImg.family],
     accent: "#B45309",
   },
   {
@@ -335,7 +337,7 @@ export const SPECIAL_PROGRAM_COURSES_EN: QuranCourse[] = [
       cta: "Discuss My Child's Needs",
       subcta: "Book Trial Lesson",
     },
-    images: [specialImg.specialNeeds],
+    images: [...specialImg.specialNeeds],
     accent: "#7C3AED",
   },
   {
@@ -445,7 +447,7 @@ export const SPECIAL_PROGRAM_COURSES_EN: QuranCourse[] = [
       cta: "Start Intensive Program",
       subcta: "Speak to Academic Advisor",
     },
-    images: [specialImg.intensive],
+    images: [...specialImg.intensive],
     accent: "#DC2626",
   },
   {
@@ -550,7 +552,7 @@ export const SPECIAL_PROGRAM_COURSES_EN: QuranCourse[] = [
       cta: "Prepare for My Assessment",
       subcta: "Request Evaluation Plan",
     },
-    images: [specialImg.exam],
+    images: [specialImg.exam[0]],
     accent: "#2563EB",
   },
   {
@@ -659,8 +661,10 @@ export const SPECIAL_PROGRAM_COURSES_EN: QuranCourse[] = [
       lines: ["Parent coaching included", "Weekly home practice structure"],
       cta: "Join Parent-Guided Program",
     },
-    images: [specialImg.parentGuided],
+    images: [...specialImg.parentGuided],
     accent: "#059669",
+    bottomImage: "/images/Special Programs/ChatGPT Image Jul 26, 2026, 02_32_09 PM.png",
+    bottomImageSection: "teacher",
   },
   {
     slug: "ijazah-pathway",
@@ -763,7 +767,7 @@ export const SPECIAL_PROGRAM_COURSES_EN: QuranCourse[] = [
       lines: ["Entry: Assessment + teacher approval", "Format: Long-term scholarly track"],
       cta: "Apply for Ijazah Track",
     },
-    images: [specialImg.ijazah],
+    images: [...specialImg.ijazah],
     accent: "#92400E",
   },
   {
@@ -872,7 +876,7 @@ export const SPECIAL_PROGRAM_COURSES_EN: QuranCourse[] = [
       lines: ["Path: Coursework → Supervised teaching → Evaluation"],
       cta: "Apply for Teacher Program",
     },
-    images: [specialImg.teacher],
+    images: [...specialImg.teacher],
     accent: "#4F46E5",
   },
   {
@@ -983,7 +987,7 @@ export const SPECIAL_PROGRAM_COURSES_EN: QuranCourse[] = [
       cta: "Request Corporate Proposal",
       subcta: "Speak to Program Director",
     },
-    images: [specialImg.corporate],
+    images: [...specialImg.corporate],
     accent: "#1E3A5F",
   },
 ];
