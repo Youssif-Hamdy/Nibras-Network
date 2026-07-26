@@ -637,6 +637,7 @@ export default function KidsProgramsPageContent() {
             alt="Kids Programs Hero"
             className="h-full w-full object-cover  object-top translate-y-15"
           />
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
         </div>
         <div className="relative z-10 w-full mx-auto max-w-5xl text-center">
           <Reveal>

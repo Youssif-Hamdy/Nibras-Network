@@ -240,65 +240,74 @@ export default function AboutMissionPageContent() {
       {/* ══════════════ HERO ══════════════ */}
       <section className="relative isolate overflow-hidden">
 
-        {/* ✅ التعديل هنا: object-[center_20%] + blur-[1.5px] + scale-110 */}
         <div className="absolute inset-0 -z-10">
+          {/* Mobile Image */}
+          <Image
+            src="/images/mission-phone.png"
+            alt={isAr ? "رسالتنا ورؤيتنا" : "Mission and Vision"}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover sm:hidden"
+          />
+          {/* Desktop Image */}
           <Image
             src="/images/Missions.jpeg"
             alt={isAr ? "رسالتنا ورؤيتنا" : "Mission and Vision"}
             fill
             priority
-            sizes="100vw"
-            className="object-cover object-[center_20%] blur-[1.5px] scale-110"
+            sizes="70vw"
+    className="hidden sm:block object-cover translate-y-20"
           />
         </div>
 
         {/* overlays */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#0D2920]/30 via-[#0D2920]/20 to-[#0D2920]/75" />
         <div className="absolute inset-0 -z-10 [background:radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_40%,rgba(13,41,32,.55)_100%)]" />
-
-        {/* Content */}
-        <div className="relative flex min-h-[100svh] flex-col items-center justify-between px-4 pb-8 pt-[calc(70px+1.5rem)] text-center sm:px-6 sm:pb-10 sm:pt-28">
-
-          <div className="fade-1 self-center">
-            <span className="hero-pill shimmer">
-              <MissionVisionIcon type="spark" />
-            </span>
-          </div>
-
-          <div className="mx-auto max-w-3xl flex flex-col items-center gap-5 py-12">
-           
-
-            <h1 className="fade-2 font-serif text-3xl font-bold leading-[1.2] text-[#F7F1E3] min-[400px]:text-4xl sm:text-6xl md:text-7xl drop-shadow-sm">
-              {isAr ? "رسالتنا" : "Our Mission"}
-              <br />
-              <span className="text-[#E3C98F]">{isAr ? "ورؤيتنا" : "& Vision"}</span>
-            </h1>
-
-            <GoldDivider />
-
-            <p className="fade-3 max-w-xl text-[15px] leading-8 text-[#CFE1D9]">
-              {isAr
-                ? "بسيطة، صادقة، ومتمركزة حول خدمة الله بخدمتكم"
-                : "Simple, sincere, and centered on serving Allah by serving you"}
-            </p>
-
-            <div className="fade-4 mt-2 flex flex-col items-center gap-2 text-[#A8C9BC]">
-              <span className="text-xs tracking-widest uppercase">
-                {isAr ? "اكتشف المزيد" : "Discover more"}
+        <div className="relative flex min-h-[100svh] flex-col items-center px-4 pb-8 pt-[calc(70px+2rem)] text-center sm:px-6 sm:pb-10 sm:pt-28">
+          
+          <div className="flex flex-col items-center justify-center flex-1 w-full mt-8 sm:mt-0">
+            <div className="fade-1 mb-6 sm:mb-8">
+              <span className="hero-pill shimmer">
+                <MissionVisionIcon type="spark" />
               </span>
-              <svg
-                className="scroll-cue h-5 w-5"
-                viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" strokeWidth="1.8"
-                strokeLinecap="round" strokeLinejoin="round"
-                aria-hidden
-              >
-                <path d="M12 5v14M5 12l7 7 7-7" />
-              </svg>
+            </div>
+
+            <div className="mx-auto max-w-3xl flex flex-col items-center gap-4 sm:gap-5">
+              <h1 className="fade-2 font-serif text-[2.25rem] font-bold leading-[1.25] text-[#F7F1E3] min-[400px]:text-4xl sm:text-6xl md:text-7xl drop-shadow-sm">
+                {isAr ? "رسالتنا" : "Our Mission"}
+                <br />
+                <span className="text-[#E3C98F]">{isAr ? "ورؤيتنا" : "& Vision"}</span>
+              </h1>
+
+              <div className="scale-90 sm:scale-100">
+                <GoldDivider />
+              </div>
+
+              <p className="fade-3 max-w-xl text-[15px] leading-relaxed sm:leading-8 text-[#CFE1D9] px-2 sm:px-0">
+                {isAr
+                  ? "بسيطة، صادقة، ومتمركزة حول خدمة الله بخدمتكم"
+                  : "Simple, sincere, and centered on serving Allah by serving you"}
+              </p>
+
+              <div className="fade-4 mt-6 sm:mt-8 flex flex-col items-center gap-2 text-[#A8C9BC]">
+                <span className="text-[10px] sm:text-xs tracking-widest uppercase">
+                  {isAr ? "اكتشف المزيد" : "Discover more"}
+                </span>
+                <svg
+                  className="scroll-cue h-4 w-4 sm:h-5 sm:w-5"
+                  viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="1.8"
+                  strokeLinecap="round" strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M12 5v14M5 12l7 7 7-7" />
+                </svg>
+              </div>
             </div>
           </div>
 
-          <div className="fade-4 flex w-full max-w-md flex-wrap justify-center gap-2 self-end sm:max-w-none sm:gap-3">
+          <div className="fade-4 flex w-full max-w-md flex-wrap justify-center gap-2 mt-8 sm:mt-auto sm:max-w-none sm:gap-3">
             {[
               { value: isAr ? "١٠٠٪" : "100%", label: isAr ? "معلمون مؤهلون" : "Qualified teachers" },
               { value: isAr ? "٢٤/٧" : "24/7", label: isAr ? "تعلّم مرن"      : "Flexible learning"  },

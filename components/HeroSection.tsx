@@ -112,8 +112,14 @@ export default function HeroSection() {
               className="hero-heading text-[1.7rem] sm:text-4xl md:text-5xl lg:text-[3.2rem] font-bold text-white leading-[1.2] mb-4 w-full max-w-[280px] sm:max-w-lg md:max-w-3xl mx-auto"
               style={{ animation: "fadeSlideUp 0.7s ease 0.25s both" }}
             >
-              {t("hero.titleBefore")}{" "}
-              <span className="text-[#F2D58C] italic">{t("hero.titleAccent")}</span>
+              {t("hero.titleBefore")}
+              <br />
+              <span 
+                className="text-[#F2D58C] italic inline-block mt-2 sm:mt-3"
+                style={{ textShadow: "0 0 12px rgba(242, 213, 140, 0.6), 0 0 24px rgba(212, 160, 23, 0.4)" }}
+              >
+                {t("hero.titleAccent")}
+              </span>
             </h1>
 
             {/* Description */}

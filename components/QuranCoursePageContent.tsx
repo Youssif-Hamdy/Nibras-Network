@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import {
   ArrowRight,
   BookOpen,
@@ -12,9 +13,11 @@ import {
   Gift,
   GraduationCap,
   Heart,
+  Maximize2,
   Sparkles,
   Tag,
   Users,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { useI18n } from "@/components/LocaleProvider";
@@ -158,6 +161,76 @@ function FlowSteps({ steps, accent }: { steps: string[]; accent: string }) {
         </li>
       ))}
     </ol>
+  );
+}
+
+function ExpandableMobileImage({ src, alt, sizes }: { src: string; alt: string; sizes?: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  return (
+    <>
+      <div 
+        className="group relative h-full w-full cursor-zoom-in lg:cursor-default"
+        onClick={() => {
+          if (window.innerWidth < 1024) setIsOpen(true);
+        }}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover transition-transform duration-500 lg:group-hover:scale-105"
+          sizes={sizes}
+        />
+        <div className="absolute bottom-3 end-3 flex items-center justify-center rounded-full bg-black/40 p-2 text-white backdrop-blur-md transition-opacity lg:hidden">
+          <Maximize2 size={16} />
+        </div>
+      </div>
+
+      {isOpen && mounted && createPortal(
+        <div 
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 p-4 backdrop-blur-2xl lg:hidden"
+          onClick={() => setIsOpen(false)}
+        >
+          <button 
+            className="absolute top-4 end-4 z-[10000] flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition-colors hover:bg-black/60"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(false);
+            }}
+          >
+            <X size={24} />
+          </button>
+          <div className="relative h-full max-h-[92vh] w-full max-w-2xl" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              className="object-contain"
+              sizes="100vw"
+            />
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
   );
 }
 
@@ -354,11 +427,9 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
               {teacherSideImage && (
                 <Reveal delayMs={80} className="lg:col-span-5 lg:h-full lg:min-h-[500px]">
                   <div className="relative h-full min-h-[400px] w-full overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm lg:min-h-[500px]">
-                    <Image
+                    <ExpandableMobileImage
                       src={teacherSideImage}
                       alt={`${course.title} — ${ui.teacherTitle}`}
-                      fill
-                      className="object-cover"
                       sizes="(max-width: 1024px) 100vw, 42vw"
                     />
                   </div>
@@ -470,15 +541,13 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
             {curriculumSideImage && (
               <Reveal delayMs={150} className="lg:col-span-5 lg:sticky lg:top-28">
                 <div className="relative h-[260px] w-full overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm sm:h-[360px] lg:h-[500px]">
-                  <Image
+                  <ExpandableMobileImage
                     src={curriculumSideImage}
                     alt={`${course.title} feature`}
-                    fill
-                    className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 42vw"
                   />
                   <div
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent z-10"
                     aria-hidden
                   />
                 </div>
@@ -590,11 +659,9 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
                   {methodsSideImage && (
                     <Reveal delayMs={120} className="lg:col-span-6 lg:h-full lg:min-h-[600px]">
                       <div className="relative h-full min-h-[400px] w-full overflow-hidden rounded-3xl border border-[#e8e4dc] shadow-sm lg:min-h-[600px]">
-                        <Image
+                        <ExpandableMobileImage
                           src={methodsSideImage}
                           alt={`${course.title} — ${isAr ? "كيف ندرّس" : "How We Teach"}`}
-                          fill
-                          className="object-cover"
                           sizes="(max-width: 1024px) 100vw, 42vw"
                         />
                       </div>
@@ -687,15 +754,13 @@ export default function QuranCoursePageContent({ slug }: { slug: string }) {
             {techniquesBannerImage && (
               <Reveal delayMs={100} className="lg:col-span-5 lg:sticky lg:top-28">
                 <div className="relative h-[260px] w-full overflow-hidden rounded-2xl border border-[#e8e4dc] shadow-md sm:h-[320px] lg:h-[480px]">
-                  <Image
+                  <ExpandableMobileImage
                     src={techniquesBannerImage}
                     alt={`${course.title} — ${isAr ? "ما ستتعلمه" : "What You Will Learn"}`}
-                    fill
-                    className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 42vw"
                   />
                   <div
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent z-10"
                     aria-hidden
                   />
                 </div>

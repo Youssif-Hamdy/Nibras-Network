@@ -28,7 +28,7 @@ export const MEGA_BY_SUBJECT: SubjectColumn[] = [
   {
     title: "Quran Programs",
     icon: "BookOpen",
-    count: 7,
+    count: 6,
     links: [
       { label: "Noorani Qaida (Foundation)",       href: "/courses/noorani-qaida"         },
       { label: "Quran Recitation (Tilawah)",        href: "/courses/quran-recitation"      },
@@ -36,7 +36,6 @@ export const MEGA_BY_SUBJECT: SubjectColumn[] = [
       { label: "Tajweed (Perfect Recitation)",      href: "/courses/tajweed"               },
       { label: "Qira'at (Variant Recitations)",     href: "/courses/qiraat"                },
       { label: "Tafsir (Quran Explanation)",        href: "/courses/tafsir-quran"          },
-      { label: "Quran with Translation",            href: "/courses/quran-with-translation"},
     ],
   },
   {
