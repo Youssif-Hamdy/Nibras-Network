@@ -101,21 +101,21 @@ export default function TutorsPageContent() {
 
   return (
     <div
-      className="relative flex-1 overflow-hidden bg-[#EDE7D9] text-[#1C3A2E]"
+      className="relative flex-1 bg-[#EDE7D9] text-[#1C3A2E]"
       dir={isAr ? "rtl" : "ltr"}
       lang={locale}
     >
-      {/* Background gradients */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-40"
-        aria-hidden
-        style={{
-          backgroundImage:
-            "radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212,160,23,0.25), transparent), radial-gradient(ellipse 60% 40% at 100% 50%, rgba(28,58,46,0.06), transparent)",
-        }}
-      />
+      {/* ─── HERO IMAGE ─── */}
+      <section className="relative w-full pt-[72px] md:pt-[80px]">
+        <img
+          src="/images/tutors/tutoresHero.jpeg"
+          alt="Our Tutors"
+          className="w-full h-auto block object-cover"
+        />
+        <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-36 bg-gradient-to-t from-[#EDE7D9] to-transparent pointer-events-none" />
+      </section>
 
-      <div className="relative mx-auto max-w-7xl px-4 pt-[calc(70px+1.5rem)] pb-14 sm:px-6 md:pt-[calc(80px+2.5rem)] md:pb-20">
+      <div className="relative mx-auto max-w-7xl px-4 pb-14 sm:px-6 md:pb-20">
         
         {/* ─── HERO & VIDEO SPLIT ─── */}
         <section className="grid gap-8 lg:grid-cols-12 lg:items-center">

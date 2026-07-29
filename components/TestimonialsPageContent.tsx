@@ -226,7 +226,16 @@ export default function TestimonialsPageContent() {
         }}
       />
 
-      <div className="relative mx-auto max-w-3xl px-4 pt-[calc(70px+1.5rem)] pb-14 sm:px-6 md:pt-[calc(80px+2rem)] md:pb-20 lg:max-w-5xl xl:max-w-6xl">
+      <div className="relative w-full pt-[72px] md:pt-[80px]">
+        <img
+          src="/images/reviews/reviews.jpeg"
+          alt="Nibras Network Reviews"
+          className="w-full h-auto object-cover block"
+        />
+        <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 bg-gradient-to-t from-[#EDE7D9] to-transparent pointer-events-none"></div>
+      </div>
+
+      <div className="relative mx-auto max-w-3xl px-4 pt-10 pb-14 sm:px-6 md:pt-14 md:pb-20 lg:max-w-5xl xl:max-w-6xl">
         <RevealSection>
           <header className="text-center">
             <div
@@ -325,7 +334,8 @@ export default function TestimonialsPageContent() {
             <h2 className={`text-xl font-bold sm:text-2xl ${hf}`}>{copy.quickTitle}</h2>
           </div>
           <p className="mb-8 text-start text-sm italic text-[#5a6b62]">{copy.quickNote}</p>
-          <div className="space-y-4 rounded-3xl border border-[#B8860B]/20 bg-[#f8faf6] p-5 sm:p-8">
+          {/* Mobile version (Original Chat Bubbles) */}
+          <div className="md:hidden space-y-4 rounded-3xl border border-[#B8860B]/20 bg-[#f8faf6] p-5 sm:p-8">
             <div
               className={`mb-2 flex items-center gap-2 text-xs font-medium text-[#6b8565] ${
                 isAr ? "tracking-normal" : "uppercase tracking-wider"
@@ -344,6 +354,16 @@ export default function TestimonialsPageContent() {
                 bubbleAria={copy.waBubbleLabel}
               />
             ))}
+          </div>
+
+          {/* Desktop version (New Image) */}
+          <div className="hidden md:block group relative mx-auto max-w-5xl w-full rounded-3xl transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2 cursor-pointer mt-10">
+            <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-[#F2D58C] via-[#B8860B] to-[#D4A017] opacity-40 blur-xl transition-all duration-500 group-hover:opacity-80 group-hover:blur-2xl animate-pulse"></div>
+            <img
+              src="/images/reviews/massages.png"
+              alt="Community Inbox"
+              className="relative w-full h-auto rounded-3xl object-cover shadow-[0_0_30px_rgba(184,134,11,0.25)] ring-1 ring-[#B8860B]/20"
+            />
           </div>
         </RevealSection>
 
