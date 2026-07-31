@@ -69,7 +69,7 @@ function buildPrimaryNav(t: (key: string) => string): NavItem[] {
         { label: t("nav.about.mission"), href: "/about/mission", icon: <SvgMission /> },
         { label: t("nav.about.values"),  href: "/about/values",  icon: <SvgValues /> },
         { label: t("nav.about.whyUs"),   href: "/about/why-us",  icon: <SvgWhyUs /> },
-        { label: t("nav.about.team"),    href: "/about/team",    icon: <SvgTeam /> },
+        { label: t("nav.about.team"),    href: "#",    icon: <SvgTeam /> },
       ],
     },
     { label: t("nav.courses"),      href: "/courses",      mega: true },
@@ -506,7 +506,7 @@ export default function Navbar() {
         {/* ── Mobile: Logo + Hamburger ── */}
         <div className="flex md:hidden h-[70px] items-center justify-between gap-3">
           <Link href="/" className="flex items-center gap-2 group min-w-0">
-            <div className="relative w-12 h-12 group-hover:scale-105 transition-all duration-200 flex-shrink-0">
+            <div className="relative w-16 h-16 group-hover:scale-105 transition-all duration-200 flex-shrink-0">
               <Image
                 src="/images/logo.png"
                 alt={t("nav.logoAlt")}
@@ -516,10 +516,10 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col leading-tight min-w-0">
-              <span className="font-serif text-[#1C3A2E] font-bold text-[0.9rem] tracking-tight truncate">
+              <span className="font-serif text-[#1C3A2E] font-bold text-[1.05rem] tracking-tight truncate">
                 {t("nav.brand")}
               </span>
-              <span className="text-[7px] text-[#B8860B] tracking-widest uppercase font-semibold">
+              <span className="text-[8px] text-[#B8860B] tracking-widest uppercase font-semibold">
                 {t("nav.brandSubtitle")}
               </span>
             </div>
