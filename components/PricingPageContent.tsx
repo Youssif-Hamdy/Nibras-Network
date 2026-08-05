@@ -993,6 +993,36 @@ function HeroPaymentCardSlider({ isAr }: { isAr: boolean }) {
   );
 }
 
+function HeroImageSlider() {
+  const [index, setIndex] = useState(0);
+  const images = [
+    "/images/pricing/pricing%20(1).jpeg",
+    "/images/pricing/pricing%20(2).jpeg",
+    "/images/pricing/pricing%20(3).jpeg",
+  ];
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(id);
+  }, [images.length]);
+
+  return (
+    <div className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-[#254A3A]">
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={`Pricing Option ${i + 1}`}
+          className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 ease-in-out ${
+            i === index ? "opacity-100 scale-100 z-10" : "opacity-0 scale-105 z-0"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
 /* ─── Types (kept for INCLUDED_ITEMS below) ──────────────────────── */
 const INCLUDED_ITEMS: { icon: ReactNode; key: string }[] = [
   { icon: <IconClock />,    key: "pricing.included.flexSchedule" },
@@ -1161,6 +1191,13 @@ export default function PricingPageContent() {
           0%, 100% { box-shadow: 0 0 0 0 rgba(180,155,68,0); }
           45%       { box-shadow: 0 0 22px 4px rgba(180,155,68,0.18); }
         }
+        @keyframes floatImage {
+          0%, 100% { transform: translateY(0); }
+          50%      { transform: translateY(-12px); }
+        }
+        .animate-float-image {
+          animation: floatImage 6s ease-in-out infinite;
+        }
 
         @media (prefers-reduced-motion: reduce) {
           .pfu-on { animation: none !important; opacity: 1 !important; transform: none !important; }
@@ -1171,15 +1208,165 @@ export default function PricingPageContent() {
       `}</style>
 
       {/* ══════════════════════════════════════════════
-          SECTION 1 — Hero Image
+          SECTION 1 — Hero Info & Image Cards
       ══════════════════════════════════════════════ */}
-      <section className="relative w-full pt-[72px] md:pt-[80px] bg-[#F5F0E8]">
-        <img
-          src="/images/pricing.png"
-          alt="Pricing"
-          className="w-full h-auto object-cover block"
-        />
-        <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 bg-gradient-to-t from-[#F5F0E8] to-transparent pointer-events-none"></div>
+      <section className="relative w-full pt-[100px] md:pt-[130px] pb-12 md:pb-16 bg-[#F5F0E8] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14">
+            
+            {/* Left: Info Squares */}
+            <div className={`w-full lg:w-[50%] pfu pfu-on pfu-d1`} dir={isAr ? "rtl" : "ltr"}>
+              <div className="text-center lg:text-start mb-6 lg:mb-8">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#B49B44] mb-2">
+                  {isAr ? "معلومات هامة" : "Important Info"}
+                </p>
+                <h1 className="font-serif text-3xl md:text-4xl lg:text-[2.6rem] font-bold mb-4 leading-tight" style={{ color: brandGreen }}>
+                  {isAr ? "استثمر في رحلتك" : "Invest in Your Journey"}
+                </h1>
+                <p className="text-[#4a5c54] text-sm md:text-base leading-relaxed max-w-lg mx-auto lg:mx-0">
+                  {isAr 
+                    ? "اختر الباقة التي تناسبك واستمتع بمرونة الدفع، وضمان استرداد الأموال، ومزايا حصرية لطلابنا." 
+                    : "Choose the package that suits you and enjoy payment flexibility, a money-back guarantee, and exclusive perks."}
+                </p>
+              </div>
+              
+              {/* Old rules list */}
+              <div className="space-y-2 mb-6">
+                {(isAr
+                    ? [
+                        { t: "تُدفع جميع الاشتراكات مقدمًا بشكل شهري.", i: "1" },
+                        { t: "يتم تأكيد مقعدك فقط بعد استلام الدفع.", i: "2" },
+                        { t: "قد تُطبق رسوم تحويل أو معالجة حسب طريقة الدفع.", i: "3" },
+                      ]
+                    : [
+                        { t: "All subscriptions are prepaid monthly.", i: "1" },
+                        { t: "Your seat is confirmed only after payment is received.", i: "2" },
+                        { t: "Transaction / processing fees may apply depending on payment method.", i: "3" },
+                      ]
+                ).map((x) => (
+                  <div
+                    key={x.i}
+                    className="flex items-start gap-3 bg-white border border-[#B49B44]/18 rounded-xl px-4 py-3 shadow-sm hover:border-[#B49B44]/30 transition-colors"
+                  >
+                    <span className="mt-0.5 shrink-0 inline-flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#254A3A] text-[#F2D58C] text-[11px] font-bold">
+                      {x.i}
+                    </span>
+                    <p className="text-[13px] text-[#3D3D30] leading-relaxed">{x.t}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* 4 Squares */}
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                {[
+                  {
+                    icon: <IconBanknote size={18} />,
+                    green: false,
+                    label: isAr ? "الفوترة" : "Billing",
+                    body: isAr ? "شهرياً مقدمًا بالدولار" : "Monthly in advance, USD",
+                  },
+                  {
+                    icon: <IconRefresh size={18} />,
+                    green: true,
+                    label: isAr ? "مرونة" : "Flexibility",
+                    body: isAr ? "إلغاء بإشعار 7 أيام" : "Cancel with 7 days notice",
+                  },
+                  {
+                    icon: <IconTag size={18} />,
+                    green: false,
+                    label: isAr ? "عرض الإطلاق" : "Launch offer",
+                    body: isAr ? "خصم 30% — أول 3 شهور" : "30% off — first 3 months",
+                  },
+                  {
+                    icon: <IconShieldCheck size={18} />,
+                    green: true,
+                    label: isAr ? "مدفوعات آمنة" : "Secure",
+                    body: isAr ? "مشفّرة وبياناتك محمية" : "Encrypted & protected",
+                  },
+                ].map((f, i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col gap-2.5 bg-white border border-[#B49B44]/18 rounded-xl px-4 py-4 shadow-sm hover:border-[#B49B44]/30 transition-colors"
+                  >
+                    <span
+                      className={[
+                        "shrink-0 inline-flex items-center justify-center h-9 w-9 rounded-full",
+                        f.green ? "bg-[#eef4f0] text-[#254A3A]" : "bg-[#FFF4D6] text-[#8B6508]",
+                      ].join(" ")}
+                    >
+                      {f.icon}
+                    </span>
+                    <div className="min-w-0 mt-1">
+                      <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#254A3A] mb-1">
+                        {f.label}
+                      </p>
+                      <p className="text-[12.5px] text-[#4a5c54] leading-snug font-medium">{f.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Money-Back Banner */}
+              <div className="flex flex-wrap items-center gap-4 bg-[#F0EBD8] border border-[#B49B44]/35 rounded-2xl px-5 py-4">
+                <div className="shrink-0 w-12 h-12 rounded-[14px] bg-white border border-[#B49B44]/30 flex items-center justify-center text-[#B49B44]">
+                  <IconShieldCheck size={22} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B49B44] mb-1">
+                    {isAr ? "ضمان استرداد" : "Money-back guarantee"}
+                  </p>
+                  <p className="text-[13.5px] text-[#3D3D30] leading-snug">
+                    {isAr ? (
+                      <>استرداد <strong className="text-[#1A1A14] font-semibold">100%</strong> بعد أول جلسة لو مش مناسب لك.</>
+                    ) : (
+                      <><strong className="text-[#1A1A14] font-semibold">100% refund</strong> after your first session if it's not a fit.</>
+                    )}
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold uppercase tracking-wide bg-[rgba(180,155,68,0.15)] text-[#8A7430] border border-[#B49B44]/30 px-3 py-1.5 rounded-full whitespace-nowrap">
+                  {isAr ? "بدون مخاطرة" : "Zero risk"}
+                </span>
+              </div>
+            </div>
+
+            {/* Right: Hero Image Card */}
+            <div className={`w-full lg:w-[45%] flex justify-center pfu pfu-on pfu-d2`}>
+              <div className="relative w-full max-w-[440px] aspect-square rounded-[24px] overflow-hidden shadow-[0_24px_54px_rgba(37,74,58,0.16)] ring-1 ring-[#D4A017]/40 transition-transform duration-700 hover:scale-[1.02] animate-float-image">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#254A3A]/60 via-transparent to-transparent z-10 pointer-events-none"></div>
+                <HeroImageSlider />
+              </div>
+            </div>
+
+          </div>
+
+          {/* CTA Strip */}
+          <div className="mt-10 md:mt-14 w-full pfu pfu-on pfu-d3" dir={isAr ? "rtl" : "ltr"}>
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-5 bg-white border border-[#B49B44]/20 shadow-[0_8px_30px_rgba(37,74,58,0.08)] rounded-2xl px-6 py-5">
+              <div className="flex items-center gap-4">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#E0E8D3] text-[#3a4f1a]">
+                  <IconSparkles size={22} />
+                </span>
+                <div>
+                  <p className="font-serif text-[18px] md:text-[20px] font-bold leading-tight" style={{ color: brandGreen }}>
+                    {isAr ? "ابدأ اليوم بدون مخاطرة" : "Start today risk-free"}
+                  </p>
+                  <p className="text-[14px] md:text-[15px] text-[#4a5c54] mt-1 font-medium">
+                    {isAr ? "استرداد 100% لأول جلسة." : "100% refund for first session."}
+                  </p>
+                </div>
+              </div>
+              <div className="w-full sm:w-auto">
+                <Link
+                  href="/book"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#254A3A] hover:bg-[#1e3d2f] text-[#F0E8CC] text-[14px] font-semibold px-8 py-3 rounded-xl transition-all duration-200 shadow-md hover:-translate-y-0.5 whitespace-nowrap"
+                >
+                  {isAr ? "احجز تجربة مجانية" : "Book free trial"}
+                  <IconArrowRight />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
       {/* ══════════════════════════════════════════════
           SECTION 2 — Tabbed Pricing
